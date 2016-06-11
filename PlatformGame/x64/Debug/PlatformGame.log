@@ -1,0 +1,31 @@
+﻿  Window.cpp
+  Sprite.cpp
+  MainGame.cpp
+  main.cpp
+  InputManager.cpp
+  Generating Code...
+InputManager.obj : error LNK2019: unresolved external symbol SDL_PollEvent referenced in function "public: void __cdecl InputManager::update(void)" (?update@InputManager@@QEAAXXZ)
+MainGame.obj : error LNK2019: unresolved external symbol SDL_Quit referenced in function "private: void __cdecl MainGame::cleanUp(void)" (?cleanUp@MainGame@@AEAAXXZ)
+Sprite.obj : error LNK2001: unresolved external symbol __imp___glewBindBuffer
+Sprite.obj : error LNK2001: unresolved external symbol __imp___glewBufferData
+Sprite.obj : error LNK2001: unresolved external symbol __imp___glewGenBuffers
+Sprite.obj : error LNK2001: unresolved external symbol __imp___glewDisableVertexAttribArray
+Sprite.obj : error LNK2001: unresolved external symbol __imp___glewEnableVertexAttribArray
+Sprite.obj : error LNK2001: unresolved external symbol __imp___glewVertexAttribPointer
+Sprite.obj : error LNK2001: unresolved external symbol __imp___glewBindVertexArray
+Sprite.obj : error LNK2001: unresolved external symbol __imp___glewGenVertexArrays
+Window.obj : error LNK2019: unresolved external symbol SDL_CreateWindow referenced in function "public: void __cdecl Window::createWindow(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &,int,int,int,int)" (?createWindow@Window@@QEAAXAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@HHHH@Z)
+Window.obj : error LNK2019: unresolved external symbol SDL_DestroyWindow referenced in function "public: void __cdecl Window::destroyWindow(void)" (?destroyWindow@Window@@QEAAXXZ)
+Window.obj : error LNK2019: unresolved external symbol SDL_GL_CreateContext referenced in function "public: void __cdecl Window::createWindow(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &,int,int,int,int)" (?createWindow@Window@@QEAAXAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@HHHH@Z)
+Window.obj : error LNK2019: unresolved external symbol SDL_GL_SwapWindow referenced in function "public: void __cdecl Window::swapWindow(void)" (?swapWindow@Window@@QEAAXXZ)
+Window.obj : error LNK2019: unresolved external symbol SDL_Init referenced in function "public: void __cdecl Window::createWindow(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &,int,int,int,int)" (?createWindow@Window@@QEAAXAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@HHHH@Z)
+Window.obj : error LNK2019: unresolved external symbol __imp_glewInit referenced in function "public: void __cdecl Window::createWindow(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &,int,int,int,int)" (?createWindow@Window@@QEAAXAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@HHHH@Z)
+Window.obj : error LNK2001: unresolved external symbol __imp_glewExperimental
+MSVCRTD.lib(exe_main.obj) : error LNK2019: unresolved external symbol main referenced in function "int __cdecl invoke_main(void)" (?invoke_main@@YAHXZ)
+C:\Users\user\Documents\Visual Studio 2015\Projects\PlatformGame\deps\lib\Debug\SDL2.lib : warning LNK4272: library machine type 'X86' conflicts with target machine type 'x64'
+C:\Users\user\Documents\Visual Studio 2015\Projects\PlatformGame\deps\lib\Debug\SDL2main.lib : warning LNK4272: library machine type 'X86' conflicts with target machine type 'x64'
+C:\Users\user\Documents\Visual Studio 2015\Projects\PlatformGame\deps\lib\Debug\SDL2test.lib : warning LNK4272: library machine type 'X86' conflicts with target machine type 'x64'
+C:\Users\user\Documents\Visual Studio 2015\Projects\PlatformGame\deps\lib\Debug\glew32.lib : warning LNK4272: library machine type 'X86' conflicts with target machine type 'x64'
+C:\Users\user\Documents\Visual Studio 2015\Projects\PlatformGame\deps\lib\Debug\glew32s.lib : warning LNK4272: library machine type 'X86' conflicts with target machine type 'x64'
+C:\Users\user\Documents\Visual Studio 2015\Projects\PlatformGame\deps\lib\Debug\Box2D.lib : warning LNK4272: library machine type 'X86' conflicts with target machine type 'x64'
+C:\Users\user\documents\visual studio 2015\Projects\PlatformGame\x64\Debug\PlatformGame.exe : fatal error LNK1120: 18 unresolved externals
