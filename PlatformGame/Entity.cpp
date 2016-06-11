@@ -16,7 +16,7 @@ void Entity::init(const glm::vec2& position, const glm::vec2& dimension, const T
 	_texture = texture;
 	_depth = depth;
 
-	setupSprite(_position.x, _position.y, _dimension.x, _dimension.y);
+	//setupSprite(_position.x, _position.y, _dimension.x, _dimension.y);
 }
 
 void Entity::update(float delta)
@@ -39,12 +39,6 @@ void Entity::render()
 
 	glDrawArrays(GL_TRIANGLES, 0, 6);
 
-	glDisableVertexAttribArray(2);
-	glDisableVertexAttribArray(1);
-	glDisableVertexAttribArray(0);
-
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
 void Entity::setupSprite(float x, float y, float width, float height)

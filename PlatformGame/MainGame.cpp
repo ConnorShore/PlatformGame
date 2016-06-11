@@ -33,6 +33,7 @@ void MainGame::init()
 	for (int i = 0; i < 1000; i++) {
 		Entity entity;
 		entity.init(glm::vec2(xDist(randomGen), yDist(randomGen)), glm::vec2(1.0f, 1.0f), tex);
+		_renderer.initEntity(entity);
 		_entities.push_back(entity);
 	}
 
@@ -89,15 +90,19 @@ void MainGame::render()
 	glClearDepth(1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
 
-	_staticShader.start();
-	_staticShader.getUniformLocations();
-	_staticShader.loadPMatrix(_camera.getCameraMatrix());
-	_staticShader.loadTexture();
+	//_staticShader.start();
+	//_staticShader.getUniformLocations();
+	//_staticShader.loadPMatrix(_camera.getCameraMatrix());
+	//_staticShader.loadTexture();
+	//for(int i = 0; i < _entities.size(); i++)
+	//	_entities[i].render();
+
+	//_staticShader.stop();
+
+	_renderer.render(_staticShader, _camera);
 
 	for (int i = 0; i < _entities.size(); i++)
-		_entities[i].render();
-
-	_staticShader.stop();
+		_renderer.processEntity(_entities[i]);
 
 	_window.swapWindow();
 }
