@@ -20,10 +20,10 @@ public:
 
 private:
 	GLuint _vaoID = 0, _vboID = 0;
+	//std::unordered_map<unsigned int, std::vector<Entity>> _entities;
+	std::vector< std::vector<Entity> > _entities;
 
-	std::unordered_map<unsigned int, std::vector<Entity>> _entities;
-
-	void prepareTexture(unsigned int textureID);
+	void prepareTexture(Texture texture);
 	void renderEntities();
 	void unbind();
 };

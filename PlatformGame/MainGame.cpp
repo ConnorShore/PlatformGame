@@ -30,7 +30,7 @@ void MainGame::init()
 
 	Texture tex = ResourceManager::loadTexture("Textures/boxTex.png");
 
-	for (int i = 0; i < 1000; i++) {
+	for (int i = 0; i < 5; i++) {
 		Entity entity;
 		entity.init(glm::vec2(xDist(randomGen), yDist(randomGen)), glm::vec2(1.0f, 1.0f), tex);
 		_renderer.initEntity(entity);

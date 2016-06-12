@@ -1,5 +1,10 @@
-﻿  main.cpp
-  Renderer.cpp
+﻿  Renderer.cpp
+c:\users\user\documents\visual studio 2015\projects\platformgame\platformgame\renderer.cpp(42): warning C4018: '<': signed/unsigned mismatch
+c:\users\user\documents\visual studio 2015\projects\platformgame\platformgame\renderer.cpp(44): warning C4018: '<': signed/unsigned mismatch
+c:\users\user\documents\visual studio 2015\projects\platformgame\platformgame\renderer.cpp(55): warning C4018: '<': signed/unsigned mismatch
+  Generating Code...
+  Compiling...
+  main.cpp
   MainGame.cpp
 c:\users\user\documents\visual studio 2015\projects\platformgame\platformgame\maingame.cpp(104): warning C4018: '<': signed/unsigned mismatch
   Generating Code...
