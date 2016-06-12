@@ -5,6 +5,7 @@
 #include "StaticShader.h"
 #include "Camera.h"
 #include "Timing.h"
+#include "Renderer.h"
 #include "Entity.h"
 
 enum class GameState {PLAY, PAUSED, EXIT};
@@ -24,6 +25,7 @@ private:
 	StaticShader _staticShader;
 	Camera _camera;
 	Timing _timer;
+	Renderer _renderer;
 
 	std::vector<Entity> _entities;
 

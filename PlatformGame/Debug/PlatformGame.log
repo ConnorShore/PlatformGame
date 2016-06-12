@@ -1,7 +1,6 @@
-﻿  MainGame.cpp
-c:\users\user\documents\visual studio 2015\projects\platformgame\platformgame\maingame.cpp(97): warning C4018: '<': signed/unsigned mismatch
-  Entity.cpp
+﻿  main.cpp
+  Renderer.cpp
+  MainGame.cpp
+c:\users\user\documents\visual studio 2015\projects\platformgame\platformgame\maingame.cpp(104): warning C4018: '<': signed/unsigned mismatch
   Generating Code...
-  Skipping... (no relevant changes detected)
-  main.cpp
   PlatformGame.vcxproj -> C:\Users\user\documents\visual studio 2015\Projects\PlatformGame\Debug\PlatformGame.exe

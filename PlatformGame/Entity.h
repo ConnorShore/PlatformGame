@@ -16,15 +16,22 @@ public:
 	void update(float delta);
 	void render();
 
-	//TODO: MAster renderer
+	glm::vec2 getPosition() const { return _position; }
+	glm::vec2 getDimension() const { return _dimension; }
+	Texture getTexture() const { return _texture; }
+	GLuint getVaoID() const { return _vaoID; }
+	GLuint getVboID() const { return _vboID; }
+
+	void setVaoID(GLuint vaoID) { _vaoID = vaoID; }
+	void setVboID(GLuint vboID) { _vboID = vboID; }
 
 protected:
 	glm::vec2 _position, _dimension;
 	Texture _texture;
 	float _depth;
+	GLuint _vaoID = 0, _vboID = 0;
 
 private:
-	GLuint _vaoID = 0, _vboID = 0;
 	void setupSprite(float x, float y, float width, float height);
 };
 
