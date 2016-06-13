@@ -2,6 +2,7 @@
 
 #include <GL\glew.h>
 #include <glm\glm.hpp>
+#include <Box2D\Box2D.h>
 
 #include "Texture.h"
 #include "Sprite.h"
@@ -12,8 +13,8 @@ public:
 	Entity();
 	~Entity();
 
-	void init(const glm::vec2& position, const glm::vec2& dimension, const Texture& texture, float depth = 1.0f);
-	void update(float delta);
+	void init(b2World* world, const glm::vec2& position, const glm::vec2& dimension, const Texture& texture, float depth = 1.0f);
+	void update();
 	void render();
 
 	glm::vec2 getPosition() const { return _position; }
@@ -25,13 +26,15 @@ public:
 	void setVaoID(GLuint vaoID) { _vaoID = vaoID; }
 	void setVboID(GLuint vboID) { _vboID = vboID; }
 
-protected:
+private:
 	glm::vec2 _position, _dimension;
 	Texture _texture;
 	float _depth;
 	GLuint _vaoID = 0, _vboID = 0;
+	b2Body* _body = nullptr;
+	b2Fixture* _fixture = nullptr;
 
-private:
-	void setupSprite(float x, float y, float width, float height);
+	//void setupSprite(float& x, float& y, float& width, float& height);
+	//void setupBox2D(b2World* world, const glm::vec4& bodyDef);
 };
 

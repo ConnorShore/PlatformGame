@@ -22,18 +22,29 @@ void MainGame::init()
 	_window.createWindow("Platform Game", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, _screenWidth, _screenHeight);
 	_currentState = GameState::PLAY;
 
+	b2Vec2 gravity(0, -20.0f);
+	_world = std::make_unique<b2World>(gravity);
+
 	_camera.init(_screenWidth, _screenHeight);
 
 	std::mt19937 randomGen;
-	std::uniform_real_distribution<float> xDist(-100.0f, 100.0f);
-	std::uniform_real_distribution<float> yDist(-100.0f, 150.0f);
+	std::uniform_real_distribution<float> xDist(-10.0f, 10.0f);
+	std::uniform_real_distribution<float> yDist(-10.0f, 15.0f);
 
 	Texture tex = ResourceManager::loadTexture("Textures/boxTex.png");
 
-	for (int i = 0; i < 5; i++) {
+	//Setup ground
+	b2BodyDef groundBodyDef;
+	groundBodyDef.position.Set(0.0f, -15.0f);
+	b2Body* groundBody = _world->CreateBody(&groundBodyDef);
+	b2PolygonShape groundShape;
+	groundShape.SetAsBox(50.0f, 5.0f);
+	groundBody->CreateFixture(&groundShape, 0.0f);
+
+	//Setup entities
+	for (int i = 0; i < 50; i++) {
 		Entity entity;
-		entity.init(glm::vec2(xDist(randomGen), yDist(randomGen)), glm::vec2(1.0f, 1.0f), tex);
-		_renderer.initEntity(entity);
+		entity.init(_world.get(), glm::vec2(xDist(randomGen), yDist(randomGen)), glm::vec2(1.0f, 1.0f), tex);
 		_entities.push_back(entity);
 	}
 
@@ -60,16 +71,16 @@ void MainGame::input()
 	}
 
 	if (_inputManager.isKeyDown(SDLK_w)) {
-		_camera.setPosition(glm::vec2(_camera.getPosition().x, _camera.getPosition().y + 10.0f * _timer.getDeltaTime()));
+		_camera.setPosition(glm::vec2(_camera.getPosition().x, _camera.getPosition().y + 10.0f));
 	}
 	else if (_inputManager.isKeyDown(SDLK_s)) {
-		_camera.setPosition(glm::vec2(_camera.getPosition().x, _camera.getPosition().y - 10.0f * _timer.getDeltaTime()));
+		_camera.setPosition(glm::vec2(_camera.getPosition().x, _camera.getPosition().y - 10.0f));
 	}
 	if (_inputManager.isKeyDown(SDLK_a)) {
-		_camera.setPosition(glm::vec2(_camera.getPosition().x - 10.0f * _timer.getDeltaTime(), _camera.getPosition().y));
+		_camera.setPosition(glm::vec2(_camera.getPosition().x - 10.0f, _camera.getPosition().y));
 	}
 	else if (_inputManager.isKeyDown(SDLK_d)) {
-		_camera.setPosition(glm::vec2(_camera.getPosition().x + 10.0f * _timer.getDeltaTime(), _camera.getPosition().y));
+		_camera.setPosition(glm::vec2(_camera.getPosition().x + 10.0f, _camera.getPosition().y));
 	}
 
 	if (_inputManager.isKeyDown(SDLK_q)) {
@@ -83,6 +94,7 @@ void MainGame::input()
 void MainGame::update()
 {
 	_camera.update();
+	_world->Step(1 / 60.0f, 6, 2);
 }
 
 void MainGame::render()
@@ -90,19 +102,15 @@ void MainGame::render()
 	glClearDepth(1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
 
-	//_staticShader.start();
-	//_staticShader.getUniformLocations();
-	//_staticShader.loadPMatrix(_camera.getCameraMatrix());
-	//_staticShader.loadTexture();
-	//for(int i = 0; i < _entities.size(); i++)
-	//	_entities[i].render();
+	_staticShader.start();
+	_staticShader.getUniformLocations();
+	_staticShader.loadPMatrix(_camera.getCameraMatrix());
+	_staticShader.loadTexture();
 
-	//_staticShader.stop();
+	for(int i = 0; i < _entities.size(); i++)
+		_entities[i].render();
 
-	_renderer.render(_staticShader, _camera);
-
-	for (int i = 0; i < _entities.size(); i++)
-		_renderer.processEntity(_entities[i]);
+	_staticShader.stop();
 
 	_window.swapWindow();
 }
@@ -113,12 +121,12 @@ void MainGame::gameLoop()
 
 	while (_currentState != GameState::EXIT) {
 		_timer.FpsLimitInit();
-		_timer.calcDeltaTime();
 
 		input();
 		update();
 		render();
 
+		_timer.LimitFPS(60.0f);
 		_timer.CalculateFPS(true);
 	}
 }
