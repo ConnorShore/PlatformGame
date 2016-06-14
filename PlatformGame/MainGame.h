@@ -7,7 +7,7 @@
 #include "StaticShader.h"
 #include "Camera.h"
 #include "Timing.h"
-#include "Entity.h"
+#include "Box.h"
 
 enum class GameState {PLAY, PAUSED, EXIT};
 
@@ -29,7 +29,7 @@ private:
 
 	std::unique_ptr<b2World> _world;
 
-	std::vector<Entity> _entities;
+	std::vector<Box> _boxes;
 
 	int _screenWidth = 1280;
 	int _screenHeight = 720;

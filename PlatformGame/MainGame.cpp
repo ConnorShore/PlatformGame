@@ -41,11 +41,11 @@ void MainGame::init()
 	groundShape.SetAsBox(50.0f, 5.0f);
 	groundBody->CreateFixture(&groundShape, 0.0f);
 
-	//Setup entities
+	//Setup boxes
 	for (int i = 0; i < 50; i++) {
-		Entity entity;
-		entity.init(_world.get(), glm::vec2(xDist(randomGen), yDist(randomGen)), glm::vec2(1.0f, 1.0f), tex);
-		_entities.push_back(entity);
+		Box box;
+		box.init(_world.get(), glm::vec2(xDist(randomGen), yDist(randomGen)), glm::vec2(1.0f, 1.0f), tex);
+		_boxes.push_back(box);
 	}
 
 	_staticShader.init("Shaders/staticShader.vert", "Shaders/staticShader.frag");
@@ -54,33 +54,19 @@ void MainGame::init()
 
 void MainGame::input()
 {
-	SDL_Event evnt;
-	while (SDL_PollEvent(&evnt)) {
-		switch (evnt.type) {
-		case SDL_QUIT:
-			//Send message to maingame to exit
-			exit(0);
-			break;
-		case SDL_KEYDOWN:
-			_inputManager.keyPressed(evnt.key.keysym.sym);
-			break;
-		case SDL_KEYUP:
-			_inputManager.keyReleased(evnt.key.keysym.sym);
-			break;
-		}
-	}
+	_inputManager.update();
 
 	if (_inputManager.isKeyDown(SDLK_w)) {
-		_camera.setPosition(glm::vec2(_camera.getPosition().x, _camera.getPosition().y + 10.0f));
+		_camera.setPosition(glm::vec2(_camera.getPosition().x, _camera.getPosition().y + 10.0f * _timer.getDeltaTime()));
 	}
 	else if (_inputManager.isKeyDown(SDLK_s)) {
-		_camera.setPosition(glm::vec2(_camera.getPosition().x, _camera.getPosition().y - 10.0f));
+		_camera.setPosition(glm::vec2(_camera.getPosition().x, _camera.getPosition().y - 10.0f * _timer.getDeltaTime()));
 	}
 	if (_inputManager.isKeyDown(SDLK_a)) {
-		_camera.setPosition(glm::vec2(_camera.getPosition().x - 10.0f, _camera.getPosition().y));
+		_camera.setPosition(glm::vec2(_camera.getPosition().x - 10.0f * _timer.getDeltaTime(), _camera.getPosition().y));
 	}
 	else if (_inputManager.isKeyDown(SDLK_d)) {
-		_camera.setPosition(glm::vec2(_camera.getPosition().x + 10.0f, _camera.getPosition().y));
+		_camera.setPosition(glm::vec2(_camera.getPosition().x + 10.0f * _timer.getDeltaTime(), _camera.getPosition().y));
 	}
 
 	if (_inputManager.isKeyDown(SDLK_q)) {
@@ -107,8 +93,8 @@ void MainGame::render()
 	_staticShader.loadPMatrix(_camera.getCameraMatrix());
 	_staticShader.loadTexture();
 
-	for(int i = 0; i < _entities.size(); i++)
-		_entities[i].render();
+	for(int i = 0; i < _boxes.size(); i++)
+		_boxes[i].render();
 
 	_staticShader.stop();
 
@@ -121,12 +107,12 @@ void MainGame::gameLoop()
 
 	while (_currentState != GameState::EXIT) {
 		_timer.FpsLimitInit();
+		_timer.calcDeltaTime();
 
 		input();
 		update();
 		render();
 
-		_timer.LimitFPS(60.0f);
 		_timer.CalculateFPS(true);
 	}
 }

@@ -1,30 +1,29 @@
-#pragma once
-
-#include "Entity.h"
-#include "StaticShader.h"
-#include "Camera.h"
-#include "Texture.h"
-
-#include <unordered_map>
-#include <GL/glew.h>
-
-class Renderer
-{
-public:
-	Renderer();
-	~Renderer();
-
-	void initEntity(Entity& entity);
-	void processEntity(Entity& entity);
-	void render(StaticShader& shader, Camera& camera);
-
-private:
-	GLuint _vaoID = 0, _vboID = 0;
-	//std::unordered_map<unsigned int, std::vector<Entity>> _entities;
-	std::vector< std::vector<Entity> > _entities;
-
-	void prepareTexture(Texture texture);
-	void renderEntities();
-	void unbind();
-};
-
+//#pragma once
+//
+//#include "Box.h"
+//#include "StaticShader.h"
+//#include "Camera.h"
+//#include "Texture.h"
+//
+//#include <unordered_map>
+//#include <GL/glew.h>
+//
+//class Renderer
+//{
+//public:
+//	Renderer();
+//	~Renderer();
+//
+//	void initEntity(Box& entity);
+//	void processEntity(Box& entity);
+//	void render(StaticShader& shader, Camera& camera);
+//
+//private:
+//	GLuint _vaoID = 0, _vboID = 0;
+//	std::vector< std::vector<Box> > _entities;
+//
+//	void prepareTexture(Texture texture);
+//	void renderEntities();
+//	void unbind();
+//};
+//

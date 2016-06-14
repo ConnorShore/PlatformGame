@@ -7,6 +7,8 @@ class InputManager
 public:
 	InputManager();
 	~InputManager();
+
+	void update();
 	
 	void keyPressed(unsigned int key);
 	void keyReleased(unsigned int key);

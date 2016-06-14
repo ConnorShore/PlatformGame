@@ -1,2 +1,8 @@
-﻿  Entity.cpp
-  PlatformGame.vcxproj -> C:\Users\user\documents\visual studio 2015\Projects\PlatformGame\Debug\PlatformGame.exe
+﻿  MainGame.cpp
+c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\platformgame\maingame.cpp(96): warning C4018: '<': signed/unsigned mismatch
+  InputManager.cpp
+  Generating Code...
+  Compiling...
+  main.cpp
+  Generating Code...
+  PlatformGame.vcxproj -> C:\Users\cjshore12\Documents\Visual Studio 2015\Projects\PlatformGame\Debug\PlatformGame.exe
