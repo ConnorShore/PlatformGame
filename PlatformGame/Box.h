@@ -14,7 +14,6 @@ public:
 	~Box();
 
 	void init(b2World* world, const glm::vec2& position, const glm::vec2& dimension, const Texture& texture, float depth = 1.0f);
-	void update();
 	void render();
 
 	glm::vec2 getDimension() const { return _dimension; }

@@ -7,10 +7,7 @@
 
 MainGame::MainGame()
 {
-	//TODO: Make entity system
-	//Improve render system
-	//TODO: Make messaging system (Make a world)
-	//TODO: Add box2D physics
+	
 }
 
 MainGame::~MainGame()
