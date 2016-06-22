@@ -3,11 +3,13 @@
 #include <glm\glm.hpp>
 #include <Box2D\Box2D.h>
 
+#include "Agent.h"
 #include "InputManager.h"
 #include "Box.h"
 #include "Texture.h"
+#include "Weapon.h"
 
-class Player
+class Player : public Agent
 {
 public:
 	Player();
@@ -18,10 +20,14 @@ public:
 	void update();
 	void render();
 
+	inline Weapon getWeapon() const { return _weapon; }
+	inline void setWeapon(Weapon& newWeapon) { _weapon = newWeapon; }
+
 private:
 	glm::vec2 _dimension, _uvDim;
 	Box _collisionBox;
 	Texture _spriteSheet;
 	b2Body* _body;
 	b2Fixture* _fixture;
+	Weapon _weapon;
 };

@@ -148,6 +148,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Agent.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Box.cpp" />
     <ClCompile Include="InputManager.cpp" />
@@ -162,9 +163,11 @@
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="StaticShader.cpp" />
     <ClCompile Include="Timing.cpp" />
+    <ClCompile Include="Weapon.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Agent.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Box.h" />
     <ClInclude Include="InputManager.h" />
@@ -180,6 +183,7 @@
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Timing.h" />
     <ClInclude Include="Vertex.h" />
+    <ClInclude Include="Weapon.h" />
     <ClInclude Include="Window.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
