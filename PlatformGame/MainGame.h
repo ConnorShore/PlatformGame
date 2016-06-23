@@ -28,12 +28,12 @@ private:
 	StaticShader _staticShader;
 	Camera _camera;
 	Timing _timer;
-	Player _player;
+	Player* _player;
 
 	std::unique_ptr<b2World> _world;
 
 	std::vector<Box> _boxes;
-	std::vector<Agent> _agents;
+	std::vector<Agent*> _agents;
 
 	int _screenWidth = 1280;
 	int _screenHeight = 720;

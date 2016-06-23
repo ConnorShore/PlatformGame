@@ -41,11 +41,12 @@ void MainGame::init()
 	//Setup boxes
 	for (int i = 0; i < 50; i++) {
 		Box box;
-		box.init(_world.get(), glm::vec2(xDist(randomGen), yDist(randomGen)), glm::vec2(1.0f, 1.0f), tex);
+		box.init(_world.get(), glm::vec2(xDist(randomGen), yDist(randomGen)), glm::vec2(2.0f, 1.0f), tex);
 		_boxes.push_back(box);
 	}
 
-	_player.init(_world.get(), glm::vec2(0.0f, 15.0f), glm::vec2(2.0f, 1.25f), glm::vec2(10, 1), "Textures/blue_ninja.png");
+	_player = new Player();
+	_player->agentInit(_world.get(), glm::vec2(0.0f, 15.0f), glm::vec2(1.0f, 1.0f), glm::vec2(1.0f, 1.0f), glm::vec2(10, 1), "Textures/ss_player_base.png");
 	_agents.push_back(_player);
 
 	_staticShader.init("Shaders/staticShader.vert", "Shaders/staticShader.frag");
@@ -55,34 +56,17 @@ void MainGame::init()
 void MainGame::input()
 {
 	_inputManager.update();
-
-	if (_inputManager.isKeyDown(SDLK_w)) {
-		_camera.setPosition(glm::vec2(_camera.getPosition().x, _camera.getPosition().y + 10.0f * _timer.getDeltaTime()));
-	}
-	else if (_inputManager.isKeyDown(SDLK_s)) {
-		_camera.setPosition(glm::vec2(_camera.getPosition().x, _camera.getPosition().y - 10.0f * _timer.getDeltaTime()));
-	}
-	if (_inputManager.isKeyDown(SDLK_a)) {
-		_camera.setPosition(glm::vec2(_camera.getPosition().x - 10.0f * _timer.getDeltaTime(), _camera.getPosition().y));
-	}
-	else if (_inputManager.isKeyDown(SDLK_d)) {
-		_camera.setPosition(glm::vec2(_camera.getPosition().x + 10.0f * _timer.getDeltaTime(), _camera.getPosition().y));
-	}
-
-	if (_inputManager.isKeyDown(SDLK_q)) {
-		_camera.setScale(_camera.getScale() + 5.0f * _timer.getDeltaTime());
-	}
-	else if (_inputManager.isKeyDown(SDLK_e)) {
-		_camera.setScale(_camera.getScale() - 5.0f * _timer.getDeltaTime());
-	}
+	_player->input(_inputManager);
 }
 
 void MainGame::update()
 {
 	for (auto& agent : _agents)
-		agent.update();
+		agent->update();
 
+	_camera.setPosition(glm::vec2(_player->getPosition().x + _player->getDimension().x / 2.0f, _player->getPosition().y + _player->getDimension().y / 2.0f));
 	_camera.update();
+
 	_world->Step(1 / 60.0f, 6, 2);
 }
 
@@ -96,10 +80,8 @@ void MainGame::render()
 	_staticShader.loadPMatrix(_camera.getCameraMatrix());
 	_staticShader.loadTexture();
 
-	printf("%f\n", _agents.size());
-
 	for (auto& agent : _agents)
-		agent.agentRender();
+		agent->agentRender();
 
 	for(int i = 0; i < _boxes.size(); i++)
 		_boxes[i].render();
