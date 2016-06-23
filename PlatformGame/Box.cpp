@@ -33,7 +33,7 @@ void Box::init(b2World* world, const glm::vec2& position, const glm::vec2& dimen
 		glGenBuffers(1, &_vboID);
 
 	Vertex vertexData[6];
-	vertexData[0].setPosition(_body->GetPosition().x+ _dimension.x, _body->GetPosition().y + _dimension.y);
+	vertexData[0].setPosition(_body->GetPosition().x + _dimension.x, _body->GetPosition().y + _dimension.y);
 	vertexData[0].setUV(1.0f, 1.0f);
 	vertexData[1].setPosition(_body->GetPosition().x, _body->GetPosition().y + _dimension.y);
 	vertexData[1].setUV(0.0f, 1.0f);

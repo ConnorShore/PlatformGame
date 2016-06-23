@@ -19,6 +19,7 @@ public:
 	glm::vec2 getDimension() const { return _dimension; }
 	Texture getTexture() const { return _texture; }
 	GLuint getVboID() const { return _vboID; }
+	b2Body* getBody() const { return _body; }
 
 	void setVboID(GLuint vboID) { _vboID = vboID; }
 

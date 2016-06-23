@@ -1,4 +1,8 @@
-﻿  Weapon.cpp
-  Player.cpp
+﻿  MainGame.cpp
+c:\users\user\documents\visual studio 2015\projects\platformgame\platformgame\maingame.cpp(104): warning C4018: '<': signed/unsigned mismatch
+c:\users\user\documents\visual studio 2015\projects\platformgame\platformgame\maingame.cpp(99): warning C4477: 'printf' : format string '%f' requires an argument of type 'double', but variadic argument 1 has type 'unsigned int'
   Generating Code...
-  PlatformGame.vcxproj -> C:\Users\cjshore12\Documents\Visual Studio 2015\Projects\PlatformGame\Debug\PlatformGame.exe
+  Skipping... (no relevant changes detected)
+  main.cpp
+  Player.cpp
+  PlatformGame.vcxproj -> C:\Users\user\documents\visual studio 2015\Projects\PlatformGame\Debug\PlatformGame.exe

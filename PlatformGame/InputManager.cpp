@@ -18,7 +18,6 @@ void InputManager::update()
 	while (SDL_PollEvent(&evnt)) {
 		switch (evnt.type) {
 		case SDL_QUIT:
-			//Send message to maingame to exit
 			exit(0);
 			break;
 		case SDL_KEYDOWN:
@@ -26,6 +25,9 @@ void InputManager::update()
 			break;
 		case SDL_KEYUP:
 			keyReleased(evnt.key.keysym.sym);
+			break;
+		case SDL_MOUSEMOTION:
+			setMousePos(evnt.motion.x, evnt.motion.y);
 			break;
 		}
 	}
@@ -48,4 +50,10 @@ bool InputManager::isKeyDown(unsigned int key)
 		return it->second;
 	else
 		return false;
+}
+
+void InputManager::setMousePos(float mouseX, float mouseY)
+{
+	_mousePos.x = mouseX;
+	_mousePos.y = mouseY;
 }

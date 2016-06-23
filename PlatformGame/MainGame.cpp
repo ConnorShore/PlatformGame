@@ -45,6 +45,9 @@ void MainGame::init()
 		_boxes.push_back(box);
 	}
 
+	_player.init(_world.get(), glm::vec2(0.0f, 15.0f), glm::vec2(2.0f, 1.25f), glm::vec2(10, 1), "Textures/blue_ninja.png");
+	_agents.push_back(_player);
+
 	_staticShader.init("Shaders/staticShader.vert", "Shaders/staticShader.frag");
 	_staticShader.bindAttributes();
 }
@@ -76,6 +79,9 @@ void MainGame::input()
 
 void MainGame::update()
 {
+	for (auto& agent : _agents)
+		agent.update();
+
 	_camera.update();
 	_world->Step(1 / 60.0f, 6, 2);
 }
@@ -89,6 +95,11 @@ void MainGame::render()
 	_staticShader.getUniformLocations();
 	_staticShader.loadPMatrix(_camera.getCameraMatrix());
 	_staticShader.loadTexture();
+
+	printf("%f\n", _agents.size());
+
+	for (auto& agent : _agents)
+		agent.agentRender();
 
 	for(int i = 0; i < _boxes.size(); i++)
 		_boxes[i].render();
@@ -110,7 +121,8 @@ void MainGame::gameLoop()
 		update();
 		render();
 
-		_timer.CalculateFPS(true);
+		_timer.LimitFPS(60.0f);
+		_timer.CalculateFPS(false);
 	}
 }
 
