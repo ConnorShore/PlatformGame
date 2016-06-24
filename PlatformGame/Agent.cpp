@@ -23,6 +23,7 @@ void Agent::agentInit(b2World* world, const glm::vec2& position, const glm::vec2
 	b2BodyDef bodyDef;
 	bodyDef.type = b2_dynamicBody;
 	bodyDef.position.Set(position.x, position.y);
+	bodyDef.fixedRotation = true;
 	_body = world->CreateBody(&bodyDef);
 
 	b2PolygonShape dynamicBox;
