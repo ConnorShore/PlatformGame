@@ -41,12 +41,12 @@ void MainGame::init()
 	//Setup boxes
 	for (int i = 0; i < 50; i++) {
 		Box box;
-		box.init(_world.get(), glm::vec2(xDist(randomGen), yDist(randomGen)), glm::vec2(2.0f, 1.0f), tex);
+		box.init(_world.get(), glm::vec2(xDist(randomGen), yDist(randomGen)), glm::vec2(1.0f, 1.0f), tex);
 		_boxes.push_back(box);
 	}
 
 	_player = new Player();
-	_player->agentInit(_world.get(), glm::vec2(0.0f, 15.0f), glm::vec2(1.25f, 2.0f), glm::vec2(1.25f, 2.0f), glm::vec2(10, 1), "Textures/ss_player_base.png");
+	_player->agentInit(_world.get(), glm::vec2(0.0f, 15.0f), glm::vec2(1.0f, 1.8f), glm::vec2(10, 1), "Textures/ss_player_base.png");
 	_agents.push_back(_player);
 
 	_staticShader.init("Shaders/staticShader.vert", "Shaders/staticShader.frag");

@@ -3,6 +3,7 @@
 
 Box::Box()
 {
+	//Add support for rotation
 }
 
 Box::~Box()

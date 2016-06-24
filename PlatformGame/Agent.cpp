@@ -12,11 +12,10 @@ Agent::~Agent()
 {
 }
 
-void Agent::agentInit(b2World* world, const glm::vec2& position, const glm::vec2& dimension, const glm::vec2& drawDims, const glm::ivec2& sheetDims, const std::string& texPath)
+void Agent::agentInit(b2World* world, const glm::vec2& position, const glm::vec2& dimension, const glm::ivec2& sheetDims, const std::string& texPath)
 {
 	_texture = ResourceManager::loadTexture(texPath);
 	_dimension = dimension;
-	_drawDims = drawDims;
 
 	_spriteSheet.init(_texture, sheetDims);
 	
@@ -39,10 +38,10 @@ void Agent::agentInit(b2World* world, const glm::vec2& position, const glm::vec2
 		glGenBuffers(1, &_vboID);
 
 	glm::vec4 destRect;
-	destRect.x = _body->GetPosition().x - _drawDims.x / 2.0f;
-	destRect.y = _body->GetPosition().y - _drawDims.y / 2.0f;
-	destRect.z = _drawDims.x;
-	destRect.w = _drawDims.y;
+	destRect.x = _body->GetPosition().x - _dimension.x / 2.0f;
+	destRect.y = _body->GetPosition().y - _dimension.y / 2.0f;
+	destRect.z = _dimension.x;
+	destRect.w = _dimension.y;
 	glm::vec4 uvRect = _spriteSheet.getUVs(0);
 
 	Vertex vertexData[6];
@@ -77,10 +76,10 @@ void Agent::agentRender()
 void Agent::initRender()
 {
 	glm::vec4 destRect;
-	destRect.x = _body->GetPosition().x - _drawDims.x / 2.0f;
-	destRect.y = _body->GetPosition().y - _drawDims.y / 2.0f;
-	destRect.z = _drawDims.x;
-	destRect.w = _drawDims.y;
+	destRect.x = _body->GetPosition().x - _dimension.x / 2.0f;
+	destRect.y = _body->GetPosition().y - _dimension.y / 2.0f;
+	destRect.z = _dimension.x;
+	destRect.w = _dimension.y;
 	glm::vec4 uvRect = animate();
 
 	Vertex vertexData[6];
