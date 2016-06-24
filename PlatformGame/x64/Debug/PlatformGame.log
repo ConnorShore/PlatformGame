@@ -1,19 +1,88 @@
-﻿  Window.cpp
-  Sprite.cpp
-  MainGame.cpp
-  main.cpp
-  InputManager.cpp
+﻿  Agent.cpp
   Generating Code...
-InputManager.obj : error LNK2019: unresolved external symbol SDL_PollEvent referenced in function "public: void __cdecl InputManager::update(void)" (?update@InputManager@@QEAAXXZ)
-MainGame.obj : error LNK2019: unresolved external symbol SDL_Quit referenced in function "private: void __cdecl MainGame::cleanUp(void)" (?cleanUp@MainGame@@AEAAXXZ)
+  Skipping... (no relevant changes detected)
+  main.cpp
+  Weapon.cpp
+  Player.cpp
+  MainGame.cpp
+Agent.obj : error LNK2001: unresolved external symbol "public: virtual class b2Shape * __cdecl b2PolygonShape::Clone(class b2BlockAllocator *)const " (?Clone@b2PolygonShape@@UEBAPEAVb2Shape@@PEAVb2BlockAllocator@@@Z)
+Box.obj : error LNK2001: unresolved external symbol "public: virtual class b2Shape * __cdecl b2PolygonShape::Clone(class b2BlockAllocator *)const " (?Clone@b2PolygonShape@@UEBAPEAVb2Shape@@PEAVb2BlockAllocator@@@Z)
+MainGame.obj : error LNK2001: unresolved external symbol "public: virtual class b2Shape * __cdecl b2PolygonShape::Clone(class b2BlockAllocator *)const " (?Clone@b2PolygonShape@@UEBAPEAVb2Shape@@PEAVb2BlockAllocator@@@Z)
+Agent.obj : error LNK2001: unresolved external symbol "public: virtual int __cdecl b2PolygonShape::GetChildCount(void)const " (?GetChildCount@b2PolygonShape@@UEBAHXZ)
+Box.obj : error LNK2001: unresolved external symbol "public: virtual int __cdecl b2PolygonShape::GetChildCount(void)const " (?GetChildCount@b2PolygonShape@@UEBAHXZ)
+MainGame.obj : error LNK2001: unresolved external symbol "public: virtual int __cdecl b2PolygonShape::GetChildCount(void)const " (?GetChildCount@b2PolygonShape@@UEBAHXZ)
+Agent.obj : error LNK2019: unresolved external symbol "public: void __cdecl b2PolygonShape::SetAsBox(float,float)" (?SetAsBox@b2PolygonShape@@QEAAXMM@Z) referenced in function "public: void __cdecl Agent::agentInit(class b2World *,struct glm::detail::tvec2<float,0> const &,struct glm::detail::tvec2<float,0> const &,struct glm::detail::tvec2<int,0> const &,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &)" (?agentInit@Agent@@QEAAXPEAVb2World@@AEBU?$tvec2@M$0A@@detail@glm@@1AEBU?$tvec2@H$0A@@45@AEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z)
+Box.obj : error LNK2001: unresolved external symbol "public: void __cdecl b2PolygonShape::SetAsBox(float,float)" (?SetAsBox@b2PolygonShape@@QEAAXMM@Z)
+MainGame.obj : error LNK2001: unresolved external symbol "public: void __cdecl b2PolygonShape::SetAsBox(float,float)" (?SetAsBox@b2PolygonShape@@QEAAXMM@Z)
+Agent.obj : error LNK2001: unresolved external symbol "public: virtual bool __cdecl b2PolygonShape::TestPoint(struct b2Transform const &,struct b2Vec2 const &)const " (?TestPoint@b2PolygonShape@@UEBA_NAEBUb2Transform@@AEBUb2Vec2@@@Z)
+Box.obj : error LNK2001: unresolved external symbol "public: virtual bool __cdecl b2PolygonShape::TestPoint(struct b2Transform const &,struct b2Vec2 const &)const " (?TestPoint@b2PolygonShape@@UEBA_NAEBUb2Transform@@AEBUb2Vec2@@@Z)
+MainGame.obj : error LNK2001: unresolved external symbol "public: virtual bool __cdecl b2PolygonShape::TestPoint(struct b2Transform const &,struct b2Vec2 const &)const " (?TestPoint@b2PolygonShape@@UEBA_NAEBUb2Transform@@AEBUb2Vec2@@@Z)
+Agent.obj : error LNK2001: unresolved external symbol "public: virtual bool __cdecl b2PolygonShape::RayCast(struct b2RayCastOutput *,struct b2RayCastInput const &,struct b2Transform const &,int)const " (?RayCast@b2PolygonShape@@UEBA_NPEAUb2RayCastOutput@@AEBUb2RayCastInput@@AEBUb2Transform@@H@Z)
+Box.obj : error LNK2001: unresolved external symbol "public: virtual bool __cdecl b2PolygonShape::RayCast(struct b2RayCastOutput *,struct b2RayCastInput const &,struct b2Transform const &,int)const " (?RayCast@b2PolygonShape@@UEBA_NPEAUb2RayCastOutput@@AEBUb2RayCastInput@@AEBUb2Transform@@H@Z)
+MainGame.obj : error LNK2001: unresolved external symbol "public: virtual bool __cdecl b2PolygonShape::RayCast(struct b2RayCastOutput *,struct b2RayCastInput const &,struct b2Transform const &,int)const " (?RayCast@b2PolygonShape@@UEBA_NPEAUb2RayCastOutput@@AEBUb2RayCastInput@@AEBUb2Transform@@H@Z)
+Agent.obj : error LNK2001: unresolved external symbol "public: virtual void __cdecl b2PolygonShape::ComputeAABB(struct b2AABB *,struct b2Transform const &,int)const " (?ComputeAABB@b2PolygonShape@@UEBAXPEAUb2AABB@@AEBUb2Transform@@H@Z)
+Box.obj : error LNK2001: unresolved external symbol "public: virtual void __cdecl b2PolygonShape::ComputeAABB(struct b2AABB *,struct b2Transform const &,int)const " (?ComputeAABB@b2PolygonShape@@UEBAXPEAUb2AABB@@AEBUb2Transform@@H@Z)
+MainGame.obj : error LNK2001: unresolved external symbol "public: virtual void __cdecl b2PolygonShape::ComputeAABB(struct b2AABB *,struct b2Transform const &,int)const " (?ComputeAABB@b2PolygonShape@@UEBAXPEAUb2AABB@@AEBUb2Transform@@H@Z)
+Agent.obj : error LNK2001: unresolved external symbol "public: virtual void __cdecl b2PolygonShape::ComputeMass(struct b2MassData *,float)const " (?ComputeMass@b2PolygonShape@@UEBAXPEAUb2MassData@@M@Z)
+Box.obj : error LNK2001: unresolved external symbol "public: virtual void __cdecl b2PolygonShape::ComputeMass(struct b2MassData *,float)const " (?ComputeMass@b2PolygonShape@@UEBAXPEAUb2MassData@@M@Z)
+MainGame.obj : error LNK2001: unresolved external symbol "public: virtual void __cdecl b2PolygonShape::ComputeMass(struct b2MassData *,float)const " (?ComputeMass@b2PolygonShape@@UEBAXPEAUb2MassData@@M@Z)
+Agent.obj : error LNK2019: unresolved external symbol "public: class b2Fixture * __cdecl b2Body::CreateFixture(struct b2FixtureDef const *)" (?CreateFixture@b2Body@@QEAAPEAVb2Fixture@@PEBUb2FixtureDef@@@Z) referenced in function "public: void __cdecl Agent::agentInit(class b2World *,struct glm::detail::tvec2<float,0> const &,struct glm::detail::tvec2<float,0> const &,struct glm::detail::tvec2<int,0> const &,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &)" (?agentInit@Agent@@QEAAXPEAVb2World@@AEBU?$tvec2@M$0A@@detail@glm@@1AEBU?$tvec2@H$0A@@45@AEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z)
+Box.obj : error LNK2001: unresolved external symbol "public: class b2Fixture * __cdecl b2Body::CreateFixture(struct b2FixtureDef const *)" (?CreateFixture@b2Body@@QEAAPEAVb2Fixture@@PEBUb2FixtureDef@@@Z)
+Agent.obj : error LNK2019: unresolved external symbol "public: class b2Body * __cdecl b2World::CreateBody(struct b2BodyDef const *)" (?CreateBody@b2World@@QEAAPEAVb2Body@@PEBUb2BodyDef@@@Z) referenced in function "public: void __cdecl Agent::agentInit(class b2World *,struct glm::detail::tvec2<float,0> const &,struct glm::detail::tvec2<float,0> const &,struct glm::detail::tvec2<int,0> const &,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &)" (?agentInit@Agent@@QEAAXPEAVb2World@@AEBU?$tvec2@M$0A@@detail@glm@@1AEBU?$tvec2@H$0A@@45@AEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z)
+Box.obj : error LNK2001: unresolved external symbol "public: class b2Body * __cdecl b2World::CreateBody(struct b2BodyDef const *)" (?CreateBody@b2World@@QEAAPEAVb2Body@@PEBUb2BodyDef@@@Z)
+MainGame.obj : error LNK2001: unresolved external symbol "public: class b2Body * __cdecl b2World::CreateBody(struct b2BodyDef const *)" (?CreateBody@b2World@@QEAAPEAVb2Body@@PEBUb2BodyDef@@@Z)
+Agent.obj : error LNK2001: unresolved external symbol __imp___glewActiveTexture
+Box.obj : error LNK2001: unresolved external symbol __imp___glewActiveTexture
+Sprite.obj : error LNK2001: unresolved external symbol __imp___glewActiveTexture
+Agent.obj : error LNK2001: unresolved external symbol __imp___glewBindBuffer
+Box.obj : error LNK2001: unresolved external symbol __imp___glewBindBuffer
 Sprite.obj : error LNK2001: unresolved external symbol __imp___glewBindBuffer
+Agent.obj : error LNK2001: unresolved external symbol __imp___glewBufferData
+Box.obj : error LNK2001: unresolved external symbol __imp___glewBufferData
 Sprite.obj : error LNK2001: unresolved external symbol __imp___glewBufferData
+Agent.obj : error LNK2001: unresolved external symbol __imp___glewGenBuffers
+Box.obj : error LNK2001: unresolved external symbol __imp___glewGenBuffers
 Sprite.obj : error LNK2001: unresolved external symbol __imp___glewGenBuffers
+Agent.obj : error LNK2001: unresolved external symbol __imp___glewDisableVertexAttribArray
+Box.obj : error LNK2001: unresolved external symbol __imp___glewDisableVertexAttribArray
 Sprite.obj : error LNK2001: unresolved external symbol __imp___glewDisableVertexAttribArray
+Agent.obj : error LNK2001: unresolved external symbol __imp___glewEnableVertexAttribArray
+Box.obj : error LNK2001: unresolved external symbol __imp___glewEnableVertexAttribArray
 Sprite.obj : error LNK2001: unresolved external symbol __imp___glewEnableVertexAttribArray
+Agent.obj : error LNK2001: unresolved external symbol __imp___glewVertexAttribPointer
+Box.obj : error LNK2001: unresolved external symbol __imp___glewVertexAttribPointer
 Sprite.obj : error LNK2001: unresolved external symbol __imp___glewVertexAttribPointer
-Sprite.obj : error LNK2001: unresolved external symbol __imp___glewBindVertexArray
-Sprite.obj : error LNK2001: unresolved external symbol __imp___glewGenVertexArrays
+InputManager.obj : error LNK2019: unresolved external symbol SDL_PollEvent referenced in function "public: void __cdecl InputManager::update(void)" (?update@InputManager@@QEAAXXZ)
+Loader.obj : error LNK2001: unresolved external symbol __imp___glewGenerateMipmap
+MainGame.obj : error LNK2019: unresolved external symbol "public: class b2Fixture * __cdecl b2Body::CreateFixture(class b2Shape const *,float)" (?CreateFixture@b2Body@@QEAAPEAVb2Fixture@@PEBVb2Shape@@M@Z) referenced in function "private: void __cdecl MainGame::init(void)" (?init@MainGame@@AEAAXXZ)
+MainGame.obj : error LNK2019: unresolved external symbol "public: __cdecl b2World::b2World(struct b2Vec2 const &)" (??0b2World@@QEAA@AEBUb2Vec2@@@Z) referenced in function "class std::unique_ptr<class b2World,struct std::default_delete<class b2World> > __cdecl std::make_unique<class b2World,struct b2Vec2 &>(struct b2Vec2 &)" (??$make_unique@Vb2World@@AEAUb2Vec2@@@std@@YA?AV?$unique_ptr@Vb2World@@U?$default_delete@Vb2World@@@std@@@0@AEAUb2Vec2@@@Z)
+MainGame.obj : error LNK2019: unresolved external symbol "public: __cdecl b2World::~b2World(void)" (??1b2World@@QEAA@XZ) referenced in function "public: void * __cdecl b2World::`scalar deleting destructor'(unsigned int)" (??_Gb2World@@QEAAPEAXI@Z)
+MainGame.obj : error LNK2019: unresolved external symbol "public: void __cdecl b2World::Step(float,int,int)" (?Step@b2World@@QEAAXMHH@Z) referenced in function "private: void __cdecl MainGame::update(void)" (?update@MainGame@@AEAAXXZ)
+MainGame.obj : error LNK2019: unresolved external symbol SDL_Quit referenced in function "private: void __cdecl MainGame::cleanUp(void)" (?cleanUp@MainGame@@AEAAXXZ)
+ShaderProgram.obj : error LNK2001: unresolved external symbol __imp___glewAttachShader
+ShaderProgram.obj : error LNK2001: unresolved external symbol __imp___glewBindAttribLocation
+ShaderProgram.obj : error LNK2001: unresolved external symbol __imp___glewCompileShader
+ShaderProgram.obj : error LNK2001: unresolved external symbol __imp___glewCreateProgram
+ShaderProgram.obj : error LNK2001: unresolved external symbol __imp___glewCreateShader
+ShaderProgram.obj : error LNK2001: unresolved external symbol __imp___glewDeleteProgram
+ShaderProgram.obj : error LNK2001: unresolved external symbol __imp___glewDeleteShader
+ShaderProgram.obj : error LNK2001: unresolved external symbol __imp___glewDetachShader
+ShaderProgram.obj : error LNK2001: unresolved external symbol __imp___glewGetProgramInfoLog
+ShaderProgram.obj : error LNK2001: unresolved external symbol __imp___glewGetProgramiv
+ShaderProgram.obj : error LNK2001: unresolved external symbol __imp___glewGetShaderInfoLog
+ShaderProgram.obj : error LNK2001: unresolved external symbol __imp___glewGetShaderiv
+ShaderProgram.obj : error LNK2001: unresolved external symbol __imp___glewGetUniformLocation
+ShaderProgram.obj : error LNK2001: unresolved external symbol __imp___glewLinkProgram
+ShaderProgram.obj : error LNK2001: unresolved external symbol __imp___glewShaderSource
+ShaderProgram.obj : error LNK2001: unresolved external symbol __imp___glewUniform1f
+ShaderProgram.obj : error LNK2001: unresolved external symbol __imp___glewUniform1i
+StaticShader.obj : error LNK2001: unresolved external symbol __imp___glewUniform1i
+ShaderProgram.obj : error LNK2001: unresolved external symbol __imp___glewUniform3f
+ShaderProgram.obj : error LNK2001: unresolved external symbol __imp___glewUniformMatrix4fv
+ShaderProgram.obj : error LNK2001: unresolved external symbol __imp___glewUseProgram
+ShaderProgram.obj : error LNK2001: unresolved external symbol __imp___glewValidateProgram
+Timing.obj : error LNK2019: unresolved external symbol SDL_GetTicks referenced in function "public: void __cdecl Timing::CalculateFPS(bool)" (?CalculateFPS@Timing@@QEAAX_N@Z)
+Timing.obj : error LNK2019: unresolved external symbol SDL_Delay referenced in function "public: void __cdecl Timing::LimitFPS(float)" (?LimitFPS@Timing@@QEAAXM@Z)
 Window.obj : error LNK2019: unresolved external symbol SDL_CreateWindow referenced in function "public: void __cdecl Window::createWindow(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &,int,int,int,int)" (?createWindow@Window@@QEAAXAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@HHHH@Z)
 Window.obj : error LNK2019: unresolved external symbol SDL_DestroyWindow referenced in function "public: void __cdecl Window::destroyWindow(void)" (?destroyWindow@Window@@QEAAXXZ)
 Window.obj : error LNK2019: unresolved external symbol SDL_GL_CreateContext referenced in function "public: void __cdecl Window::createWindow(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &,int,int,int,int)" (?createWindow@Window@@QEAAXAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@HHHH@Z)
@@ -22,10 +91,10 @@ Window.obj : error LNK2019: unresolved external symbol SDL_Init referenced in fu
 Window.obj : error LNK2019: unresolved external symbol __imp_glewInit referenced in function "public: void __cdecl Window::createWindow(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &,int,int,int,int)" (?createWindow@Window@@QEAAXAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@HHHH@Z)
 Window.obj : error LNK2001: unresolved external symbol __imp_glewExperimental
 MSVCRTD.lib(exe_main.obj) : error LNK2019: unresolved external symbol main referenced in function "int __cdecl invoke_main(void)" (?invoke_main@@YAHXZ)
-C:\Users\user\Documents\Visual Studio 2015\Projects\PlatformGame\deps\lib\Debug\SDL2.lib : warning LNK4272: library machine type 'X86' conflicts with target machine type 'x64'
-C:\Users\user\Documents\Visual Studio 2015\Projects\PlatformGame\deps\lib\Debug\SDL2main.lib : warning LNK4272: library machine type 'X86' conflicts with target machine type 'x64'
-C:\Users\user\Documents\Visual Studio 2015\Projects\PlatformGame\deps\lib\Debug\SDL2test.lib : warning LNK4272: library machine type 'X86' conflicts with target machine type 'x64'
-C:\Users\user\Documents\Visual Studio 2015\Projects\PlatformGame\deps\lib\Debug\glew32.lib : warning LNK4272: library machine type 'X86' conflicts with target machine type 'x64'
-C:\Users\user\Documents\Visual Studio 2015\Projects\PlatformGame\deps\lib\Debug\glew32s.lib : warning LNK4272: library machine type 'X86' conflicts with target machine type 'x64'
-C:\Users\user\Documents\Visual Studio 2015\Projects\PlatformGame\deps\lib\Debug\Box2D.lib : warning LNK4272: library machine type 'X86' conflicts with target machine type 'x64'
-C:\Users\user\documents\visual studio 2015\Projects\PlatformGame\x64\Debug\PlatformGame.exe : fatal error LNK1120: 18 unresolved externals
+C:\Users\cjshore12\Documents\Visual Studio 2015\Projects\PlatformGame\deps\lib\Debug\SDL2.lib : warning LNK4272: library machine type 'X86' conflicts with target machine type 'x64'
+C:\Users\cjshore12\Documents\Visual Studio 2015\Projects\PlatformGame\deps\lib\Debug\SDL2main.lib : warning LNK4272: library machine type 'X86' conflicts with target machine type 'x64'
+C:\Users\cjshore12\Documents\Visual Studio 2015\Projects\PlatformGame\deps\lib\Debug\SDL2test.lib : warning LNK4272: library machine type 'X86' conflicts with target machine type 'x64'
+C:\Users\cjshore12\Documents\Visual Studio 2015\Projects\PlatformGame\deps\lib\Debug\glew32.lib : warning LNK4272: library machine type 'X86' conflicts with target machine type 'x64'
+C:\Users\cjshore12\Documents\Visual Studio 2015\Projects\PlatformGame\deps\lib\Debug\glew32s.lib : warning LNK4272: library machine type 'X86' conflicts with target machine type 'x64'
+C:\Users\cjshore12\Documents\Visual Studio 2015\Projects\PlatformGame\deps\lib\Debug\Box2D.lib : warning LNK4272: library machine type 'X86' conflicts with target machine type 'x64'
+C:\Users\cjshore12\Documents\Visual Studio 2015\Projects\PlatformGame\x64\Debug\PlatformGame.exe : fatal error LNK1120: 54 unresolved externals

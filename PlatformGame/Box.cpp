@@ -21,7 +21,7 @@ void Box::init(b2World* world, const glm::vec2& position, const glm::vec2& dimen
 	_body = world->CreateBody(&bodyDef);
 
 	b2PolygonShape dynamicBox;
-	dynamicBox.SetAsBox(dimension.x / 2.0f, dimension.y / 2.0f);
+	dynamicBox.SetAsBox(_dimension.x / 2.0f, _dimension.y / 2.0f);
 
 	b2FixtureDef fixtureDef;
 	fixtureDef.shape = &dynamicBox;
@@ -32,39 +32,53 @@ void Box::init(b2World* world, const glm::vec2& position, const glm::vec2& dimen
 	if (_vboID == 0)
 		glGenBuffers(1, &_vboID);
 
+	glm::vec4 destRect;
+	destRect.x = _body->GetPosition().x - _dimension.x / 2.0f;
+	destRect.y = _body->GetPosition().y - _dimension.y / 2.0f;
+	destRect.z = _dimension.x;
+	destRect.w = _dimension.y;
+	glm::vec4 uvRect(0.0f, 0.0f, 1.0f, 1.0f);
+
 	Vertex vertexData[6];
-	vertexData[0].setPosition(_body->GetPosition().x + _dimension.x, _body->GetPosition().y + _dimension.y);
-	vertexData[0].setUV(1.0f, 1.0f);
-	vertexData[1].setPosition(_body->GetPosition().x, _body->GetPosition().y + _dimension.y);
-	vertexData[1].setUV(0.0f, 1.0f);
-	vertexData[2].setPosition(_body->GetPosition().x, _body->GetPosition().y);
-	vertexData[2].setUV(0.0f, 0.0f);
+	vertexData[0].setPosition(destRect.x, destRect.y + destRect.w);
+	vertexData[0].setUV(uvRect.x, uvRect.y + uvRect.w);
+	vertexData[1].setPosition(destRect.x, destRect.y);
+	vertexData[1].setUV(uvRect.x, uvRect.y);
+	vertexData[2].setPosition(destRect.x + destRect.z, destRect.y);
+	vertexData[2].setUV(uvRect.x + uvRect.z, uvRect.y);
 
 	//Second Triangle
-	vertexData[3].setPosition(_body->GetPosition().x, _body->GetPosition().y);
-	vertexData[3].setUV(0.0f, 0.0f);
-	vertexData[4].setPosition(_body->GetPosition().x+ _dimension.x, _body->GetPosition().y);
-	vertexData[4].setUV(1.0f, 0.0f);
-	vertexData[5].setPosition(_body->GetPosition().x+ _dimension.x, _body->GetPosition().y + _dimension.y);
-	vertexData[5].setUV(1.0f, 1.0f);
+	vertexData[3].setPosition(destRect.x + destRect.z, destRect.y);
+	vertexData[3].setUV(uvRect.x + uvRect.z, uvRect.y);
+	vertexData[4].setPosition(destRect.x + destRect.z, destRect.y + destRect.w);
+	vertexData[4].setUV(uvRect.x + uvRect.z, uvRect.y + uvRect.w);
+	vertexData[5].setPosition(destRect.x, destRect.y + destRect.w);
+	vertexData[5].setUV(uvRect.x, uvRect.y + uvRect.w);
 }
 void Box::render()
 {
+	glm::vec4 destRect;
+	destRect.x = _body->GetPosition().x - _dimension.x / 2.0f;
+	destRect.y = _body->GetPosition().y - _dimension.y / 2.0f;
+	destRect.z = _dimension.x;
+	destRect.w = _dimension.y;
+	glm::vec4 uvRect(0.0f, 0.0f, 1.0f, 1.0f);
+
 	Vertex vertexData[6];
-	vertexData[0].setPosition(_body->GetPosition().x + _dimension.x, _body->GetPosition().y + _dimension.y);
-	vertexData[0].setUV(1.0f, 1.0f);
-	vertexData[1].setPosition(_body->GetPosition().x, _body->GetPosition().y + _dimension.y);
-	vertexData[1].setUV(0.0f, 1.0f);
-	vertexData[2].setPosition(_body->GetPosition().x, _body->GetPosition().y);
-	vertexData[2].setUV(0.0f, 0.0f);
+	vertexData[0].setPosition(destRect.x, destRect.y + destRect.w);
+	vertexData[0].setUV(uvRect.x, uvRect.y + uvRect.w);
+	vertexData[1].setPosition(destRect.x, destRect.y);
+	vertexData[1].setUV(uvRect.x, uvRect.y);
+	vertexData[2].setPosition(destRect.x + destRect.z, destRect.y);
+	vertexData[2].setUV(uvRect.x + uvRect.z, uvRect.y);
 
 	//Second Triangle
-	vertexData[3].setPosition(_body->GetPosition().x, _body->GetPosition().y);
-	vertexData[3].setUV(0.0f, 0.0f);
-	vertexData[4].setPosition(_body->GetPosition().x + _dimension.x, _body->GetPosition().y);
-	vertexData[4].setUV(1.0f, 0.0f);
-	vertexData[5].setPosition(_body->GetPosition().x + _dimension.x, _body->GetPosition().y + _dimension.y);
-	vertexData[5].setUV(1.0f, 1.0f);
+	vertexData[3].setPosition(destRect.x + destRect.z, destRect.y);
+	vertexData[3].setUV(uvRect.x + uvRect.z, uvRect.y);
+	vertexData[4].setPosition(destRect.x + destRect.z, destRect.y + destRect.w);
+	vertexData[4].setUV(uvRect.x + uvRect.z, uvRect.y + uvRect.w);
+	vertexData[5].setPosition(destRect.x, destRect.y + destRect.w);
+	vertexData[5].setUV(uvRect.x, uvRect.y + uvRect.w);
 
 	glBindBuffer(GL_ARRAY_BUFFER, _vboID);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertexData), vertexData, GL_STATIC_DRAW);

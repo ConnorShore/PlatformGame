@@ -13,5 +13,5 @@ void main()
 {
 	gl_Position = pMatrix * vec4(vertexPosition, 0.0, 1.0);
 	fragmentColor = vertexColor;
-	fragmentUV = vertexUV;
+	fragmentUV = vec2(vertexUV.x, 1.0 - vertexUV.y);
 }

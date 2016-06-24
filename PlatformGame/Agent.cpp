@@ -1,6 +1,7 @@
 #include "Agent.h"
-
 #include "ResourceManager.h"
+
+#include <iostream>
 
 Agent::Agent()
 {
@@ -11,12 +12,13 @@ Agent::~Agent()
 {
 }
 
-void Agent::init(b2World * world, const glm::vec2 & position, const glm::vec2 & dimension, const glm::ivec2 & sheetDims, const std::string & texPath)
+void Agent::agentInit(b2World* world, const glm::vec2& position, const glm::vec2& dimension, const glm::vec2& drawDims, const glm::ivec2& sheetDims, const std::string& texPath)
 {
 	_texture = ResourceManager::loadTexture(texPath);
 	_dimension = dimension;
+	_drawDims = drawDims;
 
-	//_spriteSheet.init(_texture, sheetDims);
+	_spriteSheet.init(_texture, sheetDims);
 	
 	b2BodyDef bodyDef;
 	bodyDef.type = b2_dynamicBody;
@@ -35,40 +37,66 @@ void Agent::init(b2World * world, const glm::vec2 & position, const glm::vec2 & 
 	if (_vboID == 0)
 		glGenBuffers(1, &_vboID);
 
+	glm::vec4 destRect;
+	destRect.x = _body->GetPosition().x - _drawDims.x / 2.0f;
+	destRect.y = _body->GetPosition().y - _drawDims.y / 2.0f;
+	destRect.z = _drawDims.x;
+	destRect.w = _drawDims.y;
+	glm::vec4 uvRect = _spriteSheet.getUVs(0);
+
 	Vertex vertexData[6];
-	vertexData[0].setPosition(_body->GetPosition().x + _dimension.x, _body->GetPosition().y + _dimension.y);
-	vertexData[0].setUV(1.0f, 1.0f);
-	vertexData[1].setPosition(_body->GetPosition().x, _body->GetPosition().y + _dimension.y);
-	vertexData[1].setUV(0.0f, 1.0f);
-	vertexData[2].setPosition(_body->GetPosition().x, _body->GetPosition().y);
-	vertexData[2].setUV(0.0f, 0.0f);
+	vertexData[0].setPosition(destRect.x + destRect.z, destRect.y + destRect.w);
+	vertexData[0].setUV(uvRect.x + uvRect.z, uvRect.y + uvRect.w);
+	vertexData[1].setPosition(destRect.x, destRect.y + destRect.w);
+	vertexData[1].setUV(uvRect.x, uvRect.y + uvRect.w);
+	vertexData[2].setPosition(destRect.x, destRect.y);
+	vertexData[2].setUV(uvRect.x, uvRect.y);
 
 	//Second Triangle
-	vertexData[3].setPosition(_body->GetPosition().x, _body->GetPosition().y);
-	vertexData[3].setUV(0.0f, 0.0f);
-	vertexData[4].setPosition(_body->GetPosition().x + _dimension.x, _body->GetPosition().y);
-	vertexData[4].setUV(1.0f, 0.0f);
-	vertexData[5].setPosition(_body->GetPosition().x + _dimension.x, _body->GetPosition().y + _dimension.y);
-	vertexData[5].setUV(1.0f, 1.0f);
+	vertexData[3].setPosition(destRect.x, destRect.y);
+	vertexData[3].setUV(uvRect.x, uvRect.y);
+	vertexData[4].setPosition(destRect.x + destRect.z, destRect.y);
+	vertexData[4].setUV(uvRect.x + uvRect.z, uvRect.y);
+	vertexData[5].setPosition(destRect.x + destRect.z, destRect.y + destRect.w);
+	vertexData[5].setUV(uvRect.x + uvRect.z, uvRect.y + uvRect.w);
+
+	init();
 }
 
 void Agent::agentRender()
 {
+	initRender();
+	render();
+
+	glDrawArrays(GL_TRIANGLES, 0, 6);
+
+	unbind();
+}
+
+void Agent::initRender()
+{
+	glm::vec4 destRect;
+	destRect.x = _body->GetPosition().x - _drawDims.x / 2.0f;
+	destRect.y = _body->GetPosition().y - _drawDims.y / 2.0f;
+	destRect.z = _drawDims.x;
+	destRect.w = _drawDims.y;
+	glm::vec4 uvRect = animate();
+
 	Vertex vertexData[6];
-	vertexData[0].setPosition(_body->GetPosition().x + _dimension.x, _body->GetPosition().y + _dimension.y);
-	vertexData[0].setUV(1.0f, 1.0f);
-	vertexData[1].setPosition(_body->GetPosition().x, _body->GetPosition().y + _dimension.y);
-	vertexData[1].setUV(0.0f, 1.0f);
-	vertexData[2].setPosition(_body->GetPosition().x, _body->GetPosition().y);
-	vertexData[2].setUV(0.0f, 0.0f);
+	vertexData[0].setPosition(destRect.x + destRect.z, destRect.y + destRect.w);
+	vertexData[0].setUV(uvRect.x + uvRect.z, uvRect.y + uvRect.w);
+	vertexData[1].setPosition(destRect.x, destRect.y + destRect.w);
+	vertexData[1].setUV(uvRect.x, uvRect.y + uvRect.w);
+	vertexData[2].setPosition(destRect.x, destRect.y);
+	vertexData[2].setUV(uvRect.x, uvRect.y);
 
 	//Second Triangle
-	vertexData[3].setPosition(_body->GetPosition().x, _body->GetPosition().y);
-	vertexData[3].setUV(0.0f, 0.0f);
-	vertexData[4].setPosition(_body->GetPosition().x + _dimension.x, _body->GetPosition().y);
-	vertexData[4].setUV(1.0f, 0.0f);
-	vertexData[5].setPosition(_body->GetPosition().x + _dimension.x, _body->GetPosition().y + _dimension.y);
-	vertexData[5].setUV(1.0f, 1.0f);
+	vertexData[3].setPosition(destRect.x, destRect.y);
+	vertexData[3].setUV(uvRect.x, uvRect.y);
+	vertexData[4].setPosition(destRect.x + destRect.z, destRect.y);
+	vertexData[4].setUV(uvRect.x + uvRect.z, uvRect.y);
+	vertexData[5].setPosition(destRect.x + destRect.z, destRect.y + destRect.w);
+	vertexData[5].setUV(uvRect.x + uvRect.z, uvRect.y + uvRect.w);
 
 	glBindBuffer(GL_ARRAY_BUFFER, _vboID);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertexData), vertexData, GL_STATIC_DRAW);
@@ -83,11 +111,10 @@ void Agent::agentRender()
 	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, pos));
 	glVertexAttribPointer(1, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(Vertex), (void*)offsetof(Vertex, color));
 	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, uv));
+}
 
-	render();
-
-	glDrawArrays(GL_TRIANGLES, 0, 6);
-
+void Agent::unbind()
+{
 	glDisableVertexAttribArray(2);
 	glDisableVertexAttribArray(1);
 	glDisableVertexAttribArray(0);

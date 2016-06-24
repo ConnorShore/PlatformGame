@@ -11,10 +11,12 @@ public:
 	~Player();
 
 	void input(InputManager inputManager);
+	void init() override;
 	void update() override;
 	void render() override;
+	glm::vec4 animate() override;
 
 private:
-
+	const float MAX_SPEED = 6.0f;
 };
 
