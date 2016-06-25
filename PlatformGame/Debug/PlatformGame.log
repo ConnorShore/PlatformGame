@@ -1,9 +1,2 @@
-﻿  main.cpp
-  Weapon.cpp
-  Player.cpp
-  MainGame.cpp
-c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\platformgame\maingame.cpp(86): warning C4018: '<': signed/unsigned mismatch
-  Agent.cpp
-  Generating Code...
-  LINK : C:\Users\cjshore12\Documents\Visual Studio 2015\Projects\PlatformGame\Debug\PlatformGame.exe not found or not built by the last incremental link; performing full link
+﻿  Agent.cpp
   PlatformGame.vcxproj -> C:\Users\cjshore12\Documents\Visual Studio 2015\Projects\PlatformGame\Debug\PlatformGame.exe

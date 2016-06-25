@@ -160,7 +160,7 @@
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="ShaderProgram.cpp" />
-    <ClCompile Include="Sprite.cpp" />
+    <ClCompile Include="SpriteBatch.cpp" />
     <ClCompile Include="StaticShader.cpp" />
     <ClCompile Include="Timing.cpp" />
     <ClCompile Include="Weapon.cpp" />
@@ -178,7 +178,7 @@
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="ShaderProgram.h" />
-    <ClInclude Include="Sprite.h" />
+    <ClInclude Include="SpriteBatch.h" />
     <ClInclude Include="SpriteSheet.h" />
     <ClInclude Include="StaticShader.h" />
     <ClInclude Include="Texture.h" />

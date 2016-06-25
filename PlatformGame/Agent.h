@@ -4,10 +4,10 @@
 #include <Box2D\Box2D.h>
 #include <string>
 
-#include "Box.h"
 #include "Texture.h"
 #include "SpriteSheet.h"
 #include "Vertex.h"
+#include "SpriteBatch.h"
 
 enum class AgentState {NONE, STANDING, WALKING, RUNNING, JUMPING, SHOOTING};
 
@@ -22,12 +22,13 @@ public:
 
 	void agentInit(b2World* world, const glm::vec2& position, const glm::vec2& dimension, const glm::ivec2& sheetDims, const std::string& texPath);
 	//void agentUpdate(); //< Update will go in here, but use this to determine collision/onground/etc stuff
-	void agentRender();
+	void agentRender(SpriteBatch& spriteBatch);
 
 	virtual void init() {}
 	virtual void update() {}
 	virtual void render() {}
-	virtual glm::vec4 animate() { return glm::vec4(0, 0, 0, 0); }
+
+	virtual glm::vec4 animate() { printf("Agent\n"); return glm::vec4(0, 0, 0, 0); };
 
 	glm::vec2 getPosition() const { return glm::vec2(_body->GetPosition().x, _body->GetPosition().y); }
 	glm::vec2 getDimension() const { return _dimension; }
@@ -40,15 +41,10 @@ protected:
 	AgentState _agentState = AgentState::STANDING;
 
 	glm::vec2 _dimension;
+	glm::vec4 _uvRect;
 	float _animationTime = 0.0f;
 	float _animationSpeed = 0.3f;
 	int _direction = RIGHT;
 	bool _onGround = false;	//< Add world collision (manifold) to determine
-
-private:
-	GLuint _vboID = 0;
-
-	void initRender();
-	void unbind();
 };
 

@@ -28,6 +28,8 @@ void MainGame::init()
 	std::uniform_real_distribution<float> xDist(-10.0f, 10.0f);
 	std::uniform_real_distribution<float> yDist(-10.0f, 15.0f);
 
+	_spriteBatch.init();
+
 	Texture tex = ResourceManager::loadTexture("Textures/boxTex.png");
 
 	//Setup ground
@@ -45,8 +47,7 @@ void MainGame::init()
 		_boxes.push_back(box);
 	}
 
-	_player = new Player();
-	_player->agentInit(_world.get(), glm::vec2(0.0f, 15.0f), glm::vec2(1.0f, 1.8f), glm::vec2(10, 1), "Textures/ss_player_base.png");
+	_player.agentInit(_world.get(), glm::vec2(0.0f, 15.0f), glm::vec2(1.0f, 1.8f), glm::vec2(10, 1), "Textures/ss_player_base.png");
 	_agents.push_back(_player);
 
 	_staticShader.init("Shaders/staticShader.vert", "Shaders/staticShader.frag");
@@ -56,15 +57,15 @@ void MainGame::init()
 void MainGame::input()
 {
 	_inputManager.update();
-	_player->input(_inputManager);
+	_player.input(_inputManager);
 }
 
 void MainGame::update()
 {
 	for (auto& agent : _agents)
-		agent->update();
+		agent.update();
 
-	_camera.setPosition(glm::vec2(_player->getPosition().x + _player->getDimension().x / 2.0f, _player->getPosition().y + _player->getDimension().y / 2.0f));
+	_camera.setPosition(glm::vec2(_player.getPosition().x + _player.getDimension().x / 2.0f, _player.getPosition().y + _player.getDimension().y / 2.0f));
 	_camera.update();
 
 	_world->Step(1 / 60.0f, 6, 2);
@@ -80,11 +81,16 @@ void MainGame::render()
 	_staticShader.loadPMatrix(_camera.getCameraMatrix());
 	_staticShader.loadTexture();
 
+	_spriteBatch.begin();
+
 	for (auto& agent : _agents)
-		agent->agentRender();
+		agent.agentRender(_spriteBatch);
 
 	for(int i = 0; i < _boxes.size(); i++)
-		_boxes[i].render();
+		_boxes[i].render(_spriteBatch);
+
+	_spriteBatch.end();
+	_spriteBatch.render();
 
 	_staticShader.stop();
 
