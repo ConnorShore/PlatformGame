@@ -17,7 +17,7 @@ void Agent::agentInit(b2World* world, const glm::vec2& position, const glm::vec2
 	_texture = ResourceManager::loadTexture(texPath);
 	_dimension = dimension;
 
-	_spriteSheet.init(_texture, sheetDims);
+	_spritesheet.init(_texture, sheetDims);
 	
 	b2BodyDef bodyDef;
 	bodyDef.type = b2_dynamicBody;
@@ -33,6 +33,8 @@ void Agent::agentInit(b2World* world, const glm::vec2& position, const glm::vec2
 	fixtureDef.density = 1.0f;
 	fixtureDef.friction = 0.25f;
 	_fixture = _body->CreateFixture(&fixtureDef);
+
+	init();
 }
 
 void Agent::agentRender(SpriteBatch& spriteBatch)
@@ -44,7 +46,11 @@ void Agent::agentRender(SpriteBatch& spriteBatch)
 	destRect.w = _dimension.y;
 	glm::vec4 uvRect = animate();
 
-	render();
+	spriteBatch.addToBatch(destRect, uvRect, 1.0f, _texture.id, Color(255, 255, 255, 255));
 
-	spriteBatch.addToBatch(destRect, uvRect, Color(255, 255, 255, 255), _texture);
+	render();
+}
+
+void Agent::jump()
+{
 }

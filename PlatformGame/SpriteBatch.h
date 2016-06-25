@@ -1,29 +1,36 @@
 #pragma once
 
 #include "Vertex.h"
-#include "Texture.h"
 
-#include <glm\glm.hpp>
 #include <GL\glew.h>
+#include <glm\glm.hpp>
 #include <vector>
 
-enum class SortType {NONE, BACK_TO_FRONT, TEXTURE};
-
-class Sprite
-{
-public:
-	Sprite() {}
-	Sprite(const glm::vec4& destRect, const glm::vec4& destUV, const Color& color, Texture& tex, float dep = 1.0f);
-
-	Vertex topLeft, bottomLeft, bottomRight, topRight;
-	Texture texture;
-	float depth;
+enum class SortType {
+	NONE,
+	BACK_TO_FRONT,
+	FRONT_TO_BACK,
+	TEXTURE
 };
 
-class RenderBatch
-{
+class Sprite {
 public:
-	RenderBatch(GLuint offst, GLuint vertices, GLuint tex) : offset(offst), numVertices(vertices), texture(tex) {}
+	Sprite() {};
+	Sprite(const glm::vec4& destRect, const glm::vec4& uvRect, float Depth, GLuint Texture, const Color& color);
+	Sprite(const glm::vec4& destRect, const glm::vec4& uvRect, float Depth, GLuint Texture, const Color& color, float angle);
+
+	Vertex topLeft, bottomLeft, topRight, bottomRight;
+	GLuint texture;
+	float depth;
+
+private:
+	glm::vec2 rotatePoint(glm::vec2 point, float angle);
+};
+
+class RenderBatch {
+public:
+	RenderBatch(GLuint Offset, GLuint NumVerts, GLuint Texture) : offset(Offset), numVertices(NumVerts), texture(Texture) {}
+
 	GLuint offset, numVertices, texture;
 };
 
@@ -35,21 +42,24 @@ public:
 
 	void init();
 	void begin(SortType sortType = SortType::TEXTURE);
-	void addToBatch(glm::vec4& destRect, glm::vec4& destUV, Color& color, Texture texture, float depth = 1.0f);
-	void render();
 	void end();
+	void addToBatch(const glm::vec4& destRect, const glm::vec4& uvRect, float depth, GLuint tex, const Color& color);
+	void addToBatch(const glm::vec4& destRect, const glm::vec4& uvRect, float depth, GLuint tex, const Color& color, float angle);
+	void renderBatch();
 
 private:
-	std::vector<Sprite> _sprites;
-	std::vector<Sprite*> _sprPtrs;
-	std::vector<RenderBatch> _renderBatches;
-
-	GLuint _vaoID = 0, _vboID = 0;
+	GLuint _vaoID, _vboID;
 	SortType _sortType;
 
-	void sortSprites();
+	std::vector<RenderBatch> _renderBatches;
+	std::vector<Sprite> _sprites;
+	std::vector<Sprite*>  _spritePointers;
+
 	void createRenderBatches();
+	void createVertexArray();
+	void sortSprites();
+
 	static bool sortBackToFront(Sprite* a, Sprite* b);
+	static bool sortFrontToBack(Sprite* a, Sprite* b);
 	static bool sortTexture(Sprite* a, Sprite* b);
 };
-

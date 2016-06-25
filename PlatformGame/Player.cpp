@@ -83,19 +83,12 @@ glm::vec4 Player::animate()
 	//Apply animation
 	tileIndex = tileIndex + (int)_animationTime % numTiles;
 
-	glm::vec4 uvRect = _spriteSheet.getUVs(tileIndex);
+	glm::vec4 uvRect = _spritesheet.getUVs(tileIndex);
 
 	if (_direction == LEFT) {
-		uvRect.x += 1.0f / _spriteSheet.dims.x;
+		uvRect.x += 1.0f / _spritesheet.dims.x;
 		uvRect.z *= -1.0f;
-	}	
-
-	glm::vec4 destRect;
-	destRect.x = _body->GetPosition().x - _dimension.x / 2.0f;
-	destRect.y = _body->GetPosition().y - _dimension.y / 2.0f;
-	destRect.z = _dimension.x;
-	destRect.w = _dimension.y;
-	spriteBatch.addToBatch(destRect, uvRect, Color(255, 255, 255, 255), _texture);
+	}
 
 	return uvRect;
 }

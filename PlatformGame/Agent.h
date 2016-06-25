@@ -27,7 +27,6 @@ public:
 	virtual void init() {}
 	virtual void update() {}
 	virtual void render() {}
-
 	virtual glm::vec4 animate() { printf("Agent\n"); return glm::vec4(0, 0, 0, 0); };
 
 	glm::vec2 getPosition() const { return glm::vec2(_body->GetPosition().x, _body->GetPosition().y); }
@@ -35,7 +34,7 @@ public:
 
 protected:
 	Texture _texture;
-	SpriteSheet _spriteSheet;
+	SpriteSheet _spritesheet;
 	b2Body* _body = nullptr;
 	b2Fixture* _fixture = nullptr;
 	AgentState _agentState = AgentState::STANDING;
@@ -46,5 +45,7 @@ protected:
 	float _animationSpeed = 0.3f;
 	int _direction = RIGHT;
 	bool _onGround = false;	//< Add world collision (manifold) to determine
+
+	void jump();
 };
 

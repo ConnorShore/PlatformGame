@@ -48,7 +48,7 @@ void MainGame::init()
 	}
 
 	_player.agentInit(_world.get(), glm::vec2(0.0f, 15.0f), glm::vec2(1.0f, 1.8f), glm::vec2(10, 1), "Textures/ss_player_base.png");
-	_agents.push_back(_player);
+	_agents.push_back(&_player);
 
 	_staticShader.init("Shaders/staticShader.vert", "Shaders/staticShader.frag");
 	_staticShader.bindAttributes();
@@ -63,7 +63,7 @@ void MainGame::input()
 void MainGame::update()
 {
 	for (auto& agent : _agents)
-		agent.update();
+		agent->update();
 
 	_camera.setPosition(glm::vec2(_player.getPosition().x + _player.getDimension().x / 2.0f, _player.getPosition().y + _player.getDimension().y / 2.0f));
 	_camera.update();
@@ -83,14 +83,14 @@ void MainGame::render()
 
 	_spriteBatch.begin();
 
-	for (auto& agent : _agents)
-		agent.agentRender(_spriteBatch);
+	for (int i = 0; i < _agents.size(); i++)
+		_agents[i]->agentRender(_spriteBatch);
 
 	for(int i = 0; i < _boxes.size(); i++)
 		_boxes[i].render(_spriteBatch);
 
 	_spriteBatch.end();
-	_spriteBatch.render();
+	_spriteBatch.renderBatch();
 
 	_staticShader.stop();
 
