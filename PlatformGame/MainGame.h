@@ -10,6 +10,7 @@
 #include "Box.h"
 #include "Agent.h"
 #include "Player.h"
+#include "SpriteBatch.h"
 
 enum class GameState {PLAY, PAUSED, EXIT};
 
@@ -28,7 +29,9 @@ private:
 	StaticShader _staticShader;
 	Camera _camera;
 	Timing _timer;
-	Player* _player;
+	SpriteBatch _spriteBatch;
+
+	Player _player;
 
 	std::unique_ptr<b2World> _world;
 

@@ -2,41 +2,175 @@
 
 #include <algorithm>
 
-Sprite::Sprite(const glm::vec4& destRect, const glm::vec4& destUV, const Color& color, Texture& tex, float dep /*1.0f*/) : texture(tex), depth(dep)
-{
-	topLeft.setPosition(destRect.x, destRect.y + destRect.w);
-	topLeft.setUV(destUV.x, destUV.y + destUV.w);
+Sprite::Sprite(const glm::vec4& destRect, const glm::vec4& uvRect, float Depth, GLuint Texture, const Color& color) :
+	depth(Depth),
+	texture(Texture) {
+
 	topLeft.color = color;
+	topLeft.setPosition(destRect.x, destRect.y + destRect.w);
+	topLeft.setUV(uvRect.x, uvRect.y + uvRect.w);
 
+	bottomLeft.color = color;
 	bottomLeft.setPosition(destRect.x, destRect.y);
-	bottomLeft.setUV(destUV.x, destUV.y);
-	bottomRight.color = color;
+	bottomLeft.setUV(uvRect.x, uvRect.y);
 
+	bottomRight.color = color;
 	bottomRight.setPosition(destRect.x + destRect.z, destRect.y);
-	bottomRight.setUV(destUV.x + destUV.z, destUV.y);
-	bottomRight.color = color;
+	bottomRight.setUV(uvRect.x + uvRect.z, uvRect.y);
 
-	topRight.setPosition(destRect.x + destRect.z, destRect.y + destRect.w);
-	topRight.setUV(destUV.x + destUV.z, destUV.y + destUV.w);
 	topRight.color = color;
+	topRight.setPosition(destRect.x + destRect.z, destRect.y + destRect.w);
+	topRight.setUV(uvRect.x + uvRect.z, uvRect.y + uvRect.w);
 }
 
-SpriteBatch::SpriteBatch()
+Sprite::Sprite(const glm::vec4& destRect, const glm::vec4& uvRect, float Depth, GLuint Texture, const Color& color, float angle) :
+	depth(Depth),
+	texture(Texture) {
+
+	//Center points at origin
+	glm::vec2 halfDims(destRect.z / 2.0f, destRect.w / 2.0f);
+
+	glm::vec2 tl(-halfDims.x, halfDims.y);
+	glm::vec2 tr(halfDims.x, halfDims.y);
+	glm::vec2 bl(-halfDims.x, -halfDims.y);
+	glm::vec2 br(halfDims.x, -halfDims.y);
+
+	tl = rotatePoint(tl, angle) + halfDims;
+	tr = rotatePoint(tr, angle) + halfDims;
+	bl = rotatePoint(bl, angle) + halfDims;
+	br = rotatePoint(br, angle) + halfDims;
+
+	topLeft.color = color;
+	topLeft.setPosition(destRect.x + tl.x, destRect.y + tl.y);
+	topLeft.setUV(uvRect.x, uvRect.y + uvRect.w);
+
+	bottomLeft.color = color;
+	bottomLeft.setPosition(destRect.x + bl.x, destRect.y + bl.y);
+	bottomLeft.setUV(uvRect.x, uvRect.y);
+
+	bottomRight.color = color;
+	bottomRight.setPosition(destRect.x + br.x, destRect.y + br.y);
+	bottomRight.setUV(uvRect.x + uvRect.z, uvRect.y);
+
+	topRight.color = color;
+	topRight.setPosition(destRect.x + tr.x, destRect.y + tr.y);
+	topRight.setUV(uvRect.x + uvRect.z, uvRect.y + uvRect.w);
+
+
+}
+
+glm::vec2 Sprite::rotatePoint(glm::vec2 point, float angle)
 {
+	glm::vec2 newv;
+	newv.x = point.x * cos(angle) - point.y * sin(angle);
+	newv.y = point.x * sin(angle) + point.y * cos(angle);
+	return newv;
 }
 
-SpriteBatch::~SpriteBatch()
+SpriteBatch::SpriteBatch() : _vaoID(0), _vboID(0)
 {
 }
 
 void SpriteBatch::init()
 {
+	createVertexArray();
+}
+
+void SpriteBatch::begin(SortType sortType /*TEXTURE*/)
+{
+	_sortType = sortType;
+	_renderBatches.clear();
+
+	_sprites.clear();
+}
+
+void SpriteBatch::end()
+{
+	_spritePointers.resize(_sprites.size());
+	for (size_t i = 0; i < _sprites.size(); i++) {
+		_spritePointers[i] = &_sprites[i];
+	}
+
+	sortSprites();
+	createRenderBatches();
+}
+
+void SpriteBatch::addToBatch(const glm::vec4& destRect, const glm::vec4& uvRect, float depth, GLuint tex, const Color& color)
+{
+	_sprites.emplace_back(destRect, uvRect, depth, tex, color);
+}
+
+void SpriteBatch::addToBatch(const glm::vec4 & destRect, const glm::vec4 & uvRect, float depth, GLuint tex, const Color & color, float angle)
+{
+	_sprites.emplace_back(destRect, uvRect, depth, tex, color, angle);
+}
+
+void SpriteBatch::renderBatch()
+{
+	glBindVertexArray(_vaoID);
+
+	for (int i = 0; i < _renderBatches.size(); i++) {
+		glBindTexture(GL_TEXTURE_2D, _renderBatches[i].texture);
+		glDrawArrays(GL_TRIANGLES, _renderBatches[i].offset, _renderBatches[i].numVertices);
+	}
+
+	glBindVertexArray(0);
+}
+
+void SpriteBatch::createRenderBatches()
+{
+	std::vector<Vertex> vertices;
+	vertices.resize(_spritePointers.size() * 6);
+
+	if (_spritePointers.empty())
+		return;
+
+	int currentVert = 0;
+	int offset = 0;
+
+	//Create first render batch
+	_renderBatches.emplace_back(0, 6, _spritePointers[0]->texture);
+
+	vertices[currentVert++] = _spritePointers[0]->topLeft;
+	vertices[currentVert++] = _spritePointers[0]->bottomLeft;
+	vertices[currentVert++] = _spritePointers[0]->bottomRight;
+	vertices[currentVert++] = _spritePointers[0]->bottomRight;
+	vertices[currentVert++] = _spritePointers[0]->topRight;
+	vertices[currentVert++] = _spritePointers[0]->topLeft;
+	offset += 6;
+
+	//Loop through rest of Sprites
+	for (int cg = 1; cg < _spritePointers.size(); cg++) {
+		if (_spritePointers[cg]->texture != _spritePointers[cg - 1]->texture)	//Make sure there isn't a render batch already set up for current texture
+			_renderBatches.emplace_back(offset, 6, _spritePointers[cg]->texture);
+		else
+			_renderBatches.back().numVertices += 6;
+
+		vertices[currentVert++] = _spritePointers[cg]->topLeft;
+		vertices[currentVert++] = _spritePointers[cg]->bottomLeft;
+		vertices[currentVert++] = _spritePointers[cg]->bottomRight;
+		vertices[currentVert++] = _spritePointers[cg]->bottomRight;
+		vertices[currentVert++] = _spritePointers[cg]->topRight;
+		vertices[currentVert++] = _spritePointers[cg]->topLeft;
+		offset += 6;
+	}
+
+	glBindBuffer(GL_ARRAY_BUFFER, _vboID);
+	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vertex), nullptr, GL_DYNAMIC_DRAW);	//orphan the buffer
+	glBufferSubData(GL_ARRAY_BUFFER, 0, vertices.size() * sizeof(Vertex), vertices.data());	//upload the data
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+}
+
+void SpriteBatch::createVertexArray()
+{
 	if (_vaoID == 0)
 		glGenVertexArrays(1, &_vaoID);
+
 	glBindVertexArray(_vaoID);
 
 	if (_vboID == 0)
 		glGenBuffers(1, &_vboID);
+
 	glBindBuffer(GL_ARRAY_BUFFER, _vboID);
 
 	glEnableVertexAttribArray(0);
@@ -47,109 +181,41 @@ void SpriteBatch::init()
 	glVertexAttribPointer(1, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(Vertex), (void*)offsetof(Vertex, color));
 	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, uv));
 
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-}
-
-void SpriteBatch::begin(SortType sortType /*TEXTURE*/)
-{
-	_sortType = sortType;
-	_sprites.clear();
-	_renderBatches.clear();
-}
-
-void SpriteBatch::addToBatch(glm::vec4 & destRect, glm::vec4 & destUV, Color & color, Texture texture, float depth)
-{
-	_sprites.emplace_back(destRect, destUV, color, texture, depth);
-}
-
-void SpriteBatch::render()
-{
-	glBindVertexArray(_vaoID);
-
-	for (int i = 0; i < _renderBatches.size(); i++) {
-		//glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, _renderBatches[i].texture);
-		glDrawArrays(GL_TRIANGLES, _renderBatches[i].offset, _renderBatches[i].numVertices);
-	}
-
 	glBindVertexArray(0);
-}
-
-void SpriteBatch::end()
-{
-	_sprPtrs.resize(_sprites.size());
-	for (int i = 0; i < _sprPtrs.size(); i++) {
-		_sprPtrs[i] = &_sprites[i];
-	}
-
-	sortSprites();
-	createRenderBatches();
 }
 
 void SpriteBatch::sortSprites()
 {
 	switch (_sortType) {
-	case SortType::TEXTURE:
-		std::stable_sort(_sprPtrs.begin(), _sprPtrs.end(), sortTexture);
-		break;
 	case SortType::BACK_TO_FRONT:
-		std::stable_sort(_sprPtrs.begin(), _sprPtrs.end(), sortBackToFront);
+		std::stable_sort(_spritePointers.begin(), _spritePointers.end(), sortBackToFront);
 		break;
-	case SortType::NONE:
+
+	case SortType::FRONT_TO_BACK:
+		std::stable_sort(_spritePointers.begin(), _spritePointers.end(), sortFrontToBack);
 		break;
-	default:
+
+	case SortType::TEXTURE:
+		std::stable_sort(_spritePointers.begin(), _spritePointers.end(), sortTexture);
 		break;
 	}
 }
 
-void SpriteBatch::createRenderBatches()
-{
-	if (_sprPtrs.empty())
-		return;
-
-	std::vector<Vertex> vertices;
-	vertices.resize(_sprPtrs.size() * 6);
-	int offset = 0;
-	int cv = 0;
-
-	_renderBatches.emplace_back(0, 6, _sprPtrs[0]->texture.id);
-	vertices[cv++] = _sprPtrs[0]->topLeft;
-	vertices[cv++] = _sprPtrs[0]->bottomLeft;
-	vertices[cv++] = _sprPtrs[0]->bottomRight;
-	vertices[cv++] = _sprPtrs[0]->bottomRight;
-	vertices[cv++] = _sprPtrs[0]->topRight;
-	vertices[cv++] = _sprPtrs[0]->topLeft;
-
-	offset += 6;
-
-	for (int cg = 1; cg < _sprPtrs.size(); cg++) {
-		if (_sprPtrs[cg]->texture.id != _sprPtrs[cg - 1]->texture.id)	//Make sure there isn't a render batch already set up for current texture
-			_renderBatches.emplace_back(offset, 6, _sprPtrs[cg]->texture.id);
-		else
-		{
-			_renderBatches.back().numVertices += 6;
-			vertices[cv++] = _sprPtrs[cg]->topLeft;
-			vertices[cv++] = _sprPtrs[cg]->bottomLeft;
-			vertices[cv++] = _sprPtrs[cg]->bottomRight;
-			vertices[cv++] = _sprPtrs[cg]->bottomRight;
-			vertices[cv++] = _sprPtrs[cg]->topRight;
-			vertices[cv++] = _sprPtrs[cg]->topLeft;
-			offset += 6;
-		}
-	}
-
-	glBindBuffer(GL_ARRAY_BUFFER, _vboID);
-	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vertex), nullptr, GL_DYNAMIC_DRAW);	//orphan the buffer
-	glBufferSubData(GL_ARRAY_BUFFER, 0, vertices.size() * sizeof(Vertex), vertices.data());	//upload the data
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-}
-
-bool SpriteBatch::sortBackToFront(Sprite * a, Sprite * b)
+bool SpriteBatch::sortBackToFront(Sprite* a, Sprite* b)
 {
 	return (a->depth < b->depth);
 }
 
-bool SpriteBatch::sortTexture(Sprite * a, Sprite * b)
+bool SpriteBatch::sortFrontToBack(Sprite* a, Sprite* b)
 {
-	return (a->texture.id < b->texture.id);
+	return (a->depth > b->depth);
+}
+
+bool SpriteBatch::sortTexture(Sprite* a, Sprite* b)
+{
+	return (a->texture < b->texture);
+}
+
+SpriteBatch::~SpriteBatch()
+{
 }

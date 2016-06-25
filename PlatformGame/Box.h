@@ -5,7 +5,7 @@
 #include <Box2D\Box2D.h>
 
 #include "Texture.h"
-#include "Sprite.h"
+#include "SpriteBatch.h"
 
 class Box
 {
@@ -14,7 +14,7 @@ public:
 	~Box();
 
 	void init(b2World* world, const glm::vec2& position, const glm::vec2& dimension, const Texture& texture, float depth = 1.0f);
-	void render();
+	void render(SpriteBatch& spriteBatch);
 
 	glm::vec2 getDimension() const { return _dimension; }
 	Texture getTexture() const { return _texture; }
