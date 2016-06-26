@@ -10,7 +10,7 @@ public:
 	Player();
 	~Player();
 
-	void input(InputManager inputManager);
+	void input(InputManager inputManager, Camera& camera);
 	void init() override;
 	void update() override;
 	void render() override;

@@ -18,10 +18,10 @@ void Player::init()
 
 void Player::update()
 {
-	
+
 }
 
-void Player::input(InputManager inputManager)
+void Player::input(InputManager inputManager, Camera& camera)
 {
 	if (inputManager.isKeyDown(SDLK_d)) {
 		_body->ApplyForceToCenter(b2Vec2(100.0f, 0.0f));
@@ -38,7 +38,10 @@ void Player::input(InputManager inputManager)
 	}
 
 	if (inputManager.isKeyDown(SDLK_w)) {
-		_body->ApplyForceToCenter(b2Vec2(0.0f, 150.0f));
+		if (_canJump && _onGround) {
+			_body->ApplyLinearImpulse(b2Vec2(0.0f, 10.0), _body->GetPosition());
+			_canJump = false;
+		}
 	}
 
 	if (_body->GetLinearVelocity().x > MAX_SPEED) {
@@ -47,6 +50,9 @@ void Player::input(InputManager inputManager)
 	if (_body->GetLinearVelocity().x < -MAX_SPEED) {
 		_body->SetLinearVelocity(b2Vec2(-MAX_SPEED, _body->GetLinearVelocity().y));
 	}
+
+	for (auto& weapon : _weapons)
+		weapon->update(inputManager, camera);
 }
 
 void Player::render()

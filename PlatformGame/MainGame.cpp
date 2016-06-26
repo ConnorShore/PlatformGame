@@ -23,6 +23,7 @@ void MainGame::init()
 	_world = std::make_unique<b2World>(gravity);
 
 	_camera.init(_screenWidth, _screenHeight);
+	_camera.setScale(37.0f);
 
 	std::mt19937 randomGen;
 	std::uniform_real_distribution<float> xDist(-10.0f, 10.0f);
@@ -49,6 +50,7 @@ void MainGame::init()
 
 	_player.agentInit(_world.get(), glm::vec2(0.0f, 15.0f), glm::vec2(1.0f, 1.8f), glm::vec2(10, 1), "Textures/ss_player_base.png");
 	_agents.push_back(&_player);
+	_player.addWeapon(new Weapon(_player.getPosition() + glm::vec2(-1.0f, -0.5f), glm::vec2(1.2f, 0.55f), glm::vec2(0.0f, 0.0f), "Textures/ak47.png"));
 
 	_staticShader.init("Shaders/staticShader.vert", "Shaders/staticShader.frag");
 	_staticShader.bindAttributes();
@@ -57,13 +59,13 @@ void MainGame::init()
 void MainGame::input()
 {
 	_inputManager.update();
-	_player.input(_inputManager);
+	_player.input(_inputManager, _camera);
 }
 
 void MainGame::update()
 {
 	for (auto& agent : _agents)
-		agent->update();
+		agent->agentUpdate();
 
 	_camera.setPosition(glm::vec2(_player.getPosition().x + _player.getDimension().x / 2.0f, _player.getPosition().y + _player.getDimension().y / 2.0f));
 	_camera.update();
@@ -105,8 +107,8 @@ void MainGame::gameLoop()
 		_timer.FpsLimitInit();
 		_timer.calcDeltaTime();
 
-		input();
 		update();
+		input();
 		render();
 
 		_timer.LimitFPS(60.0f);

@@ -39,7 +39,7 @@ glm::vec2 Camera::screenToWorldCoords(glm::vec2 screenCoords)
 	//Scale coords
 	screenCoords /= _scale;
 	//Translate with camera pos
-	screenCoords += glm::vec2(_position.x, -_position.y);
+	screenCoords += glm::vec2(_position.x, _position.y);
 
 	return screenCoords;
 }

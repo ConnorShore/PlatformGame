@@ -163,7 +163,7 @@
     <ClCompile Include="SpriteBatch.cpp" />
     <ClCompile Include="StaticShader.cpp" />
     <ClCompile Include="Timing.cpp" />
-    <ClCompile Include="Weapon.cpp" />
+    <ClCompile Include="WEAPON.CPP" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>

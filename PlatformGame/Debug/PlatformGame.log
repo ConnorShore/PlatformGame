@@ -1,12 +1,4 @@
 ﻿  SpriteBatch.cpp
-c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\platformgame\spritebatch.cpp(113): warning C4018: '<': signed/unsigned mismatch
-c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\platformgame\spritebatch.cpp(144): warning C4018: '<': signed/unsigned mismatch
-  Player.cpp
-  Agent.cpp
-  Generating Code...
-  Skipping... (no relevant changes detected)
-  main.cpp
-  Weapon.cpp
-  MainGame.cpp
-  Box.cpp
+c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\platformgame\spritebatch.cpp(146): warning C4018: '<': signed/unsigned mismatch
+c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\platformgame\spritebatch.cpp(177): warning C4018: '<': signed/unsigned mismatch
   PlatformGame.vcxproj -> C:\Users\cjshore12\Documents\Visual Studio 2015\Projects\PlatformGame\Debug\PlatformGame.exe

@@ -1,26 +1,27 @@
 #pragma once
 
-#include <string>
-
-#include "Agent.h"
 #include "Texture.h"
+#include "Agent.h"
+#include "InputManager.h"
+#include "Camera.h"
 
-enum class FireType {NONE, SINGLE, BURST, AUTO};
+#include <glm\glm.hpp>
+
+class Agent;
 
 class Weapon
 {
 public:
-	Weapon(Agent& parent, FireType& fireType, const Texture& weapon, const std::string& name);
-	Weapon(){}
-	~Weapon();
+	Weapon(const glm::vec2& position, const glm::vec2& dimension, const glm::vec2& origin, const std::string& filePath);
+	Weapon() {}
 
-	virtual void update();
-	virtual void render();
+	void update(InputManager inputManager, Camera& camera);
+	void render(SpriteBatch& spriteBatch);
 
-protected:
-	Agent _parent;
-	FireType _fireMode;
-	Texture _weapon;
-	std::string _name;
+	Agent* _parent;
+	b2Body* _body;
+	glm::vec2 _position, _dimension, _origin;
+	Texture _texture;
+	float _damage, _fireRate, _angle;
+	int _bulletCount, _magazineSize;
 };
-

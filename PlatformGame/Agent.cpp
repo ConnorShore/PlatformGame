@@ -37,6 +37,33 @@ void Agent::agentInit(b2World* world, const glm::vec2& position, const glm::vec2
 	init();
 }
 
+void Agent::agentUpdate()
+{
+	for (b2ContactEdge* ce = _body->GetContactList(); ce != nullptr; ce = ce->next) {
+		b2Contact* c = ce->contact;
+		if (c->IsTouching()) {
+			b2WorldManifold manifold;
+			c->GetWorldManifold(&manifold);
+
+			//Check if points are below
+			_canJump = false;
+			for (int i = 0; i < b2_maxManifoldPoints; i++) {
+				if (manifold.points[i].y < _body->GetPosition().y - _dimension.y / 2.0f + 0.01f) {
+					//Add in capsule hit box for agents
+					_canJump = true;
+					break;
+				}
+			}
+
+		//Can jump
+		if (_canJump && _body->GetLinearVelocity().y < 0.0f)
+			_onGround = true;
+		}
+	}
+
+	update();
+}
+
 void Agent::agentRender(SpriteBatch& spriteBatch)
 {
 	glm::vec4 destRect;
@@ -48,7 +75,16 @@ void Agent::agentRender(SpriteBatch& spriteBatch)
 
 	spriteBatch.addToBatch(destRect, uvRect, 1.0f, _texture.id, Color(255, 255, 255, 255));
 
+	for (auto& weapon : _weapons)
+		weapon->render(spriteBatch);
+
 	render();
+}
+
+void Agent::addWeapon(Weapon * weapon)
+{
+	weapon->_parent = this;
+	_weapons.push_back(weapon);
 }
 
 void Agent::jump()

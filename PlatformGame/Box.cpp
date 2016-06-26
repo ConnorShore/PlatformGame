@@ -41,5 +41,5 @@ void Box::render(SpriteBatch& spriteBatch)
 	destRect.w = _dimension.y;
 	glm::vec4 uvRect(0.0f, 0.0f, 1.0f, 1.0f);
 
-	spriteBatch.addToBatch(destRect, uvRect, 1.0f, _texture.id, Color(255, 255, 255, 255), _body->GetAngle());
+	spriteBatch.addToBatch(destRect, uvRect, 1.0f, _texture.id, Color(255, 255, 255, 255), _body->GetAngle(), 1, false);
 }

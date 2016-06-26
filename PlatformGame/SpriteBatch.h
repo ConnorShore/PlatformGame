@@ -17,14 +17,14 @@ class Sprite {
 public:
 	Sprite() {};
 	Sprite(const glm::vec4& destRect, const glm::vec4& uvRect, float Depth, GLuint Texture, const Color& color);
-	Sprite(const glm::vec4& destRect, const glm::vec4& uvRect, float Depth, GLuint Texture, const Color& color, float angle);
+	Sprite(const glm::vec4& destRect, const glm::vec4& uvRect, float Depth, GLuint Texture, const Color& color, float angle, int direction, bool gun);
 
 	Vertex topLeft, bottomLeft, topRight, bottomRight;
 	GLuint texture;
 	float depth;
 
 private:
-	glm::vec2 rotatePoint(glm::vec2 point, float angle);
+	glm::vec2 rotatePoint(const glm::vec2& point, float angle);
 };
 
 class RenderBatch {
@@ -44,7 +44,8 @@ public:
 	void begin(SortType sortType = SortType::TEXTURE);
 	void end();
 	void addToBatch(const glm::vec4& destRect, const glm::vec4& uvRect, float depth, GLuint tex, const Color& color);
-	void addToBatch(const glm::vec4& destRect, const glm::vec4& uvRect, float depth, GLuint tex, const Color& color, float angle);
+	void addToBatch(const glm::vec4& destRect, const glm::vec4& uvRect, float depth, GLuint tex, const Color& color, float angle, int direction, bool gun);
+	void addToBatch(const glm::vec4 & destRect, const glm::vec4 & uvRect, float depth, GLuint tex, const Color & color, const glm::vec2 & direction);
 	void renderBatch();
 
 private:
