@@ -12,38 +12,26 @@ Weapon::Weapon(const glm::vec2 & position, const glm::vec2& dimension, const glm
 void Weapon::update(InputManager inputManager, Camera& camera)
 {
 	glm::vec2 parent(_parent->getPosition());
-
-	//if(_parent->getDirection() == RIGHT)
-	//	_position = glm::vec2(parent.x + _origin.x, parent.y + _origin.y);
-	//else
-	//	_position = glm::vec2(parent.x + _origin.x, parent.y + _origin.y);
-
 	_position = glm::vec2(parent.x + _origin.x, parent.y + _origin.y);
 
 	glm::vec2 mouse(camera.screenToWorldCoords(inputManager.getMousePos()));
-	_angle = (atan2(mouse.y - _position.y, mouse.x - _position.x)) * -1.0f;
+	_angle = (atan2(mouse.y - _position.y, mouse.x - _position.x));
 }
 
 void Weapon::render(SpriteBatch& spriteBatch)
 {
-	if (_parent->getDirection() == RIGHT) {
-		glm::vec4 destRect;
-		destRect.x = _position.x - _dimension.x / 2.0f;
-		destRect.y = _position.y - _dimension.y / 2.0f;
-		destRect.z = _dimension.x;
-		destRect.w = _dimension.y;
-		glm::vec4 uvRect(0.0f, 0.0f, 1.0f, 1.0f);
+	glm::vec4 destRect;
+	destRect.x = _position.x - _dimension.x / 2.0f;
+	destRect.y = _position.y - _dimension.y / 2.0f;
+	destRect.z = _dimension.x;
+	destRect.w = _dimension.y;
 
-		spriteBatch.addToBatch(destRect, uvRect, 1.0f, _texture.id, Color(255, 255, 255, 255), _angle, RIGHT, true);
+	if (_parent->getDirection() == RIGHT) {
+		glm::vec4 uvRect(0.0f, 0.0f, 1.0f, 1.0f);
+		spriteBatch.addToBatch(destRect, uvRect, 1.0f, _texture.id, Color(255, 255, 255, 255), _angle, true);
 	}
 	else {
-		glm::vec4 destRect;
-		destRect.x = _position.x - _dimension.x / 2.0f;
-		destRect.y = _position.y - _dimension.y / 2.0f;
-		destRect.z = _dimension.x;
-		destRect.w = _dimension.y;
-		glm::vec4 uvRect(0.0f, 0.0f, -1.0f, 1.0f);
-
-		spriteBatch.addToBatch(destRect, uvRect, 1.0f, _texture.id, Color(255, 255, 255, 255), _angle, LEFT, true);
+		glm::vec4 uvRect(0.0f, 0.0f, 1.0f, -1.0f);
+		spriteBatch.addToBatch(destRect, uvRect, 1.0f, _texture.id, Color(255, 255, 255, 255), _angle, true);
 	}
 }

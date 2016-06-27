@@ -34,12 +34,13 @@ void Camera::update()
 
 glm::vec2 Camera::screenToWorldCoords(glm::vec2 screenCoords)
 {
-	//Make 0 the center
+	// Invert Y direction
+	screenCoords.y = _screenHeight - screenCoords.y;
+	// Make it so that 0 is the center
 	screenCoords -= glm::vec2(_screenWidth / 2, _screenHeight / 2);
-	//Scale coords
+	// Scale the coordinates
 	screenCoords /= _scale;
-	//Translate with camera pos
-	screenCoords += glm::vec2(_position.x, _position.y);
-
+	// Translate with the camera position
+	screenCoords += _position;
 	return screenCoords;
 }

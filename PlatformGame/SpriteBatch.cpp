@@ -23,7 +23,7 @@ Sprite::Sprite(const glm::vec4& destRect, const glm::vec4& uvRect, float Depth, 
 	topRight.setUV(uvRect.x + uvRect.z, uvRect.y + uvRect.w);
 }
 
-Sprite::Sprite(const glm::vec4& destRect, const glm::vec4& uvRect, float Depth, GLuint Texture, const Color& color, float angle, int direction, bool gun) :
+Sprite::Sprite(const glm::vec4& destRect, const glm::vec4& uvRect, float Depth, GLuint Texture, const Color& color, float angle, bool gun) :
 	depth(Depth),
 	texture(Texture) {
 
@@ -32,40 +32,22 @@ Sprite::Sprite(const glm::vec4& destRect, const glm::vec4& uvRect, float Depth, 
 	glm::vec2 tl, tr, bl, br;
 
 	if (gun) {
-		if (direction == 1) {
-			tl = glm::vec2(0, halfDims.y);
-			tr = glm::vec2(halfDims.x * 2, halfDims.y);
-			bl = glm::vec2(0, -halfDims.y);
-			br = glm::vec2(halfDims.x * 2, -halfDims.y);
-
-			tl = rotatePoint(tl, angle) + halfDims;
-			tr = rotatePoint(tr, angle) + halfDims;
-			bl = rotatePoint(bl, angle) + halfDims;
-			br = rotatePoint(br, angle) + halfDims;
-		}
-		else {
-			tl = glm::vec2(-halfDims.x * 2, halfDims.y);
-			tr = glm::vec2(0, halfDims.y);
-			bl = glm::vec2(-halfDims.x * 2, -halfDims.y);
-			br = glm::vec2(0, -halfDims.y);
-
-			tl = rotatePoint(tl, angle) + halfDims;
-			tr = rotatePoint(tr, angle) + halfDims;
-			bl = rotatePoint(bl, angle) + halfDims;
-			br = rotatePoint(br, angle) + halfDims;
-		}
+		tl = glm::vec2(0, halfDims.y);
+		tr = glm::vec2(halfDims.x * 2, halfDims.y);
+		bl = glm::vec2(0, -halfDims.y);
+		br = glm::vec2(halfDims.x * 2, -halfDims.y);
 	}
 	else {
 		tl = glm::vec2(-halfDims.x, halfDims.y);
 		tr = glm::vec2(halfDims.x, halfDims.y);
 		bl = glm::vec2(-halfDims.x, -halfDims.y);
 		br = glm::vec2(halfDims.x, -halfDims.y);
-
-		tl = rotatePoint(tl, angle) + halfDims;
-		tr = rotatePoint(tr, angle) + halfDims;
-		bl = rotatePoint(bl, angle) + halfDims;
-		br = rotatePoint(br, angle) + halfDims;
 	}
+
+	tl = rotatePoint(tl, angle) + halfDims;
+	tr = rotatePoint(tr, angle) + halfDims;
+	bl = rotatePoint(bl, angle) + halfDims;
+	br = rotatePoint(br, angle) + halfDims;
 
 	topLeft.color = color;
 	topLeft.setPosition(destRect.x + tl.x, destRect.y + tl.y);
@@ -125,9 +107,9 @@ void SpriteBatch::addToBatch(const glm::vec4& destRect, const glm::vec4& uvRect,
 	_sprites.emplace_back(destRect, uvRect, depth, tex, color);
 }
 
-void SpriteBatch::addToBatch(const glm::vec4 & destRect, const glm::vec4 & uvRect, float depth, GLuint tex, const Color & color, float angle, int direction, bool gun)
+void SpriteBatch::addToBatch(const glm::vec4 & destRect, const glm::vec4 & uvRect, float depth, GLuint tex, const Color & color, float angle, bool gun)
 {
-	_sprites.emplace_back(destRect, uvRect, depth, tex, color, angle, direction, gun);
+	_sprites.emplace_back(destRect, uvRect, depth, tex, color, angle, gun);
 }
 
 void SpriteBatch::addToBatch(const glm::vec4 & destRect, const glm::vec4 & uvRect, float depth, GLuint tex, const Color & color, const glm::vec2 & direction)
@@ -136,7 +118,7 @@ void SpriteBatch::addToBatch(const glm::vec4 & destRect, const glm::vec4 & uvRec
 	float angle = acos(glm::dot(right, direction));
 	if (direction.y < 0.0f) angle = -angle;
 
-	_sprites.emplace_back(destRect, uvRect, depth, tex, color, angle, 0, false);
+	_sprites.emplace_back(destRect, uvRect, depth, tex, color, angle, false);
 }
 
 void SpriteBatch::renderBatch()

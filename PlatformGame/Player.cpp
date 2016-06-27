@@ -23,15 +23,16 @@ void Player::update()
 
 void Player::input(InputManager inputManager, Camera& camera)
 {
+	if (camera.screenToWorldCoords(inputManager.getMousePos()).x >= _body->GetPosition().x) _direction = RIGHT;
+	else _direction = LEFT;
+
 	if (inputManager.isKeyDown(SDLK_d)) {
 		_body->ApplyForceToCenter(b2Vec2(100.0f, 0.0f));
 		_agentState = AgentState::RUNNING;
-		_direction = RIGHT; //< Make direction based on mouse position
 	}
 	else if (inputManager.isKeyDown(SDLK_a)) {
 		_body->ApplyForceToCenter(b2Vec2(-100.0f, 0.0f));
 		_agentState = AgentState::RUNNING;
-		_direction = LEFT;
 	}
 	else {
 		_body->SetLinearVelocity(b2Vec2(_body->GetLinearVelocity().x * 0.7f, _body->GetLinearVelocity().y));
@@ -69,7 +70,11 @@ glm::vec4 Player::animate()
 	if (glm::abs(velocity.x) > 1.0f) {
 		tileIndex = 0;
 		numTiles = 10;
-		_animationSpeed = glm::abs(velocity.x) * 0.04f;
+
+		if (_direction == RIGHT)
+			_animationSpeed = glm::abs(velocity.x) * 0.04f;
+		else
+			_animationSpeed = -glm::abs(velocity.x) * 0.04f;
 
 		if (_agentState != AgentState::RUNNING) {
 			_agentState = AgentState::RUNNING;
