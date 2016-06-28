@@ -1,13 +1,13 @@
 #pragma once
 
 #include "Texture.h"
-#include "Agent.h"
+#include "Human.h"
 #include "InputManager.h"
 #include "Camera.h"
 
 #include <glm\glm.hpp>
 
-class Agent;
+class Human;
 
 class Weapon
 {
@@ -18,7 +18,7 @@ public:
 	void update(InputManager inputManager, Camera& camera);
 	void render(SpriteBatch& spriteBatch);
 
-	Agent* _parent;
+	Human* _parent;
 	b2Body* _body;
 	glm::vec2 _position, _dimension, _origin;
 	Texture _texture;

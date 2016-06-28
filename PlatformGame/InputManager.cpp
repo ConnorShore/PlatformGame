@@ -29,6 +29,12 @@ void InputManager::update()
 		case SDL_MOUSEMOTION:
 			setMousePos(evnt.motion.x, evnt.motion.y);
 			break;
+		case SDL_MOUSEBUTTONDOWN:
+			keyPressed(evnt.button.button);
+			break;
+		case SDL_MOUSEBUTTONUP:
+			keyReleased(evnt.button.button);
+			break;
 		}
 	}
 }

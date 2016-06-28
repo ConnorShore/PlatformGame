@@ -8,7 +8,7 @@
 #include "Camera.h"
 #include "Timing.h"
 #include "Box.h"
-#include "Agent.h"
+#include "Human.h"
 #include "Player.h"
 #include "SpriteBatch.h"
 
@@ -36,7 +36,7 @@ private:
 	std::unique_ptr<b2World> _world;
 
 	std::vector<Box> _boxes;
-	std::vector<Agent*> _agents;
+	std::vector<Human*> _agents;
 
 	int _screenWidth = 1280;
 	int _screenHeight = 720;

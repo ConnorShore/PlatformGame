@@ -50,7 +50,8 @@ void MainGame::init()
 
 	_player.agentInit(_world.get(), glm::vec2(0.0f, 15.0f), glm::vec2(1.0f, 1.8f), glm::vec2(10, 1), "Textures/ss_player_base.png");
 	_agents.push_back(&_player);
-	_player.addWeapon(new Weapon(_player.getPosition() + glm::vec2(-1.0f, -0.5f), glm::vec2(1.2f, 0.55f), glm::vec2(0.0f, 0.0f), "Textures/ak47.png"));
+	_player.addWeapon(new Weapon(_player.getPosition(), glm::vec2(1.2f, 0.55f), glm::vec2(1.0f, -0.75f), "Textures/ak47.png"));
+	_player.addWeapon(new Weapon(_player.getPosition(), glm::vec2(2.2f, 1.55f), glm::vec2(1.0f, -0.75f), "Textures/ak47.png"));
 
 	_staticShader.init("Shaders/staticShader.vert", "Shaders/staticShader.frag");
 	_staticShader.bindAttributes();

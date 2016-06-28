@@ -2,9 +2,9 @@
 
 #include "Camera.h"
 #include "InputManager.h"
-#include "Agent.h"
+#include "Human.h"
 
-class Player : public Agent
+class Player : public Human
 {
 public:
 	Player();
@@ -14,6 +14,7 @@ public:
 	void init() override;
 	void update() override;
 	void render() override;
+	void shoot(const glm::vec2& direction) override;
 	glm::vec4 animate() override;
 
 private:

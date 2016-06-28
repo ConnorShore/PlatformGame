@@ -3,7 +3,7 @@
 
 #include <glm\gtx\vector_angle.hpp>
 
-Weapon::Weapon(const glm::vec2 & position, const glm::vec2& dimension, const glm::vec2& origin, const std::string & filePath) : _position(position), _dimension(dimension), _origin(origin/10.0f), _angle(0)
+Weapon::Weapon(const glm::vec2 & position, const glm::vec2& dimension, const glm::vec2& origin, const std::string & filePath) : _position(position), _dimension(dimension), _origin(origin / 10.0f), _angle(0)
 {
 	//Initialize position to player and remove parameter
 	_texture = ResourceManager::loadTexture(filePath);

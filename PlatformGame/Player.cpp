@@ -1,6 +1,6 @@
 #include "Player.h"
 
-#include <SDL\SDL_keyboard.h>
+#include <SDL\SDL.h>
 
 Player::Player()
 {
@@ -40,7 +40,7 @@ void Player::input(InputManager inputManager, Camera& camera)
 
 	if (inputManager.isKeyDown(SDLK_w)) {
 		if (_canJump && _onGround) {
-			_body->ApplyLinearImpulse(b2Vec2(0.0f, 10.0), _body->GetPosition());
+			_body->ApplyLinearImpulse(b2Vec2(0.0f, 5.0), _body->GetPosition());
 			_canJump = false;
 		}
 	}
@@ -52,13 +52,30 @@ void Player::input(InputManager inputManager, Camera& camera)
 		_body->SetLinearVelocity(b2Vec2(-MAX_SPEED, _body->GetLinearVelocity().y));
 	}
 
-	for (auto& weapon : _weapons)
-		weapon->update(inputManager, camera);
+	//Weapon selection
+	if (inputManager.isKeyDown(SDLK_1)) {
+		_currentWeapon = _primaryWeapon;
+	}
+	else if (inputManager.isKeyDown(SDLK_2)) {
+		_currentWeapon = _secondaryWeapon;
+	}
+
+	//Shooting
+	if (inputManager.isKeyDown(SDL_BUTTON_LEFT)) {
+		//implement shooting
+	}
+
+	_currentWeapon->update(inputManager, camera);
 }
 
 void Player::render()
 {
 	
+}
+
+void Player::shoot(const glm::vec2& direction)
+{
+
 }
 
 glm::vec4 Player::animate()
