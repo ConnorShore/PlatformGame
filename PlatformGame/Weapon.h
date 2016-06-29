@@ -4,6 +4,7 @@
 #include "Human.h"
 #include "InputManager.h"
 #include "Camera.h"
+#include "BulletDef.h"
 
 #include <glm\glm.hpp>
 
@@ -18,10 +19,15 @@ public:
 	void update(InputManager inputManager, Camera& camera);
 	void render(SpriteBatch& spriteBatch);
 
+	void setParent(Human* parent) { _parent = parent; }
+	BulletDef getBulletDef() const { return _bulletDef; }
+
+protected:
 	Human* _parent;
 	b2Body* _body;
 	glm::vec2 _position, _dimension, _origin;
 	Texture _texture;
 	float _damage, _fireRate, _angle;
 	int _bulletCount, _magazineSize;
+	BulletDef _bulletDef;
 };

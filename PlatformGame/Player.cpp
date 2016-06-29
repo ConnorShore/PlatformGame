@@ -18,7 +18,7 @@ void Player::init()
 
 void Player::update()
 {
-
+	_shooting = false;
 }
 
 void Player::input(InputManager inputManager, Camera& camera)
@@ -62,18 +62,13 @@ void Player::input(InputManager inputManager, Camera& camera)
 
 	//Shooting
 	if (inputManager.isKeyDown(SDL_BUTTON_LEFT)) {
-		//implement shooting
+		_shooting = true;
 	}
 
 	_currentWeapon->update(inputManager, camera);
 }
 
 void Player::render()
-{
-	
-}
-
-void Player::shoot(const glm::vec2& direction)
 {
 
 }

@@ -14,7 +14,6 @@ public:
 	void init() override;
 	void update() override;
 	void render() override;
-	void shoot(const glm::vec2& direction) override;
 	glm::vec4 animate() override;
 
 private:

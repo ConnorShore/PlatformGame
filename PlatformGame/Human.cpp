@@ -12,7 +12,7 @@ Human::~Human()
 {
 }
 
-void Human::agentInit(b2World* world, const glm::vec2& position, const glm::vec2& dimension, const glm::ivec2& sheetDims, const std::string& texPath)
+void Human::humanInit(b2World* world, const glm::vec2& position, const glm::vec2& dimension, const glm::ivec2& sheetDims, const std::string& texPath)
 {
 	_texture = ResourceManager::loadTexture(texPath);
 	_dimension = dimension;
@@ -37,7 +37,7 @@ void Human::agentInit(b2World* world, const glm::vec2& position, const glm::vec2
 	init();
 }
 
-void Human::agentUpdate()
+void Human::humanUpdate()
 {
 	for (b2ContactEdge* ce = _body->GetContactList(); ce != nullptr; ce = ce->next) {
 		b2Contact* c = ce->contact;
@@ -64,7 +64,7 @@ void Human::agentUpdate()
 	update();
 }
 
-void Human::agentRender(SpriteBatch& spriteBatch)
+void Human::humanRender(SpriteBatch& spriteBatch)
 {
 	glm::vec4 destRect;
 	destRect.x = _body->GetPosition().x - _dimension.x / 2.0f;
@@ -82,7 +82,7 @@ void Human::agentRender(SpriteBatch& spriteBatch)
 
 void Human::addWeapon(Weapon * weapon)
 {
-	weapon->_parent = this;
+	weapon->setParent(this);
 
 	if (_weapons.size() == 0) {
 		_primaryWeapon = weapon;

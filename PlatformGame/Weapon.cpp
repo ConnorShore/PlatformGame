@@ -16,6 +16,9 @@ void Weapon::update(InputManager inputManager, Camera& camera)
 
 	glm::vec2 mouse(camera.screenToWorldCoords(inputManager.getMousePos()));
 	_angle = (atan2(mouse.y - _position.y, mouse.x - _position.x));
+	
+	_bulletDef.direction = glm::vec2(glm::cos(_angle), glm::sin(_angle));
+	_bulletDef.position = glm::vec2(_position.x, _position.y) + _bulletDef.direction;
 }
 
 void Weapon::render(SpriteBatch& spriteBatch)

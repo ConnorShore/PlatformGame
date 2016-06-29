@@ -1,5 +1,6 @@
 #include "MainGame.h"
 #include "ResourceManager.h"
+#include "AK47.h"
 
 #include <SDL\SDL.h>
 #include <GL\glew.h>
@@ -48,10 +49,10 @@ void MainGame::init()
 		_boxes.push_back(box);
 	}
 
-	_player.agentInit(_world.get(), glm::vec2(0.0f, 15.0f), glm::vec2(1.0f, 1.8f), glm::vec2(10, 1), "Textures/ss_player_base.png");
-	_agents.push_back(&_player);
-	_player.addWeapon(new Weapon(_player.getPosition(), glm::vec2(1.2f, 0.55f), glm::vec2(1.0f, -0.75f), "Textures/ak47.png"));
-	_player.addWeapon(new Weapon(_player.getPosition(), glm::vec2(2.2f, 1.55f), glm::vec2(1.0f, -0.75f), "Textures/ak47.png"));
+	_player.humanInit(_world.get(), glm::vec2(0.0f, 15.0f), glm::vec2(1.0f, 1.8f), glm::vec2(10, 1), "Textures/ss_player_base.png");
+	_player.addWeapon(new AK47(_player.getPosition(), glm::vec2(1.0f, -0.75f)));
+	_player.addWeapon(new AK47(_player.getPosition(), glm::vec2(2.2f, 1.55f), glm::vec2(1.0f, -0.75f)));
+	_humans.push_back(&_player);
 
 	_staticShader.init("Shaders/staticShader.vert", "Shaders/staticShader.frag");
 	_staticShader.bindAttributes();
@@ -65,11 +66,20 @@ void MainGame::input()
 
 void MainGame::update()
 {
-	for (auto& agent : _agents)
-		agent->agentUpdate();
+	for (auto& human : _humans) {
+		if (human->isShooting()) {
+			Bullet* bullet = new Bullet(_world.get(), human->getCurrentWeapon()->getBulletDef());
+			_bullets.push_back(bullet);
+		}
+
+		human->humanUpdate();
+	}
 
 	_camera.setPosition(glm::vec2(_player.getPosition().x + _player.getDimension().x / 2.0f, _player.getPosition().y + _player.getDimension().y / 2.0f));
 	_camera.update();
+
+	for (auto& bullet : _bullets)
+		bullet->update();
 
 	_world->Step(1 / 60.0f, 6, 2);
 }
@@ -86,8 +96,11 @@ void MainGame::render()
 
 	_spriteBatch.begin();
 
-	for (int i = 0; i < _agents.size(); i++)
-		_agents[i]->agentRender(_spriteBatch);
+	for (int i = 0; i < _humans.size(); i++)
+		_humans[i]->humanRender(_spriteBatch);
+
+	for (int i = 0; i < _bullets.size(); i++)
+		_bullets[i]->render(_spriteBatch);
 
 	for(int i = 0; i < _boxes.size(); i++)
 		_boxes[i].render(_spriteBatch);

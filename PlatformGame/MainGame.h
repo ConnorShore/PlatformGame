@@ -11,6 +11,7 @@
 #include "Human.h"
 #include "Player.h"
 #include "SpriteBatch.h"
+#include "Bullet.h"
 
 enum class GameState {PLAY, PAUSED, EXIT};
 
@@ -36,7 +37,8 @@ private:
 	std::unique_ptr<b2World> _world;
 
 	std::vector<Box> _boxes;
-	std::vector<Human*> _agents;
+	std::vector<Human*> _humans;
+	std::vector<Bullet*> _bullets;
 
 	int _screenWidth = 1280;
 	int _screenHeight = 720;

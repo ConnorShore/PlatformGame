@@ -69,6 +69,12 @@
     <ClCompile Include="Agent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="AK47.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainGame.h">
@@ -129,6 +135,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Agent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AK47.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletDef.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
