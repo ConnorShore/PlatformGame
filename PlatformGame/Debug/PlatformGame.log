@@ -1,20 +1,20 @@
-﻿  MainGame.cpp
-c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\platformgame\maingame.cpp(80): warning C4018: '<': signed/unsigned mismatch
-c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\platformgame\maingame.cpp(85): warning C4018: '<': signed/unsigned mismatch
-c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\platformgame\maingame.cpp(106): warning C4018: '<': signed/unsigned mismatch
-c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\platformgame\maingame.cpp(134): warning C4018: '<': signed/unsigned mismatch
-c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\platformgame\maingame.cpp(137): warning C4018: '<': signed/unsigned mismatch
-c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\platformgame\maingame.cpp(140): warning C4018: '<': signed/unsigned mismatch
-  Bullet.cpp
+﻿  AK47.cpp
   Generating Code...
   Compiling...
-  main.cpp
+  MainGame.cpp
+c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\platformgame\maingame.cpp(77): warning C4018: '<': signed/unsigned mismatch
+c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\platformgame\maingame.cpp(82): warning C4018: '<': signed/unsigned mismatch
+c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\platformgame\maingame.cpp(103): warning C4018: '<': signed/unsigned mismatch
+c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\platformgame\maingame.cpp(131): warning C4018: '<': signed/unsigned mismatch
+c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\platformgame\maingame.cpp(134): warning C4018: '<': signed/unsigned mismatch
+c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\platformgame\maingame.cpp(137): warning C4018: '<': signed/unsigned mismatch
   Generating Code...
   Skipping... (no relevant changes detected)
+  main.cpp
   Weapon.cpp
   Player.cpp
   Human.cpp
+  Bullet.cpp
   Box.cpp
   Agent.cpp
-  AK47.cpp
   PlatformGame.vcxproj -> C:\Users\cjshore12\Documents\Visual Studio 2015\Projects\PlatformGame\Debug\PlatformGame.exe

@@ -61,7 +61,11 @@ void Player::input(InputManager inputManager, Camera& camera)
 
 	//Shooting
 	if (inputManager.isKeyDown(SDL_BUTTON_LEFT)) {
-		_shooting = true;
+		_shooting = _currentWeapon->shoot();
+	}
+
+	if (!inputManager.isKeyDown(SDL_BUTTON_LEFT)) {
+		_currentWeapon->setFireCount(_currentWeapon->getFireRate());
 	}
 
 	_currentWeapon->update(inputManager, camera);

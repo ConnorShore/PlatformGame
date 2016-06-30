@@ -35,7 +35,7 @@ public:
 
 		if (bodyAName != NULL && bodyBName != NULL) {
 			if (bodyAName == "box" && bodyBName == "bullet") {
-				bodiesToDestroy.push_back(bodyA);
+				//bodiesToDestroy.push_back(bodyA);
 				bodiesToDestroy.push_back(bodyB);
 			}	
 		}

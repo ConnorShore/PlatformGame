@@ -19,6 +19,13 @@ void Weapon::update(InputManager inputManager, Camera& camera)
 	
 	_bulletDef.direction = glm::vec2(glm::cos(_angle), glm::sin(_angle));
 	_bulletDef.position = glm::vec2(_position.x, _position.y) + _bulletDef.direction;
+
+	if (_fireCount < _fireRate) {
+		_canShoot = false;
+		_fireCount++;
+	} else {
+		_canShoot = true;
+	}
 }
 
 void Weapon::render(SpriteBatch& spriteBatch)
@@ -37,4 +44,14 @@ void Weapon::render(SpriteBatch& spriteBatch)
 		glm::vec4 uvRect(0.0f, 0.0f, 1.0f, -1.0f);
 		spriteBatch.addToBatch(destRect, uvRect, 1.0f, _texture.id, Color(255, 255, 255, 255), _angle, true);
 	}
+}
+
+bool Weapon::shoot()
+{
+	if (_canShoot) {
+		_fireCount = 0;
+		_canShoot = false;
+		return true;
+	}
+	return false;
 }
