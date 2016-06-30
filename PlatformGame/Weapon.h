@@ -20,7 +20,7 @@ public:
 	void render(SpriteBatch& spriteBatch);
 
 	void setParent(Human* parent) { _parent = parent; }
-	BulletDef getBulletDef() const { return _bulletDef; }
+	BulletDef& getBulletDef() { return _bulletDef; }
 
 protected:
 	Human* _parent;

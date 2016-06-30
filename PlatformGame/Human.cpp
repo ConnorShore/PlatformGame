@@ -16,6 +16,8 @@ void Human::humanInit(b2World* world, const glm::vec2& position, const glm::vec2
 {
 	_texture = ResourceManager::loadTexture(texPath);
 	_dimension = dimension;
+	_collisionCategory = CATEGORY_FRIENDLY;
+	_collisionMask = MASK_FRIENDLY;
 
 	_spritesheet.init(_texture, sheetDims);
 	
@@ -32,6 +34,8 @@ void Human::humanInit(b2World* world, const glm::vec2& position, const glm::vec2
 	fixtureDef.shape = &dynamicBox;
 	fixtureDef.density = 1.0f;
 	fixtureDef.friction = 0.25f;
+	fixtureDef.filter.categoryBits = _collisionCategory;
+	fixtureDef.filter.maskBits = _collisionMask;
 	_fixture = _body->CreateFixture(&fixtureDef);
 
 	init();
@@ -83,6 +87,8 @@ void Human::humanRender(SpriteBatch& spriteBatch)
 void Human::addWeapon(Weapon * weapon)
 {
 	weapon->setParent(this);
+	weapon->getBulletDef().collisionCategory = _collisionCategory;
+	weapon->getBulletDef().collisionMask = _collisionMask;
 
 	if (_weapons.size() == 0) {
 		_primaryWeapon = weapon;

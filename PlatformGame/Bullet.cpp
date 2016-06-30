@@ -25,12 +25,16 @@ Bullet::Bullet(b2World* world, BulletDef& bulletDef /*Human* parent* <= for coll
 	fixtureDef.shape = &circleShape;
 	fixtureDef.friction = 0.0f;
 	fixtureDef.density = 0.0f;
+	fixtureDef.filter.categoryBits = bulletDef.collisionCategory;
+	fixtureDef.filter.maskBits = bulletDef.collisionMask;
 	_fixture = _body->CreateFixture(&fixtureDef);
 }
 
 void Bullet::update()
 {
 	_body->ApplyLinearImpulse(b2Vec2(_direction.x * _speed, _direction.y * _speed), _body->GetPosition());
+
+	checkCollision();
 
 	if (_lifeCount > LIFE_TIME)
 		_alive = false;
@@ -45,4 +49,9 @@ void Bullet::render(SpriteBatch & spriteBatch)
 	destRect.y = _body->GetPosition().y - _size / 2.0f;
 	destRect.z = destRect.w = _size;
 	spriteBatch.addToBatch(destRect, glm::vec4(0.0f, 0.0f, 1.0f, 1.0f), 0.0f, _texture.id, Color(255, 255, 255, 255));
+}
+
+void Bullet::checkCollision()
+{
+
 }

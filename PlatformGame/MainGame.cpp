@@ -38,9 +38,16 @@ void MainGame::init()
 	b2BodyDef groundBodyDef;
 	groundBodyDef.position.Set(0.0f, -15.0f);
 	b2Body* groundBody = _world->CreateBody(&groundBodyDef);
+	
 	b2PolygonShape groundShape;
 	groundShape.SetAsBox(50.0f, 5.0f);
-	groundBody->CreateFixture(&groundShape, 0.0f);
+
+	b2FixtureDef fixDef;
+	fixDef.shape = &groundShape;
+	fixDef.density = 0.0f;
+	fixDef.filter.categoryBits = CATEGORY_ENVIRONMENT;
+	fixDef.filter.maskBits = MASK_ALL;
+	groundBody->CreateFixture(&fixDef);
 
 	//Setup boxes
 	for (int i = 0; i < 50; i++) {
@@ -78,8 +85,17 @@ void MainGame::update()
 	_camera.setPosition(glm::vec2(_player.getPosition().x + _player.getDimension().x / 2.0f, _player.getPosition().y + _player.getDimension().y / 2.0f));
 	_camera.update();
 
-	for (auto& bullet : _bullets)
-		bullet->update();
+	for (int i = 0; i < _bullets.size(); i++) {
+		if (!_bullets[i]->isAlive()) {
+			delete _bullets[i];
+			_bullets[i] = _bullets.back();
+			_bullets.pop_back();
+			i--;
+		}
+		else {
+			_bullets[i]->update();
+		}
+	}
 
 	_world->Step(1 / 60.0f, 6, 2);
 }
@@ -100,7 +116,8 @@ void MainGame::render()
 		_humans[i]->humanRender(_spriteBatch);
 
 	for (int i = 0; i < _bullets.size(); i++)
-		_bullets[i]->render(_spriteBatch);
+		if(_bullets[i]->isAlive())
+			_bullets[i]->render(_spriteBatch);
 
 	for(int i = 0; i < _boxes.size(); i++)
 		_boxes[i].render(_spriteBatch);

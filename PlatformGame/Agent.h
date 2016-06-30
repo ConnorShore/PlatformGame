@@ -8,6 +8,7 @@
 #include "SpriteSheet.h"
 #include "Vertex.h"
 #include "SpriteBatch.h"
+#include "Collision.h"
 
 enum class AgentState { NONE, STANDING, WALKING, RUNNING, JUMPING, SHOOTING };
 
@@ -30,12 +31,19 @@ public:
 
 	int getDirection() const { return _direction; }
 
+	uint16 getCollisionCategory() { return _collisionCategory; }
+	uint16 getCollisionMask() { return _collisionMask; }
+
 protected:
 	Texture _texture;
 	SpriteSheet _spritesheet;
 	b2Body* _body = nullptr;
 	b2Fixture* _fixture = nullptr;
 	AgentState _agentState = AgentState::STANDING;
+
+	uint16 _collisionCategory = CATEGORY_NEUTRAL;
+	uint16 _collisionMask = MASK_ALL;
+
 	int _direction = RIGHT;
 
 	glm::vec2 _dimension;

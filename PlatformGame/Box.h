@@ -6,6 +6,7 @@
 
 #include "Texture.h"
 #include "SpriteBatch.h"
+#include "Collision.h"
 
 class Box
 {
