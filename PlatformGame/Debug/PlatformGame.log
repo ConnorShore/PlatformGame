@@ -1,6 +1,20 @@
 ﻿  MainGame.cpp
-c:\users\user\documents\visual studio 2015\projects\platformgame\platformgame\maingame.cpp(88): warning C4018: '<': signed/unsigned mismatch
-c:\users\user\documents\visual studio 2015\projects\platformgame\platformgame\maingame.cpp(115): warning C4018: '<': signed/unsigned mismatch
-c:\users\user\documents\visual studio 2015\projects\platformgame\platformgame\maingame.cpp(118): warning C4018: '<': signed/unsigned mismatch
-c:\users\user\documents\visual studio 2015\projects\platformgame\platformgame\maingame.cpp(122): warning C4018: '<': signed/unsigned mismatch
-  PlatformGame.vcxproj -> C:\Users\user\documents\visual studio 2015\Projects\PlatformGame\Debug\PlatformGame.exe
+c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\platformgame\maingame.cpp(80): warning C4018: '<': signed/unsigned mismatch
+c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\platformgame\maingame.cpp(85): warning C4018: '<': signed/unsigned mismatch
+c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\platformgame\maingame.cpp(106): warning C4018: '<': signed/unsigned mismatch
+c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\platformgame\maingame.cpp(134): warning C4018: '<': signed/unsigned mismatch
+c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\platformgame\maingame.cpp(137): warning C4018: '<': signed/unsigned mismatch
+c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\platformgame\maingame.cpp(140): warning C4018: '<': signed/unsigned mismatch
+  Bullet.cpp
+  Generating Code...
+  Compiling...
+  main.cpp
+  Generating Code...
+  Skipping... (no relevant changes detected)
+  Weapon.cpp
+  Player.cpp
+  Human.cpp
+  Box.cpp
+  Agent.cpp
+  AK47.cpp
+  PlatformGame.vcxproj -> C:\Users\cjshore12\Documents\Visual Studio 2015\Projects\PlatformGame\Debug\PlatformGame.exe

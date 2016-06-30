@@ -12,6 +12,7 @@
 #include "Player.h"
 #include "SpriteBatch.h"
 #include "Bullet.h"
+#include "Collision.h"
 
 enum class GameState {PLAY, PAUSED, EXIT};
 
@@ -31,6 +32,7 @@ private:
 	Camera _camera;
 	Timing _timer;
 	SpriteBatch _spriteBatch;
+	CollisionManager _collisionManager;
 
 	Player _player;
 

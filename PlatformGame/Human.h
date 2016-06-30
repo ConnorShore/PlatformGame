@@ -38,6 +38,8 @@ protected:
 	bool _canShoot = true;
 	bool _shooting = false;
 
+	char* _name = "human";
+
 	std::vector<Weapon*> _weapons;
 	Weapon* _currentWeapon;
 	Weapon* _primaryWeapon;

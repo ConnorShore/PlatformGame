@@ -20,7 +20,9 @@ void Box::init(b2World* world, const glm::vec2& position, const glm::vec2& dimen
 	bodyDef.type = b2_dynamicBody;
 	bodyDef.position.Set(position.x, position.y);
 	bodyDef.fixedRotation = false;
+	bodyDef.active = true;
 	_body = world->CreateBody(&bodyDef);
+	_body->SetUserData((void*) "box");
 
 	b2PolygonShape dynamicBox;
 	dynamicBox.SetAsBox(_dimension.x / 2.0f, _dimension.y / 2.0f);

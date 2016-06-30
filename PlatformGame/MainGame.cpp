@@ -22,6 +22,7 @@ void MainGame::init()
 
 	b2Vec2 gravity(0, -20.0f);
 	_world = std::make_unique<b2World>(gravity);
+	_world.get()->SetContactListener(&_collisionManager);
 
 	_camera.init(_screenWidth, _screenHeight);
 	_camera.setScale(37.0f);
@@ -73,6 +74,20 @@ void MainGame::input()
 
 void MainGame::update()
 {
+	for (int i = 0; i < _collisionManager.bodiesToDestroy.size(); i++) {
+		_collisionManager.bodiesToDestroy[i]->SetActive(false);
+	}
+	_collisionManager.bodiesToDestroy.clear();
+
+	for (int i = 0; i < _boxes.size(); i++) {
+		if (_boxes[i].getBody()->IsActive() == false) {
+			_world->DestroyBody(_boxes[i].getBody());
+			_boxes[i] = _boxes.back();
+			_boxes.pop_back();
+			i--;
+		}
+	}
+
 	for (auto& human : _humans) {
 		if (human->isShooting()) {
 			Bullet* bullet = new Bullet(_world.get(), human->getCurrentWeapon()->getBulletDef());
@@ -86,7 +101,8 @@ void MainGame::update()
 	_camera.update();
 
 	for (int i = 0; i < _bullets.size(); i++) {
-		if (!_bullets[i]->isAlive()) {
+		if (_bullets[i]->getBody()->IsActive() == false) {
+			_world->DestroyBody(_bullets[i]->getBody());
 			delete _bullets[i];
 			_bullets[i] = _bullets.back();
 			_bullets.pop_back();
@@ -116,8 +132,7 @@ void MainGame::render()
 		_humans[i]->humanRender(_spriteBatch);
 
 	for (int i = 0; i < _bullets.size(); i++)
-		if(_bullets[i]->isAlive())
-			_bullets[i]->render(_spriteBatch);
+		_bullets[i]->render(_spriteBatch);
 
 	for(int i = 0; i < _boxes.size(); i++)
 		_boxes[i].render(_spriteBatch);

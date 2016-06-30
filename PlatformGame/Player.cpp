@@ -6,14 +6,13 @@ Player::Player()
 {
 }
 
-
 Player::~Player()
 {
 }
 
 void Player::init()
 {
-	
+	_name = "player";
 }
 
 void Player::update()

@@ -39,6 +39,8 @@ void Human::humanInit(b2World* world, const glm::vec2& position, const glm::vec2
 	_fixture = _body->CreateFixture(&fixtureDef);
 
 	init();
+
+	_body->SetUserData((void*)_name);
 }
 
 void Human::humanUpdate()

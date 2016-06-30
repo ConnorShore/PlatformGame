@@ -19,16 +19,11 @@ public:
 
 	glm::vec2 getDimension() const { return _dimension; }
 	Texture getTexture() const { return _texture; }
-	GLuint getVboID() const { return _vboID; }
 	b2Body* getBody() const { return _body; }
-
-	void setVboID(GLuint vboID) { _vboID = vboID; }
-
 private:
 	glm::vec2 _dimension;
 	Texture _texture;
 	float _depth;
-	GLuint _vboID = 0;
 	b2Body* _body = nullptr;
 	b2Fixture* _fixture = nullptr;
 };
