@@ -3,11 +3,12 @@
 #include "BulletDef.h"
 #include "SpriteBatch.h"
 #include "Agent.h"
+#include "Damagable.h"
 
 #include <vector>
 #include <Box2D\Box2D.h>
 
-class Bullet
+class Bullet : public Damagable
 {
 public:
 	Bullet(b2World* world, BulletDef& bulletDef);
@@ -19,6 +20,7 @@ public:
 	b2Body* getBody() { return _body; }
 
 private:
+	Damagable* _damageStats = new Damagable;
 	b2Body* _body;
 	b2Fixture* _fixture;
 	int _lifeCount = 0;

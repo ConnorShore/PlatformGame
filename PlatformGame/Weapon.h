@@ -24,6 +24,7 @@ public:
 
 	void setParent(Human* parent) { _parent = parent; }
 	void setFireCount(float count) { _fireCount = count; }
+	void resetFireCount() { _fireCount = 0.0f; }
 
 	BulletDef& getBulletDef() { return _bulletDef; }
 	float getFireRate() const { return _fireRate; }

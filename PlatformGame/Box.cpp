@@ -16,13 +16,16 @@ void Box::init(b2World* world, const glm::vec2& position, const glm::vec2& dimen
 	_texture = texture;
 	_depth = depth;
 
+	_damageStats->name = "box";
+	_damageStats->health = 2.0f;
+
 	b2BodyDef bodyDef;
 	bodyDef.type = b2_dynamicBody;
 	bodyDef.position.Set(position.x, position.y);
 	bodyDef.fixedRotation = false;
 	bodyDef.active = true;
 	_body = world->CreateBody(&bodyDef);
-	_body->SetUserData((void*) "box");
+	_body->SetUserData(_damageStats);
 
 	b2PolygonShape dynamicBox;
 	dynamicBox.SetAsBox(_dimension.x / 2.0f, _dimension.y / 2.0f);
@@ -34,6 +37,12 @@ void Box::init(b2World* world, const glm::vec2& position, const glm::vec2& dimen
 	fixtureDef.filter.categoryBits = CATEGORY_ENVIRONMENT;
 	fixtureDef.filter.maskBits = MASK_ALL;
 	_fixture = _body->CreateFixture(&fixtureDef);
+}
+
+void Box::update()
+{
+	if (_damageStats->health <= 0.0f)
+		_isAlive = false;
 }
 
 void Box::render(SpriteBatch& spriteBatch)

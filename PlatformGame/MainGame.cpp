@@ -80,7 +80,8 @@ void MainGame::update()
 	_collisionManager.bodiesToDestroy.clear();
 
 	for (int i = 0; i < _boxes.size(); i++) {
-		if (_boxes[i].getBody()->IsActive() == false) {
+		_boxes[i].update();
+		if (_boxes[i].isAlive() == false) {
 			_world->DestroyBody(_boxes[i].getBody());
 			_boxes[i] = _boxes.back();
 			_boxes.pop_back();

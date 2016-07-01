@@ -4,12 +4,13 @@
 
 #include "Agent.h"
 #include "Weapon.h"
+#include "Damagable.h"
 
 class Weapon;
 
 //Break up Agent to be abstract and have lower levels such as human, bug, etc.
 
-class Human : public Agent
+class Human : public Agent, public Damagable
 {
 public:
 	Human();
@@ -31,14 +32,17 @@ public:
 
 	bool canShoot() const { return _canShoot; }
 	bool isShooting() const { return _shooting; }
+	float getHealth() const { return _damageStats->health; }
+
+	void setHealth(float newHealth) { _damageStats->health = newHealth; }
 
 protected:
+	Damagable* _damageStats = new Damagable;
+	bool _isAlive = true;
 	bool _onGround = false;	//< Add world collision (manifold) to determine
 	bool _canJump = false;
 	bool _canShoot = true;
 	bool _shooting = false;
-
-	char* _name = "human";
 
 	std::vector<Weapon*> _weapons;
 	Weapon* _currentWeapon;

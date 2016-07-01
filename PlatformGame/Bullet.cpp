@@ -4,10 +4,12 @@ Bullet::Bullet(b2World* world, BulletDef& bulletDef /*Human* parent* <= for coll
 {
 	//Add collision filtering i.e 0x00, 0x02 for what bullets can collide with
 	_size = bulletDef.size;
-	_damage = bulletDef.damage;
 	_speed = bulletDef.speed;
 	_texture = bulletDef.texture;
 	_direction = bulletDef.direction;
+
+	_damageStats->name = "bullet";
+	_damageStats->damage = bulletDef.damage;
 
 	//Implement body
 	b2BodyDef bodyDef;
@@ -17,7 +19,7 @@ Bullet::Bullet(b2World* world, BulletDef& bulletDef /*Human* parent* <= for coll
 	bodyDef.position.Set(bulletDef.position.x, bulletDef.position.y);
 	bodyDef.linearVelocity.Set(bulletDef.direction.x * bulletDef.speed, bulletDef.direction.y * bulletDef.speed);
 	_body = world->CreateBody(&bodyDef);
-	_body->SetUserData((void*)"bullet");
+	_body->SetUserData(_damageStats);
 
 	b2CircleShape circleShape;
 	circleShape.m_radius = bulletDef.size / 2.0f;
@@ -34,6 +36,8 @@ Bullet::Bullet(b2World* world, BulletDef& bulletDef /*Human* parent* <= for coll
 void Bullet::update()
 {
 	_body->ApplyLinearImpulse(b2Vec2(_direction.x * _speed, _direction.y * _speed), _body->GetPosition());
+
+	if (_damageStats->health <= 0.0f) _body->SetActive(false);
 
 	if (_lifeCount > LIFE_TIME)
 		_body->SetActive(false);

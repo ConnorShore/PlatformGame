@@ -14,6 +14,9 @@ Human::~Human()
 
 void Human::humanInit(b2World* world, const glm::vec2& position, const glm::vec2& dimension, const glm::ivec2& sheetDims, const std::string& texPath)
 {
+	_damageStats->name = "human";
+	_damageStats->health = 100.0f;
+
 	_texture = ResourceManager::loadTexture(texPath);
 	_dimension = dimension;
 	_collisionCategory = CATEGORY_FRIENDLY;
@@ -40,7 +43,7 @@ void Human::humanInit(b2World* world, const glm::vec2& position, const glm::vec2
 
 	init();
 
-	_body->SetUserData((void*)_name);
+	_body->SetUserData(_damageStats);
 }
 
 void Human::humanUpdate()

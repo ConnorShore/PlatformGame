@@ -5,6 +5,8 @@
 #include <vector>
 #include <iostream>
 
+#include "Damagable.h"
+
 enum CollisionCategory
 {
 	CATEGORY_ENVIRONMENT = 0x0001,
@@ -30,13 +32,13 @@ public:
 		b2Body* bodyA = contact->GetFixtureA()->GetBody();
 		b2Body* bodyB= contact->GetFixtureB()->GetBody();
 
-		char* bodyAName = (char*)bodyA->GetUserData(); 
-		char* bodyBName = (char*)bodyB->GetUserData();
+		Damagable* bodyAName = (Damagable*)(bodyA->GetUserData());
+		Damagable* bodyBName = (Damagable*)(bodyB->GetUserData());
 
 		if (bodyAName != NULL && bodyBName != NULL) {
-			if (bodyAName == "box" && bodyBName == "bullet") {
-				//bodiesToDestroy.push_back(bodyA);
-				bodiesToDestroy.push_back(bodyB);
+			if (bodyAName->name == "box" && bodyBName->name == "bullet") {
+				bodyAName->health -= bodyBName->damage;
+				bodyBName->health = 0.0f;
 			}	
 		}
 	}

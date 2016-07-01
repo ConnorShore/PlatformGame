@@ -12,12 +12,13 @@ Player::~Player()
 
 void Player::init()
 {
-	_name = "player";
+	_damageStats->name = "player";
+	_damageStats->health = 120.0f;
 }
 
 void Player::update()
 {
-	_shooting = false;
+	
 }
 
 void Player::input(InputManager inputManager, Camera& camera)
@@ -53,10 +54,15 @@ void Player::input(InputManager inputManager, Camera& camera)
 
 	//Weapon selection
 	if (inputManager.isKeyDown(SDLK_1)) {
-		_currentWeapon = _primaryWeapon;
+		if (_currentWeapon != _primaryWeapon) {
+			//Release the LMB so firing stops when switching weapons
+			_currentWeapon = _primaryWeapon;
+		}
 	}
 	else if (inputManager.isKeyDown(SDLK_2)) {
-		_currentWeapon = _secondaryWeapon;
+		if (_currentWeapon != _secondaryWeapon) {
+			_currentWeapon = _secondaryWeapon;
+		}
 	}
 
 	//Shooting
