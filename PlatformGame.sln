@@ -4,6 +4,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PlatformGame", "PlatformGame\PlatformGame.vcxproj", "{FB032FD2-4E19-433E-9639-29755122281A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{FAAD4AC6-EA68-4CB5-B911-AADC22F54CBF} = {FAAD4AC6-EA68-4CB5-B911-AADC22F54CBF}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CandleLight_Engine", "CandleLight_Engine\CandleLight_Engine.vcxproj", "{FAAD4AC6-EA68-4CB5-B911-AADC22F54CBF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +26,14 @@ Global
 		{FB032FD2-4E19-433E-9639-29755122281A}.Release|x64.Build.0 = Release|x64
 		{FB032FD2-4E19-433E-9639-29755122281A}.Release|x86.ActiveCfg = Release|Win32
 		{FB032FD2-4E19-433E-9639-29755122281A}.Release|x86.Build.0 = Release|Win32
+		{FAAD4AC6-EA68-4CB5-B911-AADC22F54CBF}.Debug|x64.ActiveCfg = Debug|x64
+		{FAAD4AC6-EA68-4CB5-B911-AADC22F54CBF}.Debug|x64.Build.0 = Debug|x64
+		{FAAD4AC6-EA68-4CB5-B911-AADC22F54CBF}.Debug|x86.ActiveCfg = Debug|Win32
+		{FAAD4AC6-EA68-4CB5-B911-AADC22F54CBF}.Debug|x86.Build.0 = Debug|Win32
+		{FAAD4AC6-EA68-4CB5-B911-AADC22F54CBF}.Release|x64.ActiveCfg = Release|x64
+		{FAAD4AC6-EA68-4CB5-B911-AADC22F54CBF}.Release|x64.Build.0 = Release|x64
+		{FAAD4AC6-EA68-4CB5-B911-AADC22F54CBF}.Release|x86.ActiveCfg = Release|Win32
+		{FAAD4AC6-EA68-4CB5-B911-AADC22F54CBF}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

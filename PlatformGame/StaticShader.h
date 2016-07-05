@@ -1,6 +1,6 @@
 #pragma once
 
-#include "ShaderProgram.h"
+#include <CandleLight_Engine\ShaderProgram.h>
 
 #include <string>
 

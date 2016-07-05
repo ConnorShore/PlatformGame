@@ -17,7 +17,7 @@ void Box::init(b2World* world, const glm::vec2& position, const glm::vec2& dimen
 	_depth = depth;
 
 	_damageStats->name = "box";
-	_damageStats->health = 2.0f;
+	_damageStats->health = 20.0f;
 
 	b2BodyDef bodyDef;
 	bodyDef.type = b2_dynamicBody;

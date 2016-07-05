@@ -4,10 +4,11 @@
 #include <Box2D\Box2D.h>
 #include <string>
 
-#include "Texture.h"
-#include "SpriteSheet.h"
-#include "Vertex.h"
-#include "SpriteBatch.h"
+#include <CandleLight_Engine\Texture.h>
+#include <CandleLight_Engine\SpriteSheet.h>
+#include <CandleLight_Engine\Vertex.h>
+#include <CandleLight_Engine\SpriteBatch.h>
+
 #include "Collision.h"
 
 enum class AgentState { NONE, STANDING, WALKING, RUNNING, JUMPING, SHOOTING };

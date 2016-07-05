@@ -1,9 +1,10 @@
 #pragma once
 
-#include "Texture.h"
+#include <CandleLight_Engine\Texture.h>
+#include <CandleLight_Engine\InputManager.h>
+#include <CandleLight_Engine\Camera.h>
+
 #include "Human.h"
-#include "InputManager.h"
-#include "Camera.h"
 #include "BulletDef.h"
 
 #include <glm\glm.hpp>

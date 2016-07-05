@@ -1,7 +1,7 @@
 #pragma once
 
 #include "BulletDef.h"
-#include "SpriteBatch.h"
+#include <CandleLight_Engine\SpriteBatch.h>
 #include "Agent.h"
 #include "Damagable.h"
 

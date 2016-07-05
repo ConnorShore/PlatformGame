@@ -1,7 +1,8 @@
 #pragma once
 
-#include "Camera.h"
-#include "InputManager.h"
+#include <CandleLight_Engine\InputManager.h>
+#include <CandleLight_Engine\Camera.h>
+
 #include "Human.h"
 
 class Player : public Human

@@ -1,5 +1,6 @@
 #include "Weapon.h"
-#include "ResourceManager.h"
+
+#include <CandleLight_Engine\ResourceManager.h>
 
 #include <glm\gtx\vector_angle.hpp>
 

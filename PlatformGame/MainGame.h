@@ -2,15 +2,16 @@
 
 #include <Box2D\Box2D.h>
 
-#include "Window.h"
-#include "InputManager.h"
+#include <CandleLight_Engine\Window.h>
+#include <CandleLight_Engine\InputManager.h>
+#include <CandleLight_Engine\Camera.h>
+#include <CandleLight_Engine\Timing.h>
+#include <CandleLight_Engine\SpriteBatch.h>
+
 #include "StaticShader.h"
-#include "Camera.h"
-#include "Timing.h"
 #include "Box.h"
 #include "Human.h"
 #include "Player.h"
-#include "SpriteBatch.h"
 #include "Bullet.h"
 #include "Collision.h"
 

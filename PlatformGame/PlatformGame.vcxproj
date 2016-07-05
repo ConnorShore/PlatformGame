@@ -88,13 +88,13 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\Users\user\Documents\Visual Studio 2015\Projects\PlatformGame\deps\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)deps\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\user\Documents\Visual Studio 2015\Projects\PlatformGame\deps\lib\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2test.lib;glew32.lib;glew32s.lib;OpenGL32.lib;Box2D.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Debug\;$(SolutionDir)deps\lib\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2test.lib;glew32.lib;glew32s.lib;OpenGL32.lib;Box2D.lib;CandleLight_Engine.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -152,22 +152,12 @@
     <ClCompile Include="AK47.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Human.cpp" />
-    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Box.cpp" />
-    <ClCompile Include="InputManager.cpp" />
-    <ClCompile Include="Loader.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainGame.cpp" />
-    <ClCompile Include="picoPNG.cpp" />
     <ClCompile Include="Player.cpp" />
-    <ClCompile Include="Renderer.cpp" />
-    <ClCompile Include="ResourceManager.cpp" />
-    <ClCompile Include="ShaderProgram.cpp" />
-    <ClCompile Include="SpriteBatch.cpp" />
     <ClCompile Include="StaticShader.cpp" />
-    <ClCompile Include="Timing.cpp" />
     <ClCompile Include="Weapon.cpp" />
-    <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Agent.h" />
@@ -177,24 +167,11 @@
     <ClInclude Include="Collision.h" />
     <ClInclude Include="Damagable.h" />
     <ClInclude Include="Human.h" />
-    <ClInclude Include="Camera.h" />
     <ClInclude Include="Box.h" />
-    <ClInclude Include="InputManager.h" />
-    <ClInclude Include="Loader.h" />
     <ClInclude Include="MainGame.h" />
-    <ClInclude Include="picoPNG.h" />
     <ClInclude Include="Player.h" />
-    <ClInclude Include="Renderer.h" />
-    <ClInclude Include="ResourceManager.h" />
-    <ClInclude Include="ShaderProgram.h" />
-    <ClInclude Include="SpriteBatch.h" />
-    <ClInclude Include="SpriteSheet.h" />
     <ClInclude Include="StaticShader.h" />
-    <ClInclude Include="Texture.h" />
-    <ClInclude Include="Timing.h" />
-    <ClInclude Include="Vertex.h" />
     <ClInclude Include="Weapon.h" />
-    <ClInclude Include="Window.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

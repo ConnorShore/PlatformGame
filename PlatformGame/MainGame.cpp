@@ -1,6 +1,7 @@
 #include "MainGame.h"
-#include "ResourceManager.h"
 #include "AK47.h"
+
+#include <CandleLight_Engine\ResourceManager.h>
 
 #include <SDL\SDL.h>
 #include <GL\glew.h>

@@ -4,8 +4,9 @@
 #include <glm\glm.hpp>
 #include <Box2D\Box2D.h>
 
-#include "Texture.h"
-#include "SpriteBatch.h"
+#include <CandleLight_Engine\Texture.h>
+#include <CandleLight_Engine\SpriteBatch.h>
+
 #include "Collision.h"
 #include "Damagable.h";
 

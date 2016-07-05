@@ -1,5 +1,6 @@
 #include "Human.h"
-#include "ResourceManager.h"
+
+#include <CandleLight_Engine\ResourceManager.h>
 
 #include <iostream>
 

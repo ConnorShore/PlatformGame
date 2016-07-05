@@ -11,6 +11,6 @@ public:
 	~AK47();
 
 private:
-
+	void initStats(const glm::vec2& position);
 };
 
