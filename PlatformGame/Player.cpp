@@ -4,6 +4,7 @@
 
 Player::Player()
 {
+	_isPlayer = true;
 }
 
 Player::~Player()
@@ -18,7 +19,7 @@ void Player::init()
 
 void Player::update()
 {
-	
+
 }
 
 void Player::input(InputManager inputManager, Camera& camera)
@@ -70,9 +71,9 @@ void Player::input(InputManager inputManager, Camera& camera)
 		_shooting = _currentWeapon->shoot();
 	}
 
-	if (!inputManager.isKeyDown(SDL_BUTTON_LEFT)) {
-		_currentWeapon->setFireCount(_currentWeapon->getFireRate());
-	}
+	//if (!inputManager.isKeyDown(SDL_BUTTON_LEFT)) {
+	//	_currentWeapon->setFireCount(_currentWeapon->getFireRate());
+	//}
 
 	_currentWeapon->update(inputManager, camera);
 }

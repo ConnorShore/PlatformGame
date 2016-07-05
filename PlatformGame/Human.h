@@ -32,6 +32,7 @@ public:
 
 	bool canShoot() const { return _canShoot; }
 	bool isShooting() const { return _shooting; }
+	bool isPlayer() const { return _isPlayer; }
 	float getHealth() const { return _damageStats->health; }
 
 	void setHealth(float newHealth) { _damageStats->health = newHealth; }
@@ -43,6 +44,7 @@ protected:
 	bool _canJump = false;
 	bool _canShoot = true;
 	bool _shooting = false;
+	bool _isPlayer = false;
 
 	std::vector<Weapon*> _weapons;
 	Weapon* _currentWeapon;

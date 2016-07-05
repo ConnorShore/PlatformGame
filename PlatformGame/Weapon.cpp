@@ -12,21 +12,21 @@ Weapon::Weapon(const glm::vec2 & position, const glm::vec2& dimension, const glm
 
 void Weapon::update(InputManager inputManager, Camera& camera)
 {
-	glm::vec2 parent(_parent->getPosition());
-	_position = glm::vec2(parent.x + _origin.x, parent.y + _origin.y);
+	//glm::vec2 parent(_parent->getPosition());
+	//_position = glm::vec2(parent.x + _origin.x, parent.y + _origin.y);
 
-	glm::vec2 mouse(camera.screenToWorldCoords(inputManager.getMousePos()));
-	_angle = (atan2(mouse.y - _position.y, mouse.x - _position.x));
-	
-	_bulletDef.direction = glm::vec2(glm::cos(_angle), glm::sin(_angle));
-	_bulletDef.position = glm::vec2(_position.x, _position.y) + _bulletDef.direction;
+	//glm::vec2 mouse(camera.screenToWorldCoords(inputManager.getMousePos()));
+	//_angle = (atan2(mouse.y - _position.y, mouse.x - _position.x));
+	//
+	//_bulletDef.direction = glm::vec2(glm::cos(_angle), glm::sin(_angle));
+	//_bulletDef.position = glm::vec2(_position.x, _position.y) + _bulletDef.direction;
 
-	if (_fireCount < _fireRate) {
-		_canShoot = false;
-		_fireCount++;
-	} else {
-		_canShoot = true;
-	}
+	//if (_fireCount < _fireRate) {
+	//	_canShoot = false;
+	//	_fireCount++;
+	//} else {
+	//	_canShoot = true;
+	//}
 }
 
 void Weapon::render(SpriteBatch& spriteBatch)
