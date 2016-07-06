@@ -85,7 +85,7 @@ void Human::humanRender(SpriteBatch& spriteBatch)
 
 	spriteBatch.addToBatch(destRect, uvRect, 1.0f, _texture.id, Color(255, 255, 255, 255));
 
-	//_currentWeapon->render(spriteBatch);
+	_currentWeapon->render(spriteBatch);
 
 	render();
 }

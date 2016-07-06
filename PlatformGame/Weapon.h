@@ -29,6 +29,10 @@ public:
 
 	BulletDef& getBulletDef() { return _bulletDef; }
 	float getFireRate() const { return _fireRate; }
+	std::string getName() const { return _name; }
+	glm::vec2 getPosition() const { return _position; }
+	glm::vec2 getDimension() const { return _dimension; }
+	glm::vec2 getOrigin() const { return _origin; }
 
 protected:
 	Human* _parent;
@@ -39,4 +43,5 @@ protected:
 	int _bulletCount, _magazineSize;
 	BulletDef _bulletDef;
 	bool _canShoot = true;
+	std::string _name = "weapon";
 };

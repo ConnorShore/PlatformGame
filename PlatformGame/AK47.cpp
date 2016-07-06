@@ -19,6 +19,7 @@ AK47::~AK47()
 
 void AK47::initStats(const glm::vec2& position)
 {
+	_name = "ak47";
 	_bulletDef.damage = 8.0f;
 	_bulletDef.size = 0.25f;
 	_bulletDef.speed = 40.0f;

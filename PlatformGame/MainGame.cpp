@@ -76,16 +76,8 @@ void MainGame::input()
 	_inputManager.update();
 	_player.input(_inputManager, _camera);
 
-	if (_inputManager.isKeyDown(SDLK_s)) {
+	if (_inputManager.isKeyDown(SDLK_F1)) {
 		Level::saveLevel("TestLevel.txt", _player, _humans, _boxes);
-	}
-
-	if (_inputManager.isKeyDown(SDLK_l)) {
-		_boxes.clear();
-		_humans.clear();
-		_world.reset();
-		//_world = std::make_unique<b2World>(10.0f);
-		//Level::loadLevel("TestLevel.txt", _world.get(), _player, _humans, _boxes);
 	}
 }
 
@@ -106,29 +98,29 @@ void MainGame::update()
 		}
 	}
 
-	for (int i = 0; i < _humans.size(); i++) {
-		if (_humans[i]->isShooting()) {
-			//Bullet* bullet = new Bullet(_world.get(), human->getCurrentWeapon()->getBulletDef());
-			//_bullets.push_back(bullet);
+	for (auto& human : _humans) {
+		if (human->isShooting()) {
+			Bullet* bullet = new Bullet(_world.get(), human->getCurrentWeapon()->getBulletDef());
+			_bullets.push_back(bullet);
 		}
-		_humans[i]->humanUpdate();
+		human->humanUpdate();
 	}
 
 	_camera.setPosition(glm::vec2(_player.getPosition().x + _player.getDimension().x / 2.0f, _player.getPosition().y + _player.getDimension().y / 2.0f));
 	_camera.update();
 
-	//for (int i = 0; i < _bullets.size(); i++) {
-	//	if (_bullets[i]->getBody()->IsActive() == false) {
-	//		_world->DestroyBody(_bullets[i]->getBody());
-	//		delete _bullets[i];
-	//		_bullets[i] = _bullets.back();
-	//		_bullets.pop_back();
-	//		i--;
-	//	}
-	//	else {
-	//		_bullets[i]->update();
-	//	}
-	//}
+	for (int i = 0; i < _bullets.size(); i++) {
+		if (_bullets[i]->getBody()->IsActive() == false) {
+			_world->DestroyBody(_bullets[i]->getBody());
+			delete _bullets[i];
+			_bullets[i] = _bullets.back();
+			_bullets.pop_back();
+			i--;
+		}
+		else {
+			_bullets[i]->update();
+		}
+	}
 
 	_world->Step(1 / 60.0f, 6, 2);
 }
@@ -148,8 +140,8 @@ void MainGame::render()
 	for (int i = 0; i < _humans.size(); i++)
 		_humans[i]->humanRender(_spriteBatch);
 
-	//for (int i = 0; i < _bullets.size(); i++)
-	//	_bullets[i]->render(_spriteBatch);
+	for (int i = 0; i < _bullets.size(); i++)
+		_bullets[i]->render(_spriteBatch);
 
 	for(int i = 0; i < _boxes.size(); i++)
 		_boxes[i].render(_spriteBatch);

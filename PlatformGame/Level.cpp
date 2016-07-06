@@ -5,6 +5,10 @@
 
 #include <fstream>
 #include <glm\glm.hpp>
+#include <string>
+
+#include "Weapon.h"
+#include "AK47.h"
 
 Level::Level()
 {
@@ -27,10 +31,14 @@ bool Level::saveLevel(const std::string name, const Player& player, const std::v
 	level << humans.size()-1 << "\n";
 	for (auto& human : humans) {
 		if(human->isPlayer() == false)
-			level << human->getPosition().x << ' ' << human->getPosition().y << ' ' << human->getDimension().x << ' ' << human->getDimension().y << ' ' << human->getTexture().filePath << "\n";
+			level << human->getPosition().x << ' ' << human->getPosition().y << ' ' << human->getDimension().x << ' ' << human->getDimension().y << ' ' << human->getTexture().filePath << ' '
+			<< human->getCurrentWeapon()->getName() << ' ' << human->getCurrentWeapon()->getPosition().x << ' ' << human->getCurrentWeapon()->getPosition().y << ' '
+			<< human->getCurrentWeapon()->getDimension().x <<  ' ' << human->getCurrentWeapon()->getDimension().y << ' ' << human->getCurrentWeapon()->getOrigin().x << ' ' << human->getCurrentWeapon()->getOrigin().y << "\n";
 	}
 
-	level << player.getPosition().x << ' ' << player.getPosition().y << ' ' << player.getDimension().x << ' ' << player.getDimension().y << ' ' << player.getTexture().filePath << "\n";
+	level << player.getPosition().x << ' ' << player.getPosition().y << ' ' << player.getDimension().x << ' ' << player.getDimension().y << ' ' << player.getTexture().filePath << ' '
+	<< player.getCurrentWeapon()->getName() << ' ' << player.getCurrentWeapon()->getPosition().x << ' ' << player.getCurrentWeapon()->getPosition().y << ' '
+	<< player.getCurrentWeapon()->getDimension().x << ' ' << player.getCurrentWeapon()->getDimension().y << ' ' << player.getCurrentWeapon()->getOrigin().x << ' ' << player.getCurrentWeapon()->getOrigin().y << "\n";
 
 	level << boxes.size() << "\n";
 	for (auto& box : boxes) {
@@ -70,8 +78,14 @@ bool Level::loadLevel(const std::string name, b2World* world, Player& player, st
 		//player
 		glm::vec2 pos, dim;
 		std::string texPath;
-		level >> pos.x >> pos.y >> dim.x >> dim.y >> texPath;
+		std::string weaponName;
+		level >> pos.x >> pos.y >> dim.x >> dim.y >> texPath >> weaponName;
 		player.humanInit(world, pos, dim, glm::vec2(10, 1), texPath);
+		if (weaponName == "ak47") {
+			glm::vec2 pos, dim, ori;
+			level >> pos.x >> pos.y >> dim.x >> dim.y >> ori.x >> ori.y;
+			player.addWeapon(new AK47(pos, dim, ori));
+		}
 		humans.push_back(&player);
 	}
 
