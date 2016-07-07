@@ -32,33 +32,35 @@ void MainGame::init()
 
 	std::mt19937 randomGen;
 	std::uniform_real_distribution<float> xDist(-10.0f, 10.0f);
-	std::uniform_real_distribution<float> yDist(-10.0f, 15.0f);
+	std::uniform_real_distribution<float> yDist(-10.0f, 2.0f);
 
 	_tileBatch.init();
 	_spriteBatch.init();
 
 	Texture tex = ResourceManager::loadTexture("Textures/boxTex.png");
 
-	//_ground.addVertex(glm::vec2(-10.7f, -10.0f));
-	//_ground.addVertex(glm::vec2(0.7f, -18.0f));
-	//_ground.addVertex(glm::vec2(10.7f, -10.0f));
-	//_ground.init(_world.get(), _ground.getVertices().size());
+	_ground.addVertex(glm::vec2(-10.0f, -10.0f));
+	_ground.addVertex(glm::vec2(-3.0f, -10.0f));
+	_ground.addVertex(glm::vec2(-3.0f, -11.0f));
+	_ground.addVertex(glm::vec2(21.0f, -11.0f));
+	_ground.addVertex(glm::vec2(21.0f, -10.0f));
+	_ground.addVertex(glm::vec2(26.0f, -10.0f));
+	_ground.init(_world.get(), _ground.getVertices().size());
 
-	////Setup boxes
-	//for (int i = 0; i < 10; i++) {
-	//	Box box;
-	//	box.init(_world.get(), glm::vec2(xDist(randomGen), yDist(randomGen)), glm::vec2(1.0f, 1.0f), tex);
-	//	_boxes.push_back(box);
-	//}
+	//Setup boxes
+	for (int i = 0; i < 10; i++) {
+		Box box;
+		box.init(_world.get(), glm::vec2(xDist(randomGen), yDist(randomGen)), glm::vec2(1.0f, 1.0f), tex);
+		_boxes.push_back(box);
+	}
 
-	//_player.humanInit(_world.get(), glm::vec2(0.0f, 15.0f), glm::vec2(1.0f, 1.8f), glm::vec2(10, 1), "Textures/ss_player_base.png");
-	//_player.addWeapon(new AK47(_player.getPosition(), glm::vec2(1.0f, -0.75f)));
-	//_player.addWeapon(new AK47(_player.getPosition(), glm::vec2(2.2f, 1.55f), glm::vec2(1.0f, -0.75f)));
-	//_humans.push_back(&_player);
+	_player.humanInit(_world.get(), glm::vec2(0.0f, -5.0f), glm::vec2(1.0f, 1.8f), glm::vec2(10, 1), "Textures/ss_player_base.png");
+	_player.addWeapon(new AK47(_player.getPosition(), glm::vec2(1.0f, -0.75f)));
+	_player.addWeapon(new AK47(_player.getPosition(), glm::vec2(2.2f, 1.55f), glm::vec2(1.0f, -0.75f)));
+	_humans.push_back(&_player);
 
-	//Level::loadTiles("TestLevel_Tiles.txt", _tiles);
 	Level::loadTiles("TestLevel_tiles.txt", "Textures/Tiles/test.png", _tiles);
-	Level::loadLevel("TestLevel.txt", _world.get(), _player, _humans, _boxes, _ground);
+	//Level::loadLevel("TestLevel.txt", _world.get(), _player, _humans, _boxes, _ground);
 
 	_staticShader.init("Shaders/staticShader.vert", "Shaders/staticShader.frag");
 	_staticShader.bindAttributes();

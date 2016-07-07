@@ -14,7 +14,6 @@ Level::Level()
 {
 }
 
-
 Level::~Level()
 {
 }
@@ -197,4 +196,5 @@ void Level::saveGround(std::ofstream& level, Ground & ground)
 
 void Level::saveTiles(std::ofstream & level, std::vector<Tile>& tiles)
 {
+
 }

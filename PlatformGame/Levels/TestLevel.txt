@@ -1,17 +1,19 @@
-3
--10.7 -10
-0.7 -18
-10.7 -10
+6
+-10 -10
+-3 -10
+-3 -11
+21 -11
+21 -10
+26 -10
 0
-5.06139 -12.5538 1 1.8 Textures/ss_player_base.png ak47 5.16139 -12.6288 1.2 0.55 0.1 -0.075 ak47 0 15 2.2 1.55 0.1 -0.075
-10
--1.92765 -15.5244 1 1 Textures/boxTex.png
-4.6653 -14.1696 1 1 Textures/boxTex.png
-1.50591 -16.6767 1 1 Textures/boxTex.png
-0.577082 -16.0432 1 1 Textures/boxTex.png
--1.09675 -16.1068 1 1 Textures/boxTex.png
-0.558434 -17.2769 1 1 Textures/boxTex.png
--0.266536 -16.6888 1 1 Textures/boxTex.png
-2.29392 -16.0507 1 1 Textures/boxTex.png
-3.87199 -14.796 1 1 Textures/boxTex.png
-3.08262 -15.4242 1 1 Textures/boxTex.png
+6.58695 -10.085 1 1.8 Textures/ss_player_base.png ak47 6.68695 -10.16 1.2 0.55 0.1 -0.075 ak47 0 -5 2.2 1.55 0.1 -0.075
+9
+-77.0043 -2671.3 1 1 Textures/boxTex.png
+7.60619 -10.485 1 1 Textures/boxTex.png
+16.2749 -10.485 1 1 Textures/boxTex.png
+-48.8789 -2613 1 1 Textures/boxTex.png
+-30.1279 -2521.88 1 1 Textures/boxTex.png
+12.6262 -10.4826 1 1 Textures/boxTex.png
+-65.133 -2646.69 1 1 Textures/boxTex.png
+20.485 -10.4844 1 1 Textures/boxTex.png
+19.4246 -10.485 1 1 Textures/boxTex.png

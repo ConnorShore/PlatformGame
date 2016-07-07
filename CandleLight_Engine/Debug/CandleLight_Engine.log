@@ -1,22 +1,4 @@
 ﻿  Window.cpp
-  Timing.cpp
-c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\candlelight_engine\timing.cpp(45): warning C4244: 'argument': conversion from 'float' to 'Uint32', possible loss of data
-  SpriteBatch.cpp
-c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\candlelight_engine\spritebatch.cpp(128): warning C4018: '<': signed/unsigned mismatch
-c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\candlelight_engine\spritebatch.cpp(159): warning C4018: '<': signed/unsigned mismatch
-  ShaderProgram.cpp
-  ResourceManager.cpp
-  Renderer.cpp
-  picoPNG.cpp
-  Loader.cpp
-c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\candlelight_engine\loader.cpp(30): warning C4477: 'printf' : format string '%s' requires an argument of type 'char *', but variadic argument 1 has type 'std::string'
-c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\candlelight_engine\loader.cpp(67): warning C4244: '=': conversion from 'std::streamoff' to 'long', possible loss of data
-c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\candlelight_engine\loader.cpp(73): warning C4244: '-=': conversion from 'std::streamoff' to 'long', possible loss of data
-c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\candlelight_engine\loader.cpp(60): warning C4477: 'printf' : format string '%s' requires an argument of type 'char *', but variadic argument 1 has type 'const std::string'
-  InputManager.cpp
-c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\candlelight_engine\inputmanager.cpp(30): warning C4244: 'argument': conversion from 'Sint32' to 'float', possible loss of data
-  Camera.cpp
-  Generating Code...
 glew32.lib(glew32.dll) : warning LNK4006: __NULL_IMPORT_DESCRIPTOR already defined in SDL2.lib(SDL2.dll); second definition ignored
 glew32.lib(glew32.dll) : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
 glew32s.lib(glew.obj) : warning LNK4006: _glewGetExtension@4 already defined in glew32.lib(glew32.dll); second definition ignored

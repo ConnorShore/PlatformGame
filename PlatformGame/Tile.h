@@ -5,7 +5,7 @@
 #include <CandleLight_Engine\Texture.h>
 #include <CandleLight_Engine\SpriteSheet.h>
 
-const float TILE_SIZE = 1.5f;
+const float TILE_SIZE = 1.0f;
 
 class Tile
 {

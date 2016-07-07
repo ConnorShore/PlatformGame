@@ -21,6 +21,7 @@ void Window::createWindow(const std::string & title, int x, int y, int width, in
 	SDL_Init(SDL_INIT_EVERYTHING);
 
 	_window = SDL_CreateWindow(title.c_str(), x, y, width, height, SDL_WINDOW_OPENGL);
+
 	if (_window == nullptr) {
 		printf("Failed to create SDL Window");
 	}
