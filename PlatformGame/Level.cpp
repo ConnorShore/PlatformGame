@@ -111,6 +111,52 @@ bool Level::loadLevel(const std::string name, b2World* world, Player& player, st
 	return true;
 }
 
+bool Level::loadTiles(const std::string& name, const std::string& tileSheet, std::vector<Tile>& tiles)
+{
+	std::ifstream level;
+	level.open("Levels/" + name);
+	if (level.fail()) {
+		printf("Failed to open level: %s", name.c_str());
+		return false;
+	}
+
+	Texture tex = ResourceManager::loadTexture(tileSheet);
+
+	//Get position of first tile
+	glm::vec2 startPos;
+	level >> startPos.x >> startPos.y;
+
+	std::vector<std::string> levelData;
+	std::string temp;
+
+	while (std::getline(level, temp)) {
+		levelData.emplace_back(temp);
+	}
+
+	for (int y = 0; y < levelData.size(); y++) {
+		for (int x = 0; x < levelData[y].size(); x++) {
+			char tile = levelData[y][x];
+			switch (tile) {
+			case '0':
+				tiles.emplace_back(glm::vec2((x * TILE_SIZE) + startPos.x, (-y * TILE_SIZE) + startPos.y), 0, tex);
+				break;
+			case '1':
+				tiles.emplace_back(glm::vec2((x * TILE_SIZE) + startPos.x, (-y * TILE_SIZE) + startPos.y), 1, tex);
+				break;
+			case ' ':
+			case '\t':
+			case '.':
+				break;
+			default:
+				printf("Unexpected character %c at (%d, %d)\n", tile, x, y);
+				break;
+			}
+		}
+	}
+
+	return true;
+}
+
 void Level::saveHumans(std::ofstream& level, const Player & player, const std::vector<Human*>& humans)
 {
 	//Humans
@@ -147,4 +193,8 @@ void Level::saveGround(std::ofstream& level, Ground & ground)
 	for (auto& vert : ground.getVertices()) {
 		level << vert.x << ' ' << vert.y << "\n";
 	}
+}
+
+void Level::saveTiles(std::ofstream & level, std::vector<Tile>& tiles)
+{
 }

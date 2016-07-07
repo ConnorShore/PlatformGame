@@ -15,6 +15,7 @@
 #include "Bullet.h"
 #include "Collision.h"
 #include "Ground.h"
+#include "Tile.h"
 
 enum class GameState {PLAY, PAUSED, EXIT};
 
@@ -34,6 +35,7 @@ private:
 	Camera _camera;
 	Timing _timer;
 	SpriteBatch _spriteBatch;
+	SpriteBatch _tileBatch;
 	CollisionManager _collisionManager;
 	Ground _ground;
 
@@ -41,6 +43,7 @@ private:
 
 	std::unique_ptr<b2World> _world;
 
+	std::vector<Tile> _tiles;
 	std::vector<Box> _boxes;
 	std::vector<Human*> _humans;
 	std::vector<Bullet*> _bullets;

@@ -34,6 +34,7 @@ void MainGame::init()
 	std::uniform_real_distribution<float> xDist(-10.0f, 10.0f);
 	std::uniform_real_distribution<float> yDist(-10.0f, 15.0f);
 
+	_tileBatch.init();
 	_spriteBatch.init();
 
 	Texture tex = ResourceManager::loadTexture("Textures/boxTex.png");
@@ -55,6 +56,8 @@ void MainGame::init()
 	//_player.addWeapon(new AK47(_player.getPosition(), glm::vec2(2.2f, 1.55f), glm::vec2(1.0f, -0.75f)));
 	//_humans.push_back(&_player);
 
+	//Level::loadTiles("TestLevel_Tiles.txt", _tiles);
+	Level::loadTiles("TestLevel_tiles.txt", "Textures/Tiles/test.png", _tiles);
 	Level::loadLevel("TestLevel.txt", _world.get(), _player, _humans, _boxes, _ground);
 
 	_staticShader.init("Shaders/staticShader.vert", "Shaders/staticShader.frag");
@@ -125,6 +128,16 @@ void MainGame::render()
 	_staticShader.loadPMatrix(_camera.getCameraMatrix());
 	_staticShader.loadTexture();
 
+	//Tiles
+	_tileBatch.begin();
+
+	for (int i = 0; i < _tiles.size(); i++) {
+		_tiles[i].render(_tileBatch);
+	}
+	_tileBatch.end();
+	_tileBatch.renderBatch();
+
+	//Sprites
 	_spriteBatch.begin();
 
 	for (int i = 0; i < _humans.size(); i++)
