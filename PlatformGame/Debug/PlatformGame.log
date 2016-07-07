@@ -1,9 +1,9 @@
 ﻿  MainGame.cpp
 c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\platformgame\box.h(11): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\platformgame\maingame.cpp(86): warning C4018: '<': signed/unsigned mismatch
-c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\platformgame\maingame.cpp(91): warning C4018: '<': signed/unsigned mismatch
-c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\platformgame\maingame.cpp(112): warning C4018: '<': signed/unsigned mismatch
-c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\platformgame\maingame.cpp(140): warning C4018: '<': signed/unsigned mismatch
-c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\platformgame\maingame.cpp(143): warning C4018: '<': signed/unsigned mismatch
-c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\platformgame\maingame.cpp(146): warning C4018: '<': signed/unsigned mismatch
+c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\platformgame\maingame.cpp(95): warning C4018: '<': signed/unsigned mismatch
+c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\platformgame\maingame.cpp(100): warning C4018: '<': signed/unsigned mismatch
+c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\platformgame\maingame.cpp(121): warning C4018: '<': signed/unsigned mismatch
+c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\platformgame\maingame.cpp(149): warning C4018: '<': signed/unsigned mismatch
+c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\platformgame\maingame.cpp(152): warning C4018: '<': signed/unsigned mismatch
+c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\platformgame\maingame.cpp(155): warning C4018: '<': signed/unsigned mismatch
   PlatformGame.vcxproj -> C:\Users\cjshore12\Documents\Visual Studio 2015\Projects\PlatformGame\Debug\PlatformGame.exe

@@ -38,23 +38,13 @@ void MainGame::init()
 
 	Texture tex = ResourceManager::loadTexture("Textures/boxTex.png");
 
-	//Setup ground
-	b2BodyDef groundBodyDef;
-	groundBodyDef.position.Set(0.0f, -15.0f);
-	b2Body* groundBody = _world->CreateBody(&groundBodyDef);
-	
-	b2PolygonShape groundShape;
-	groundShape.SetAsBox(50.0f, 5.0f);
-
-	b2FixtureDef fixDef;
-	fixDef.shape = &groundShape;
-	fixDef.density = 0.0f;
-	fixDef.filter.categoryBits = CATEGORY_ENVIRONMENT;
-	fixDef.filter.maskBits = MASK_ALL;
-	groundBody->CreateFixture(&fixDef);
+	//_ground.addVertex(glm::vec2(-10.7f, -10.0f));
+	//_ground.addVertex(glm::vec2(0.7f, -18.0f));
+	//_ground.addVertex(glm::vec2(10.7f, -10.0f));
+	//_ground.init(_world.get(), _ground.getVertices().size());
 
 	////Setup boxes
-	//for (int i = 0; i < 50; i++) {
+	//for (int i = 0; i < 10; i++) {
 	//	Box box;
 	//	box.init(_world.get(), glm::vec2(xDist(randomGen), yDist(randomGen)), glm::vec2(1.0f, 1.0f), tex);
 	//	_boxes.push_back(box);
@@ -65,7 +55,7 @@ void MainGame::init()
 	//_player.addWeapon(new AK47(_player.getPosition(), glm::vec2(2.2f, 1.55f), glm::vec2(1.0f, -0.75f)));
 	//_humans.push_back(&_player);
 
-	Level::loadLevel("TestLevel.txt", _world.get(), _player, _humans, _boxes);
+	Level::loadLevel("TestLevel.txt", _world.get(), _player, _humans, _boxes, _ground);
 
 	_staticShader.init("Shaders/staticShader.vert", "Shaders/staticShader.frag");
 	_staticShader.bindAttributes();
@@ -77,7 +67,7 @@ void MainGame::input()
 	_player.input(_inputManager, _camera);
 
 	if (_inputManager.isKeyDown(SDLK_F1)) {
-		Level::saveLevel("TestLevel.txt", _player, _humans, _boxes);
+		Level::saveLevel("TestLevel.txt", _player, _humans, _boxes, _ground);
 	}
 }
 

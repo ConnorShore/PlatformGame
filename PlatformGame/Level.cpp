@@ -19,7 +19,7 @@ Level::~Level()
 {
 }
 
-bool Level::saveLevel(const std::string name, const Player& player, const std::vector<Human*>& humans, const std::vector<Box>& boxes)
+bool Level::saveLevel(const std::string name, const Player& player, const std::vector<Human*>& humans, const std::vector<Box>& boxes, Ground& ground)
 {
 	std::ofstream level;
 	level.open("Levels/" + name);
@@ -28,29 +28,9 @@ bool Level::saveLevel(const std::string name, const Player& player, const std::v
 		return false;
 	}
 
-	//Humans
-	level << humans.size()-1 << "\n";
-	for (auto& human : humans) {
-		if(human->isPlayer() == false)
-			level << human->getPosition().x << ' ' << human->getPosition().y << ' ' << human->getDimension().x << ' ' << human->getDimension().y << ' ' << human->getTexture().filePath << ' '
-			<< human->getPrimaryWeapon()->getName() << ' ' << human->getPrimaryWeapon()->getPosition().x << ' ' << human->getPrimaryWeapon()->getPosition().y << ' '
-			<< human->getPrimaryWeapon()->getDimension().x <<  ' ' << human->getPrimaryWeapon()->getDimension().y << ' ' << human->getPrimaryWeapon()->getOrigin().x << ' ' << human->getPrimaryWeapon()->getOrigin().y << ' '
-			<< human->getSecondaryWeapon()->getName() << ' ' << human->getSecondaryWeapon()->getPosition().x << ' ' << human->getSecondaryWeapon()->getPosition().y << ' '
-			<< human->getSecondaryWeapon()->getDimension().x << ' ' << human->getSecondaryWeapon()->getDimension().y << ' ' << human->getSecondaryWeapon()->getOrigin().x << ' ' << human->getSecondaryWeapon()->getOrigin().y << "\n";
-	}
-
-	//Player
-	level << player.getPosition().x << ' ' << player.getPosition().y << ' ' << player.getDimension().x << ' ' << player.getDimension().y << ' ' << player.getTexture().filePath << ' '
-	<< player.getPrimaryWeapon()->getName() << ' ' << player.getPrimaryWeapon()->getPosition().x << ' ' << player.getPrimaryWeapon()->getPosition().y << ' '
-	<< player.getPrimaryWeapon()->getDimension().x << ' ' << player.getPrimaryWeapon()->getDimension().y << ' ' << player.getPrimaryWeapon()->getOrigin().x << ' ' << player.getPrimaryWeapon()->getOrigin().y << ' '
-	<< player.getSecondaryWeapon()->getName() << ' ' << player.getSecondaryWeapon()->getPosition().x << ' ' << player.getSecondaryWeapon()->getPosition().y << ' '
-	<< player.getSecondaryWeapon()->getDimension().x << ' ' << player.getSecondaryWeapon()->getDimension().y << ' ' << player.getSecondaryWeapon()->getOrigin().x << ' ' << player.getSecondaryWeapon()->getOrigin().y << "\n";
-
-	//Boxes
-	level << boxes.size() << "\n";
-	for (auto& box : boxes) {
-		level << box.getPosition().x << ' ' << box.getPosition().y << ' ' << box.getDimension().x << ' ' << box.getDimension().y << ' ' << box.getTexture().filePath << "\n";
-	}
+	saveGround(level, ground);
+	saveHumans(level, player, humans);
+	saveObjects(level, boxes);
 
 	level.close();
 
@@ -58,13 +38,25 @@ bool Level::saveLevel(const std::string name, const Player& player, const std::v
 	return true;
 }
 
-bool Level::loadLevel(const std::string name, b2World* world, Player& player, std::vector<Human*>& humans, std::vector<Box>& boxes)
+bool Level::loadLevel(const std::string name, b2World* world, Player& player, std::vector<Human*>& humans, std::vector<Box>& boxes, Ground& ground)
 {
 	std::ifstream level;
 	level.open("Levels/" + name);
 	if (level.fail()) {
 		printf("Failed to open level: %s", name.c_str());
 		return false;
+	}
+
+	{
+		//Ground
+		glm::vec2 vert;
+		int numVerts;
+		level >> numVerts;
+		for (int i = 0; i < numVerts; i++) {
+			level >> vert.x >> vert.y;
+			ground.addVertex(vert);
+		}
+		ground.init(world, numVerts);
 	}
 
 	{
@@ -117,4 +109,42 @@ bool Level::loadLevel(const std::string name, b2World* world, Player& player, st
 	printf("Level %s Loaded!\n", name.c_str());
 
 	return true;
+}
+
+void Level::saveHumans(std::ofstream& level, const Player & player, const std::vector<Human*>& humans)
+{
+	//Humans
+	level << humans.size() - 1 << "\n";
+	for (auto& human : humans) {
+		if (human->isPlayer() == false)
+			level << human->getPosition().x << ' ' << human->getPosition().y << ' ' << human->getDimension().x << ' ' << human->getDimension().y << ' ' << human->getTexture().filePath << ' '
+			<< human->getPrimaryWeapon()->getName() << ' ' << human->getPrimaryWeapon()->getPosition().x << ' ' << human->getPrimaryWeapon()->getPosition().y << ' '
+			<< human->getPrimaryWeapon()->getDimension().x << ' ' << human->getPrimaryWeapon()->getDimension().y << ' ' << human->getPrimaryWeapon()->getOrigin().x << ' ' << human->getPrimaryWeapon()->getOrigin().y << ' '
+			<< human->getSecondaryWeapon()->getName() << ' ' << human->getSecondaryWeapon()->getPosition().x << ' ' << human->getSecondaryWeapon()->getPosition().y << ' '
+			<< human->getSecondaryWeapon()->getDimension().x << ' ' << human->getSecondaryWeapon()->getDimension().y << ' ' << human->getSecondaryWeapon()->getOrigin().x << ' ' << human->getSecondaryWeapon()->getOrigin().y << "\n";
+	}
+
+	//Player
+	level << player.getPosition().x << ' ' << player.getPosition().y << ' ' << player.getDimension().x << ' ' << player.getDimension().y << ' ' << player.getTexture().filePath << ' '
+		<< player.getPrimaryWeapon()->getName() << ' ' << player.getPrimaryWeapon()->getPosition().x << ' ' << player.getPrimaryWeapon()->getPosition().y << ' '
+		<< player.getPrimaryWeapon()->getDimension().x << ' ' << player.getPrimaryWeapon()->getDimension().y << ' ' << player.getPrimaryWeapon()->getOrigin().x << ' ' << player.getPrimaryWeapon()->getOrigin().y << ' '
+		<< player.getSecondaryWeapon()->getName() << ' ' << player.getSecondaryWeapon()->getPosition().x << ' ' << player.getSecondaryWeapon()->getPosition().y << ' '
+		<< player.getSecondaryWeapon()->getDimension().x << ' ' << player.getSecondaryWeapon()->getDimension().y << ' ' << player.getSecondaryWeapon()->getOrigin().x << ' ' << player.getSecondaryWeapon()->getOrigin().y << "\n";
+}
+
+void Level::saveObjects(std::ofstream& level, const std::vector<Box>& boxes)
+{
+	//Boxes
+	level << boxes.size() << "\n";
+	for (auto& box : boxes) {
+		level << box.getPosition().x << ' ' << box.getPosition().y << ' ' << box.getDimension().x << ' ' << box.getDimension().y << ' ' << box.getTexture().filePath << "\n";
+	}
+}
+
+void Level::saveGround(std::ofstream& level, Ground & ground)
+{
+	level << ground.getVertices().size() << "\n";
+	for (auto& vert : ground.getVertices()) {
+		level << vert.x << ' ' << vert.y << "\n";
+	}
 }

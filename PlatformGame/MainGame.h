@@ -14,6 +14,7 @@
 #include "Player.h"
 #include "Bullet.h"
 #include "Collision.h"
+#include "Ground.h"
 
 enum class GameState {PLAY, PAUSED, EXIT};
 
@@ -34,6 +35,7 @@ private:
 	Timing _timer;
 	SpriteBatch _spriteBatch;
 	CollisionManager _collisionManager;
+	Ground _ground;
 
 	Player _player;
 
