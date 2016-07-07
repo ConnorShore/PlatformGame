@@ -29,6 +29,8 @@ public:
 	virtual glm::vec4 animate() { return glm::vec4(0, 0, 0, 0); };
 
 	Weapon* getCurrentWeapon() const { return _currentWeapon; }
+	Weapon* getPrimaryWeapon() const { return _primaryWeapon; }
+	Weapon* getSecondaryWeapon() const { return _secondaryWeapon; }
 
 	bool canShoot() const { return _canShoot; }
 	bool isShooting() const { return _shooting; }
