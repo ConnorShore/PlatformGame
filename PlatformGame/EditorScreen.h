@@ -15,15 +15,19 @@
 #include "Ground.h"
 #include "Tile.h"
 
-#define NONE 0
+const int NO_TILE = -1;
+const int NO_BOX = -1;
+const int LEFT_BUTTON = 0;
+const int RIGHT_BUTTON = 1;
 
 enum class ObjectMode
 {
 	TILE,
-	BOX
+	BOX,
+	GROUND
 };
 
-enum class SelectMODE
+enum class SelectMode
 {
 	SELECT,
 	PLACE
@@ -38,6 +42,8 @@ public:
 	void run();
 
 private:
+	std::unique_ptr<b2World> _world;
+
 	Window _window;
 	InputManager _inputManager;
 	StaticShader _staticShader;
@@ -47,16 +53,23 @@ private:
 	SpriteBatch _tileBatch;
 	CollisionManager _collisionManager;
 	Ground _ground;
+	Texture _sheetTex;
+	
+	ObjectMode _objectMode = ObjectMode::TILE;
+	SelectMode _selectMode = SelectMode::PLACE;
 
 	bool _isRunning;
 
-	//Player _player;
-
 	std::vector<Tile> _tiles;
 	std::vector<Box> _boxes;
-	//std::vector<Human*> _humans;
-	int _selectedTile = NONE;
-	int _selectedBox = NONE;
+
+	bool _mouseButtons[2];
+
+	int _tileIndices[64];
+	int _currentTileIndex = 0;
+
+	int _selectedTile = NO_TILE;
+	int _selectedBox = NO_BOX;
 
 	int _screenWidth = 1600;
 	int _screenHeight = 960;
@@ -67,5 +80,12 @@ private:
 	void render();
 	void gameLoop();
 	void cleanUp();
+
+	void updateMouseDown(const SDL_Event& evnt);
+	void updateMouseWheel(const SDL_Event& evnt);
+
+
+	//Player _player;
+	//std::vector<Human*> _humans;
 };
 

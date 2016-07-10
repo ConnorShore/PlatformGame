@@ -141,6 +141,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="DebugRenderer.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="Loader.cpp" />
     <ClCompile Include="picoPNG.cpp" />
@@ -153,6 +154,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="DebugRenderer.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="Loader.h" />
     <ClInclude Include="picoPNG.h" />

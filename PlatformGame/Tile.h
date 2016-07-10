@@ -14,6 +14,8 @@ public:
 
 	void render(SpriteBatch& spriteBatch);
 
+	glm::vec2 getPosition() const { return _position; }
+
 private:
 	glm::vec2 _position;
 	glm::vec4 _uvRect;
