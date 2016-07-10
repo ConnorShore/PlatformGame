@@ -1,1 +1,8 @@
-﻿  PlatformGame.vcxproj -> C:\Users\cjshore12\Documents\Visual Studio 2015\Projects\PlatformGame\Debug\PlatformGame.exe
+﻿  EditorScreen.cpp
+c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\platformgame\box.h(11): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\platformgame\editorscreen.cpp(50): warning C4018: '<': signed/unsigned mismatch
+c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\platformgame\editorscreen.cpp(59): warning C4018: '<': signed/unsigned mismatch
+  Generating Code...
+  Skipping... (no relevant changes detected)
+  main.cpp
+  PlatformGame.vcxproj -> C:\Users\cjshore12\Documents\Visual Studio 2015\Projects\PlatformGame\Debug\PlatformGame.exe
