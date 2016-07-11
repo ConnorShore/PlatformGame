@@ -7,6 +7,7 @@
 #include <CandleLight_Engine\Camera.h>
 #include <CandleLight_Engine\Timing.h>
 #include <CandleLight_Engine\SpriteBatch.h>
+#include <CandleLight_Engine\Button.h>
 
 #include "StaticShader.h"
 #include "Box.h"
@@ -18,6 +19,7 @@
 #include "Tile.h"
 
 enum class GameState {PLAY, PAUSED, EXIT};
+enum class GameControl {GAME, GUI};
 
 class MainGame
 {
@@ -30,12 +32,14 @@ public:
 private:
 	Window _window;
 	GameState _currentState;
+	GameControl _gameControl;
 	InputManager _inputManager;
 	StaticShader _staticShader;
 	Camera _camera;
 	Timing _timer;
 	SpriteBatch _spriteBatch;
 	SpriteBatch _tileBatch;
+	SpriteBatch _guiBatch;
 	CollisionManager _collisionManager;
 	Ground _ground;
 
@@ -47,6 +51,7 @@ private:
 	std::vector<Box> _boxes;
 	std::vector<Human*> _humans;
 	std::vector<Bullet*> _bullets;
+	std::vector<Button> _buttons;
 
 	int _screenWidth = 1280;
 	int _screenHeight = 720;

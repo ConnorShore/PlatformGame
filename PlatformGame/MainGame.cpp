@@ -22,6 +22,7 @@ void MainGame::init()
 {
 	_window.createWindow("Platform Game", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, _screenWidth, _screenHeight);
 	_currentState = GameState::PLAY;
+	_gameControl = GameControl::GAME;
 
 	b2Vec2 gravity(0, -20.0f);
 	_world = std::make_unique<b2World>(gravity);
@@ -36,6 +37,7 @@ void MainGame::init()
 
 	_tileBatch.init();
 	_spriteBatch.init();
+	_guiBatch.init();
 
 	Texture tex = ResourceManager::loadTexture("Textures/boxTex.png");
 
@@ -62,6 +64,9 @@ void MainGame::init()
 	Level::loadTiles("TestLevel_tiles.txt", "Textures/Tiles/test.png", _tiles);
 	//Level::loadLevel("TestLevel.txt", _world.get(), _player, _humans, _boxes, _ground);
 
+	Button button(glm::vec2(0.0f, -10.0f), glm::vec2(3.0f, 2.0f), "Textures/GUI/button.png", Color(255, 255, 255, 255));
+	_buttons.push_back(button);
+
 	_staticShader.init("Shaders/staticShader.vert", "Shaders/staticShader.frag");
 	_staticShader.bindAttributes();
 }
@@ -69,8 +74,27 @@ void MainGame::init()
 void MainGame::input()
 {
 	_inputManager.update();
+
+	//Check button input
+	for (int i = 0; i < _buttons.size(); i++) {
+		glm::vec2 pos = _camera.screenToWorldCoords(_inputManager.getMousePos());
+		if (_buttons[i].inBox(pos)) {
+			_gameControl = GameControl::GUI;
+			if (_inputManager.isKeyDown(SDL_BUTTON_LEFT)) {
+				_buttons[i].onClick();
+			}
+		}
+		else {
+			_gameControl = GameControl::GAME;
+		}
+	}
+
+	_gameControl = GameControl::GAME;
+
+	//Player input
 	_player.input(_inputManager, _camera);
 
+	//Other
 	if (_inputManager.isKeyDown(SDLK_F1)) {
 		Level::saveLevel("TestLevel.txt", _player, _humans, _boxes, _ground);
 	}
@@ -153,6 +177,16 @@ void MainGame::render()
 
 	_spriteBatch.end();
 	_spriteBatch.renderBatch();
+
+	//GUIS
+	_guiBatch.begin();
+
+	for (int i = 0; i < _buttons.size(); i++) {
+		_buttons[i].render(_guiBatch);
+	}
+
+	_guiBatch.end();
+	_guiBatch.renderBatch();
 
 	_staticShader.stop();
 
