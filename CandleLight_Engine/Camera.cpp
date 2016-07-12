@@ -44,3 +44,23 @@ glm::vec2 Camera::screenToWorldCoords(glm::vec2 screenCoords)
 	screenCoords += _position;
 	return screenCoords;
 }
+
+glm::vec2 Camera::screenToGLCoords(glm::vec2 screenCoords)
+{
+	// Invert Y direction
+	screenCoords.y = _screenHeight - screenCoords.y;
+	// Make it so that 0 is the center
+	screenCoords -= glm::vec2(_screenWidth / 2, _screenHeight / 2);
+	// Scale the coordinates
+	screenCoords.x /= _screenWidth/2;
+	screenCoords.y /= _screenHeight/2;
+	return screenCoords;
+}
+
+void Camera::createTransformMatrix()
+{
+	glm::vec3 translate(-_position.x, -_position.y, 0.0f);
+	_transformMatrix = glm::translate(_orthoMatrix, translate);
+	glm::vec3 scale(_scale, _scale, 0.0f);
+	_transformMatrix = glm::scale(glm::mat4(1.0f), scale) * _cameraMatrix;
+}

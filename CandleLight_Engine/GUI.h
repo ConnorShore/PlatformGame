@@ -17,6 +17,10 @@ public:
 
 	void render(SpriteBatch& spriteBatch);
 
+	bool inBox(const glm::vec2& pos);
+
+	virtual void onClick() {}
+
 	const glm::vec2& getPosition() { return position; }
 	const glm::vec2& getDimension() { return dimension; }
 
@@ -26,5 +30,4 @@ protected:
 	glm::vec2 position, dimension;
 	Color color;
 	Texture texture;
-	Camera camera;
 };

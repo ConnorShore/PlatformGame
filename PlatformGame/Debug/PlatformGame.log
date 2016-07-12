@@ -1,12 +1,12 @@
 ﻿  MainGame.cpp
-c:\users\user\documents\visual studio 2015\projects\platformgame\platformgame\box.h(11): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-c:\users\user\documents\visual studio 2015\projects\platformgame\platformgame\maingame.cpp(82): warning C4018: '<': signed/unsigned mismatch
-c:\users\user\documents\visual studio 2015\projects\platformgame\platformgame\maingame.cpp(108): warning C4018: '<': signed/unsigned mismatch
-c:\users\user\documents\visual studio 2015\projects\platformgame\platformgame\maingame.cpp(113): warning C4018: '<': signed/unsigned mismatch
-c:\users\user\documents\visual studio 2015\projects\platformgame\platformgame\maingame.cpp(134): warning C4018: '<': signed/unsigned mismatch
-c:\users\user\documents\visual studio 2015\projects\platformgame\platformgame\maingame.cpp(163): warning C4018: '<': signed/unsigned mismatch
-c:\users\user\documents\visual studio 2015\projects\platformgame\platformgame\maingame.cpp(172): warning C4018: '<': signed/unsigned mismatch
-c:\users\user\documents\visual studio 2015\projects\platformgame\platformgame\maingame.cpp(175): warning C4018: '<': signed/unsigned mismatch
-c:\users\user\documents\visual studio 2015\projects\platformgame\platformgame\maingame.cpp(178): warning C4018: '<': signed/unsigned mismatch
-c:\users\user\documents\visual studio 2015\projects\platformgame\platformgame\maingame.cpp(193): warning C4018: '<': signed/unsigned mismatch
-  PlatformGame.vcxproj -> C:\Users\user\documents\visual studio 2015\Projects\PlatformGame\Debug\PlatformGame.exe
+c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\platformgame\box.h(11): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\platformgame\maingame.cpp(82): warning C4018: '<': signed/unsigned mismatch
+c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\platformgame\maingame.cpp(116): warning C4018: '<': signed/unsigned mismatch
+c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\platformgame\maingame.cpp(121): warning C4018: '<': signed/unsigned mismatch
+c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\platformgame\maingame.cpp(142): warning C4018: '<': signed/unsigned mismatch
+c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\platformgame\maingame.cpp(171): warning C4018: '<': signed/unsigned mismatch
+c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\platformgame\maingame.cpp(180): warning C4018: '<': signed/unsigned mismatch
+c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\platformgame\maingame.cpp(183): warning C4018: '<': signed/unsigned mismatch
+c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\platformgame\maingame.cpp(186): warning C4018: '<': signed/unsigned mismatch
+c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\platformgame\maingame.cpp(196): warning C4018: '<': signed/unsigned mismatch
+  PlatformGame.vcxproj -> C:\Users\cjshore12\Documents\Visual Studio 2015\Projects\PlatformGame\Debug\PlatformGame.exe

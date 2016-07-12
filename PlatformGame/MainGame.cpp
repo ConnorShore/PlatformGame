@@ -64,14 +64,14 @@ void MainGame::init()
 	Level::loadTiles("TestLevel_tiles.txt", "Textures/Tiles/test.png", _tiles);
 	//Level::loadLevel("TestLevel.txt", _world.get(), _player, _humans, _boxes, _ground);
 
-	Button button(glm::vec2(0.0f, -10.0f), glm::vec2(3.0f, 2.0f), "Textures/GUI/button.png", Color(255, 255, 255, 255));
-	_buttons.push_back(button);
+	Button* button = new Button(glm::vec2(-0.8f, 0.8f), glm::vec2(0.15f, 0.12f), "Textures/GUI/button.png", Color(255, 255, 255, 255));
+	_guis.push_back(button);
 
 	_staticShader.init("Shaders/staticShader.vert", "Shaders/staticShader.frag");
 	_staticShader.bindAttributes();
 	
-	_guiShader.init("Shaders/guiShader.vert", "Shaders/guiShader.frag");
-	_guiShader.bindAttributes();
+	//_guiShader.init("Shaders/guiShader.vert", "Shaders/guiShader.frag");
+	//_guiShader.bindAttributes();
 }
 
 void MainGame::input()
@@ -79,12 +79,12 @@ void MainGame::input()
 	_inputManager.update();
 
 	//Check button input
-	for (int i = 0; i < _buttons.size(); i++) {
-		glm::vec2 pos = _camera.screenToWorldCoords(_inputManager.getMousePos());
-		if (_buttons[i].inBox(pos)) {
+	for (int i = 0; i < _guis.size(); i++) {
+		glm::vec2 pos = _camera.screenToGLCoords(_inputManager.getMousePos());
+		if (_guis[i]->inBox(pos)) {
 			_gameControl = GameControl::GUI;
 			if (_inputManager.isKeyDown(SDL_BUTTON_LEFT)) {
-				_buttons[i].onClick();
+				_guis[i]->onClick();
 			}
 		}
 		else {
@@ -100,6 +100,14 @@ void MainGame::input()
 	//Other
 	if (_inputManager.isKeyDown(SDLK_F1)) {
 		Level::saveLevel("TestLevel.txt", _player, _humans, _boxes, _ground);
+	}
+
+	if (_inputManager.isKeyDown(SDLK_e)) {
+		_camera.setScale(_camera.getScale() + 0.25f);
+	}
+
+	if (_inputManager.isKeyDown(SDLK_q)) {
+		_camera.setScale(_camera.getScale() - 0.25f);
 	}
 }
 
@@ -181,24 +189,35 @@ void MainGame::render()
 	_spriteBatch.end();
 	_spriteBatch.renderBatch();
 
-	_staticShader.stop();
-
-	//GUIS
-	_guiShader.start();
-	_guiShader.getUniformLocations();
-	_guiShader.loadTexture();
+	_staticShader.loadPMatrix(_camera.getTransformationMatrix());
 
 	_guiBatch.begin();
 
-	for (int i = 0; i < _buttons.size(); i++) {
-		_buttons[i].render(_guiBatch);	//< TODO: Make follow camera at all times
+	for (int i = 0; i < _guis.size(); i++) {
+		_guis[i]->render(_guiBatch);	//< TODO: Make follow camera at all times
 	}
 
 	_guiBatch.end();
 	_guiBatch.renderBatch();
 
+	_staticShader.stop();
 
-	_guiShader.stop();
+	//GUIS
+	//_guiShader.start();
+	//_guiShader.getUniformLocations();
+	//_guiShader.loadTexture();
+
+	//_guiBatch.begin();
+
+	//for (int i = 0; i < _guis.size(); i++) {
+	//	_guis[i].render(_guiBatch);	//< TODO: Make follow camera at all times
+	//}
+
+	//_guiBatch.end();
+	//_guiBatch.renderBatch();
+
+
+	//_guiShader.stop();
 
 	_window.swapWindow();
 }

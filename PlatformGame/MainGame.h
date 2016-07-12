@@ -8,6 +8,7 @@
 #include <CandleLight_Engine\Timing.h>
 #include <CandleLight_Engine\SpriteBatch.h>
 #include <CandleLight_Engine\Button.h>
+#include <CandleLight_Engine\GUI.h>
 
 #include "GUIShader.h"
 #include "StaticShader.h"
@@ -53,7 +54,7 @@ private:
 	std::vector<Box> _boxes;
 	std::vector<Human*> _humans;
 	std::vector<Bullet*> _bullets;
-	std::vector<Button> _buttons;
+	std::vector<GUI*> _guis;
 
 	int _screenWidth = 1280;
 	int _screenHeight = 720;

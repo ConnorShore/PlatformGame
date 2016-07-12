@@ -11,8 +11,7 @@ public:
 	~Button();
 
 	//void update(InputManager& inputManager, Camera& camera);
-	bool inBox(const glm::vec2& pos);
-	void onClick();
+	void onClick() override;
 
 private:
 
