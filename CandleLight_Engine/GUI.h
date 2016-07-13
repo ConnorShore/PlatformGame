@@ -33,7 +33,7 @@ public:
 	void setPosition(glm::vec2& newPos) { position = newPos; }
 
 	std::function<void()> callback() const { return eventCallback; }
-	void subscribeEvent(const std::function<void*()>& callback)
+	void subscribeEvent(const std::function<void()>& callback)
 	{
 		eventCallback = callback;
 	}
@@ -42,6 +42,6 @@ protected:
 	glm::vec2 position, dimension;
 	Color color;
 	Texture texture;
-	std::function<void*()> eventCallback;
+	std::function<void()> eventCallback;
 	GUIType type;
 };

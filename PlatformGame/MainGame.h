@@ -21,6 +21,7 @@
 #include "Tile.h"
 
 void printWorking();
+void printHello();
 
 enum class GameState {PLAY, PAUSED, EXIT};
 enum class GameControl {GAME, GUI};
@@ -67,7 +68,5 @@ private:
 	void render();
 	void gameLoop();
 	void cleanUp();
-
-	void printHello();
 };
 
