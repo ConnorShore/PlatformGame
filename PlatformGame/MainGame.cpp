@@ -65,7 +65,12 @@ void MainGame::init()
 	//Level::loadLevel("TestLevel.txt", _world.get(), _player, _humans, _boxes, _ground);
 
 	Button* button = new Button(glm::vec2(-0.8f, 0.8f), glm::vec2(0.15f, 0.12f), "Textures/GUI/button.png", Color(255, 255, 255, 255));
+	button->subscribeEvent(printWorking);
 	_guis.push_back(button);
+
+	Button* button1 = new Button(glm::vec2(0.8f, 0.8f), glm::vec2(0.15f, 0.12f), "Textures/GUI/button.png", Color(255, 255, 255, 255));
+	button1->subscribeEvent(printHello);
+	_guis.push_back(button1);
 
 	_staticShader.init("Shaders/staticShader.vert", "Shaders/staticShader.frag");
 	_staticShader.bindAttributes();
@@ -81,10 +86,19 @@ void MainGame::input()
 	//Check button input
 	for (int i = 0; i < _guis.size(); i++) {
 		glm::vec2 pos = _camera.screenToGLCoords(_inputManager.getMousePos());
+		GUIType t = _guis[i]->getType();
 		if (_guis[i]->inBox(pos)) {
 			_gameControl = GameControl::GUI;
 			if (_inputManager.isKeyDown(SDL_BUTTON_LEFT)) {
-				_guis[i]->onClick();
+				switch (t) {
+					case BUTTON:
+						Button* button;
+						button = static_cast<Button*>(_guis[i]);
+						button->onClick();
+						break;
+					case NONE:
+						break;
+				}
 			}
 		}
 		else {
@@ -241,6 +255,18 @@ void MainGame::gameLoop()
 
 void MainGame::cleanUp()
 {
+	b2World* raw = _world.release();
+	delete raw;
+
+	for (int i = 0; i < _humans.size(); i++)
+		delete _humans[i];
+
+	for (int i = 0; i < _bullets.size(); i++)
+		delete _bullets[i];
+
+	for (int i = 0; i < _guis.size(); i++)
+		delete _guis[i];
+
 	_window.destroyWindow();
 	SDL_Quit();
 	exit(0);
@@ -251,4 +277,14 @@ void MainGame::run()
 	init();
 	gameLoop();
 	cleanUp();
+}
+
+void printWorking()
+{
+	printf("Working\n");
+}
+
+void printHello()
+{
+	printf("Hello\n");
 }
