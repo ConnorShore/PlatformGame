@@ -77,9 +77,6 @@ void MainGame::init()
 
 	_staticShader.init("Shaders/staticShader.vert", "Shaders/staticShader.frag");
 	_staticShader.bindAttributes();
-	
-	//_guiShader.init("Shaders/guiShader.vert", "Shaders/guiShader.frag");
-	//_guiShader.bindAttributes();
 }
 
 void MainGame::input()
@@ -218,23 +215,6 @@ void MainGame::render()
 	_guiBatch.renderBatch();
 
 	_staticShader.stop();
-
-	//GUIS
-	//_guiShader.start();
-	//_guiShader.getUniformLocations();
-	//_guiShader.loadTexture();
-
-	//_guiBatch.begin();
-
-	//for (int i = 0; i < _guis.size(); i++) {
-	//	_guis[i].render(_guiBatch);	//< TODO: Make follow camera at all times
-	//}
-
-	//_guiBatch.end();
-	//_guiBatch.renderBatch();
-
-
-	//_guiShader.stop();
 
 	_window.swapWindow();
 }

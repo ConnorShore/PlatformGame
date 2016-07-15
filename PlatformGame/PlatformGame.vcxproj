@@ -152,7 +152,6 @@
     <ClCompile Include="AK47.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Ground.cpp" />
-    <ClCompile Include="GUIShader.cpp" />
     <ClCompile Include="Human.cpp" />
     <ClCompile Include="Box.cpp" />
     <ClCompile Include="Level.cpp" />
@@ -171,7 +170,6 @@
     <ClInclude Include="Collision.h" />
     <ClInclude Include="Damagable.h" />
     <ClInclude Include="Ground.h" />
-    <ClInclude Include="GUIShader.h" />
     <ClInclude Include="Human.h" />
     <ClInclude Include="Box.h" />
     <ClInclude Include="Level.h" />

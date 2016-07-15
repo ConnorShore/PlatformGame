@@ -1,4 +1,7 @@
-﻿  MainGame.cpp
+﻿  main.cpp
+c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\platformgame\box.h(11): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+  Tile.cpp
+  MainGame.cpp
 c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\platformgame\box.h(11): warning C4067: unexpected tokens following preprocessor directive - expected a newline
 c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\platformgame\maingame.cpp(90): warning C4018: '<': signed/unsigned mismatch
 c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\platformgame\maingame.cpp(133): warning C4018: '<': signed/unsigned mismatch
@@ -12,4 +15,11 @@ c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\platformga
 c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\platformgame\maingame.cpp(264): warning C4018: '<': signed/unsigned mismatch
 c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\platformgame\maingame.cpp(267): warning C4018: '<': signed/unsigned mismatch
 c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\platformgame\maingame.cpp(270): warning C4018: '<': signed/unsigned mismatch
+  Level.cpp
+c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\platformgame\box.h(11): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\platformgame\level.cpp(135): warning C4018: '<': signed/unsigned mismatch
+c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\platformgame\level.cpp(136): warning C4018: '<': signed/unsigned mismatch
+  Generating Code...
+c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\platformgame\box.h(23): warning C4172: returning address of local variable or temporary
+  LINK : C:\Users\cjshore12\Documents\Visual Studio 2015\Projects\PlatformGame\Debug\PlatformGame.exe not found or not built by the last incremental link; performing full link
   PlatformGame.vcxproj -> C:\Users\cjshore12\Documents\Visual Studio 2015\Projects\PlatformGame\Debug\PlatformGame.exe

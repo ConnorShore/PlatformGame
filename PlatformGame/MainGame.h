@@ -11,7 +11,6 @@
 #include <CandleLight_Engine\Panel.h>
 #include <CandleLight_Engine\Button.h>
 
-#include "GUIShader.h"
 #include "StaticShader.h"
 #include "Box.h"
 #include "Human.h"
@@ -41,7 +40,6 @@ private:
 	GameControl _gameControl;
 	InputManager _inputManager;
 	StaticShader _staticShader;
-	GUIShader _guiShader;
 	Camera _camera;
 	Timing _timer;
 	SpriteBatch _spriteBatch;
