@@ -1,7 +1,19 @@
 #include "GUI.h"
 
+
+
+GUI::GUI(GUI * prnt, glm::vec2 & pos, glm::vec2 & dim, Texture & tex, Color & col)
+{
+	parent = prnt;
+	position = (pos * parent->getDimension() + parent->getPosition());
+	dimension = dim;
+	texture = tex;
+	color = col;
+}
+
 GUI::GUI(glm::vec2 & pos, glm::vec2 & dim, Texture & tex, Color& col) : position(pos), dimension(dim), texture(tex), color(col)
 {
+
 }
 
 GUI::GUI()

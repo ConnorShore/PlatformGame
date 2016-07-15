@@ -7,8 +7,9 @@
 #include <CandleLight_Engine\Camera.h>
 #include <CandleLight_Engine\Timing.h>
 #include <CandleLight_Engine\SpriteBatch.h>
-#include <CandleLight_Engine\Button.h>
 #include <CandleLight_Engine\GUI.h>
+#include <CandleLight_Engine\Panel.h>
+#include <CandleLight_Engine\Button.h>
 
 #include "GUIShader.h"
 #include "StaticShader.h"

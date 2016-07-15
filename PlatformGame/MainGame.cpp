@@ -56,7 +56,7 @@ void MainGame::init()
 		_boxes.push_back(box);
 	}
 
-	_player.humanInit(_world.get(), glm::vec2(0.0f, -5.0f), glm::vec2(1.0f, 1.8f), glm::vec2(10, 1), "Textures/ss_player_base.png");
+	_player.humanInit(_world.get(), glm::vec2(0.0f, -5.0f), glm::vec2(1.0f, 1.9f), glm::vec2(10, 1), "Textures/ss_player_base.png");
 	_player.addWeapon(new AK47(_player.getPosition(), glm::vec2(1.0f, -0.75f)));
 	_player.addWeapon(new AK47(_player.getPosition(), glm::vec2(2.2f, 1.55f), glm::vec2(1.0f, -0.75f)));
 	_humans.push_back(&_player);
@@ -64,11 +64,14 @@ void MainGame::init()
 	Level::loadTiles("TestLevel_tiles.txt", "Textures/Tiles/test.png", _tiles);
 	//Level::loadLevel("TestLevel.txt", _world.get(), _player, _humans, _boxes, _ground);
 
-	Button* button = new Button(glm::vec2(-0.8f, 0.8f), glm::vec2(0.15f, 0.12f), "Textures/GUI/button.png", Color(255, 255, 255, 255));
+	Panel* panel = new Panel(glm::vec2(-0.95f, -0.95f), glm::vec2(0.4f, 1.8f), "Textures/GUI/panel.png", Color(255, 255, 255, 255));
+	_guis.push_back(panel);
+
+	Button* button = new Button(panel, glm::vec2(0.1f, 0.87f), glm::vec2(0.1f, 0.07f), "Textures/GUI/button.png", Color(255, 255, 255, 255));
 	button->subscribeEvent(printWorking);
 	_guis.push_back(button);
 
-	Button* button1 = new Button(glm::vec2(0.8f, 0.8f), glm::vec2(0.15f, 0.12f), "Textures/GUI/button.png", Color(255, 255, 255, 255));
+	Button* button1 = new Button(panel, glm::vec2(0.6f, 0.87f), glm::vec2(0.1f, 0.07f), "Textures/GUI/button.png", Color(255, 255, 255, 255));
 	button1->subscribeEvent(printHello);
 	_guis.push_back(button1);
 

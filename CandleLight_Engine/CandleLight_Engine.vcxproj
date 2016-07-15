@@ -145,6 +145,7 @@
     <ClCompile Include="GUI.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="Loader.cpp" />
+    <ClCompile Include="Panel.cpp" />
     <ClCompile Include="picoPNG.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
@@ -159,6 +160,7 @@
     <ClInclude Include="GUI.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="Loader.h" />
+    <ClInclude Include="Panel.h" />
     <ClInclude Include="picoPNG.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="ResourceManager.h" />
