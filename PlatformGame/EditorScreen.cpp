@@ -26,9 +26,52 @@ void EditorScreen::init()
 
 	_tileBatch.init();
 	_spriteBatch.init();
+	_guiBatch.init();
+
+	Panel* panel = new Panel(glm::vec2(-0.98f, -0.98f), glm::vec2(0.45f, 1.95f), "Textures/GUI/panel.png", Color(255, 255, 255, 255));
+	_guis.push_back(panel);
+	
+	Button* button = new Button(panel, glm::vec2(0.1f, 0.87f), glm::vec2(0.15f, 0.1f), "Textures/GUI/button.png", Color(255, 255, 255, 255));
+	_guis.push_back(button);
+
+	Button* button1 = new Button(panel, glm::vec2(0.55f, 0.87f), glm::vec2(0.15f, 0.1f), "Textures/GUI/button.png", Color(255, 255, 255, 255));
+	_guis.push_back(button1);
 
 	_staticShader.init("Shaders/staticShader.vert", "Shaders/staticShader.frag");
 	_staticShader.bindAttributes();
+}
+
+void EditorScreen::updateGUI()
+{
+	//Check button input
+	for (int i = 0; i < _guis.size(); i++) {
+		glm::vec2 pos = _camera.screenToGLCoords(_inputManager.getMousePos());
+
+		if (_guis[i]->inBox(pos))
+			_guiControl = true;
+		else if (_guis[i]->getParent() != nullptr && _guis[i]->getParent()->inBox(pos))
+			_guiControl = true;
+		else
+			_guiControl = false;
+
+		GUIType t = _guis[i]->getType();
+		if (_guis[i]->inBox(pos)) {
+			_guiControl = true;
+			if (_inputManager.isKeyDown(SDL_BUTTON_LEFT)) {
+				switch (t) {
+				case BUTTON:
+					printf("Working\n ");
+					Button* button;
+					button = static_cast<Button*>(_guis[i]);
+					button->onClick();
+					delete button;
+					break;
+				case NONE:
+					break;
+				}
+			}
+		}
+	}
 }
 
 void EditorScreen::input()
@@ -51,18 +94,23 @@ void EditorScreen::input()
 			_inputManager.setMousePos(evnt.motion.x, evnt.motion.y);
 			break;
 		case SDL_MOUSEBUTTONDOWN:
-			updateMouseDown(evnt);
+			if(!_guiControl)
+				updateMouseDown(evnt);
 			break;
 		//case SDL_MOUSEBUTTONUP:
 		//	updateMouseUp(evnt);
 		//	break;
 		}
 	}
+
+	updateGUI();
 }
 
 void EditorScreen::update()
 {
 	_camera.update();
+
+	_world->Step(1 / 60.0f, 0, 0);
 }
 
 void EditorScreen::render()
@@ -92,6 +140,17 @@ void EditorScreen::render()
 	_spriteBatch.end();
 	_spriteBatch.renderBatch();
 
+	//GUIs
+	_staticShader.loadPMatrix(_camera.getTransformationMatrix());
+
+	_guiBatch.begin();
+
+	for (int i = 0; i < _guis.size(); i++) {
+		_guis[i]->render(_guiBatch);	//< TODO: Make follow camera at all times
+	}
+
+	_guiBatch.end();
+	_guiBatch.renderBatch();
 	_staticShader.stop();
 
 	_window.swapWindow();
@@ -185,4 +244,10 @@ void EditorScreen::updateMouseWheel(const SDL_Event & evnt)
 			printf("%d\n", _currentTileIndex);
 		}
 	}
+}
+
+void EditorScreen::clear()
+{
+	_tiles.clear();
+	_boxes.clear();
 }

@@ -231,7 +231,7 @@ void MainGame::gameLoop()
 		render();
 
 		_timer.LimitFPS(60.0f);
-		_timer.CalculateFPS(false);
+		_timer.CalculateFPS(true);
 	}
 }
 

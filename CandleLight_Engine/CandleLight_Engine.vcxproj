@@ -142,11 +142,8 @@
   <ItemGroup>
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Camera.cpp" />
-<<<<<<< HEAD
     <ClCompile Include="GUI.cpp" />
-=======
     <ClCompile Include="DebugRenderer.cpp" />
->>>>>>> feature
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="Loader.cpp" />
     <ClCompile Include="Panel.cpp" />
@@ -161,11 +158,8 @@
   <ItemGroup>
     <ClInclude Include="Button.h" />
     <ClInclude Include="Camera.h" />
-<<<<<<< HEAD
     <ClInclude Include="GUI.h" />
-=======
     <ClInclude Include="DebugRenderer.h" />
->>>>>>> feature
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="Loader.h" />
     <ClInclude Include="Panel.h" />

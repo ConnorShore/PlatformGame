@@ -5,6 +5,9 @@
 #include <CandleLight_Engine\Camera.h>
 #include <CandleLight_Engine\Timing.h>
 #include <CandleLight_Engine\SpriteBatch.h>
+#include <CandleLight_Engine\GUI.h>
+#include <CandleLight_Engine\Button.h>
+#include <CandleLight_Engine\Panel.h>
 
 #include "StaticShader.h"
 #include "Box.h"
@@ -51,6 +54,7 @@ private:
 	Timing _timer;
 	SpriteBatch _spriteBatch;
 	SpriteBatch _tileBatch;
+	SpriteBatch _guiBatch;
 	CollisionManager _collisionManager;
 	Ground _ground;
 	Texture _sheetTex;
@@ -59,7 +63,9 @@ private:
 	SelectMode _selectMode = SelectMode::PLACE;
 
 	bool _isRunning;
+	bool _guiControl = false;
 
+	std::vector<GUI*> _guis;
 	std::vector<Tile> _tiles;
 	std::vector<Box> _boxes;
 
@@ -75,6 +81,7 @@ private:
 	int _screenHeight = 960;
 
 	void init();
+	void updateGUI();
 	void input();
 	void update();
 	void render();
@@ -83,7 +90,7 @@ private:
 
 	void updateMouseDown(const SDL_Event& evnt);
 	void updateMouseWheel(const SDL_Event& evnt);
-
+	void clear();
 
 	//Player _player;
 	//std::vector<Human*> _humans;
