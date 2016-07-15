@@ -151,6 +151,7 @@
     <ClCompile Include="Agent.cpp" />
     <ClCompile Include="AK47.cpp" />
     <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="EditorScreen.cpp" />
     <ClCompile Include="Ground.cpp" />
     <ClCompile Include="Human.cpp" />
     <ClCompile Include="Box.cpp" />
@@ -169,6 +170,7 @@
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="Collision.h" />
     <ClInclude Include="Damagable.h" />
+    <ClInclude Include="EditorScreen.h" />
     <ClInclude Include="Ground.h" />
     <ClInclude Include="Human.h" />
     <ClInclude Include="Box.h" />
