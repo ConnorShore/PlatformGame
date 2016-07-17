@@ -90,6 +90,8 @@ private:
 
 	void updateMouseDown(const SDL_Event& evnt);
 	void updateMouseWheel(const SDL_Event& evnt);
+
+	void switchSelectMode(SelectMode& mode);
 	void clear();
 
 	//Player _player;

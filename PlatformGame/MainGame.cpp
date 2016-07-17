@@ -64,15 +64,15 @@ void MainGame::init()
 	Level::loadTiles("TestLevel_tiles.txt", "Textures/Tiles/test.png", _tiles);
 	//Level::loadLevel("TestLevel.txt", _world.get(), _player, _humans, _boxes, _ground);
 
-	Panel* panel = new Panel(glm::vec2(-0.95f, -0.95f), glm::vec2(0.4f, 1.8f), "Textures/GUI/panel.png", Color(255, 255, 255, 255));
+	Panel* panel = new Panel(glm::vec2(-0.95f, -0.95f), glm::vec2(0.4f, 1.8f), "Textures/GUI/panel.png", Color(255, 255, 255, 150));
 	_guis.push_back(panel);
 
 	Button* button = new Button(panel, glm::vec2(0.1f, 0.87f), glm::vec2(0.1f, 0.07f), "Textures/GUI/button.png", Color(255, 255, 255, 255));
-	button->subscribeEvent(printWorking);
+	button->subscribeEvent(this, &MainGame::printWorking, 4);
 	_guis.push_back(button);
 
 	Button* button1 = new Button(panel, glm::vec2(0.6f, 0.87f), glm::vec2(0.1f, 0.07f), "Textures/GUI/button.png", Color(255, 255, 255, 255));
-	button1->subscribeEvent(printHello);
+	button1->subscribeEvent(this, &MainGame::printHello);
 	_guis.push_back(button1);
 
 	_staticShader.init("Shaders/staticShader.vert", "Shaders/staticShader.frag");
@@ -231,7 +231,7 @@ void MainGame::gameLoop()
 		render();
 
 		_timer.LimitFPS(60.0f);
-		_timer.CalculateFPS(true);
+		_timer.CalculateFPS(false);
 	}
 }
 
@@ -261,12 +261,12 @@ void MainGame::run()
 	cleanUp();
 }
 
-void printWorking()
+void MainGame::printWorking(int a)
 {
-	printf("Working\n");
+	printf("Working %d\n", a);
 }
 
-void printHello()
+void MainGame::printHello()
 {
 	printf("Hello\n");
 }

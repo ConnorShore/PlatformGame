@@ -32,10 +32,16 @@ void EditorScreen::init()
 	_guis.push_back(panel);
 	
 	Button* button = new Button(panel, glm::vec2(0.1f, 0.87f), glm::vec2(0.15f, 0.1f), "Textures/GUI/button.png", Color(255, 255, 255, 255));
+	button->subscribeEvent(this, &EditorScreen::switchSelectMode, SelectMode::SELECT);
 	_guis.push_back(button);
 
 	Button* button1 = new Button(panel, glm::vec2(0.55f, 0.87f), glm::vec2(0.15f, 0.1f), "Textures/GUI/button.png", Color(255, 255, 255, 255));
+	button1->subscribeEvent(this, &EditorScreen::switchSelectMode, SelectMode::PLACE);
 	_guis.push_back(button1);
+
+	Button* button2 = new Button(panel, glm::vec2(0.35f, 0.74f), glm::vec2(0.15f, 0.1f), "Textures/GUI/button.png", Color(255, 255, 255, 255));
+	button2->subscribeEvent(this, &EditorScreen::clear);
+	_guis.push_back(button2);
 
 	_staticShader.init("Shaders/staticShader.vert", "Shaders/staticShader.frag");
 	_staticShader.bindAttributes();
@@ -64,7 +70,6 @@ void EditorScreen::updateGUI()
 					Button* button;
 					button = static_cast<Button*>(_guis[i]);
 					button->onClick();
-					delete button;
 					break;
 				case NONE:
 					break;
@@ -94,12 +99,14 @@ void EditorScreen::input()
 			_inputManager.setMousePos(evnt.motion.x, evnt.motion.y);
 			break;
 		case SDL_MOUSEBUTTONDOWN:
+			_inputManager.keyPressed(evnt.button.button);
 			if(!_guiControl)
 				updateMouseDown(evnt);
 			break;
-		//case SDL_MOUSEBUTTONUP:
-		//	updateMouseUp(evnt);
-		//	break;
+		case SDL_MOUSEBUTTONUP:
+			_inputManager.keyReleased(evnt.button.button);
+			//updateMouseUp(evnt);
+			break;
 		}
 	}
 
@@ -244,6 +251,11 @@ void EditorScreen::updateMouseWheel(const SDL_Event & evnt)
 			printf("%d\n", _currentTileIndex);
 		}
 	}
+}
+
+void EditorScreen::switchSelectMode(SelectMode & mode)
+{
+	_selectMode = mode;
 }
 
 void EditorScreen::clear()

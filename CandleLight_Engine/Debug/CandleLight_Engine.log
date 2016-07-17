@@ -1,5 +1,4 @@
-﻿  DebugRenderer.cpp
-glew32.lib(glew32.dll) : warning LNK4006: __NULL_IMPORT_DESCRIPTOR already defined in SDL2.lib(SDL2.dll); second definition ignored
+﻿glew32.lib(glew32.dll) : warning LNK4006: __NULL_IMPORT_DESCRIPTOR already defined in SDL2.lib(SDL2.dll); second definition ignored
 glew32.lib(glew32.dll) : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
 glew32s.lib(glew.obj) : warning LNK4006: _glewGetExtension@4 already defined in glew32.lib(glew32.dll); second definition ignored
 glew32s.lib(glew.obj) : warning LNK4006: _wglewGetExtension@4 already defined in glew32.lib(glew32.dll); second definition ignored
@@ -10,4 +9,4 @@ glew32s.lib(glew.obj) : warning LNK4006: _glewIsSupported@4 already defined in g
 glew32s.lib(glew.obj) : warning LNK4006: _wglewIsSupported@4 already defined in glew32.lib(glew32.dll); second definition ignored
 OpenGL32.lib(OPENGL32.dll) : warning LNK4006: __NULL_IMPORT_DESCRIPTOR already defined in SDL2.lib(SDL2.dll); second definition ignored
 OpenGL32.lib(OPENGL32.dll) : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
-  CandleLight_Engine.vcxproj -> C:\Users\cjshore12\Documents\Visual Studio 2015\Projects\PlatformGame\Debug\CandleLight_Engine.lib
+  CandleLight_Engine.vcxproj -> C:\Users\user\documents\visual studio 2015\Projects\PlatformGame\Debug\CandleLight_Engine.lib

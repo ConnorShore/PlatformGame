@@ -20,6 +20,8 @@ enum GUIType
 class GUI
 {
 public:
+	typedef std::function<void()> call;
+
 	GUI(GUI* prnt, glm::vec2& pos, glm::vec2& dim, Texture& tex, Color& col);
 	GUI(glm::vec2& pos, glm::vec2& dim, Texture& tex, Color& col);
 	GUI();
@@ -37,9 +39,12 @@ public:
 	void setParent(GUI* prnt) { parent = prnt; }
 
 	std::function<void()> callback() const { return eventCallback; }
-	void subscribeEvent(const std::function<void()>& callback)
+
+	template<typename T, typename F, typename... Args>
+	void subscribeEvent(T instance, F func, Args... args)
 	{
-		eventCallback = callback;
+		call temp = { std::bind(func, instance, args...) };
+		eventCallback = temp;
 	}
 	
 protected:
@@ -47,6 +52,6 @@ protected:
 	glm::vec2 position, dimension;
 	Color color;
 	Texture texture;
-	std::function<void()> eventCallback = NULL;
+	call eventCallback = NULL;
 	GUIType type;
 };
