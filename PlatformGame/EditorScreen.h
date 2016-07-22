@@ -6,9 +6,11 @@
 #include <CandleLight_Engine\Timing.h>
 #include <CandleLight_Engine\SpriteBatch.h>
 #include <CandleLight_Engine\GUI.h>
+#include <CandleLight_Engine\RadioButton.h>
 #include <CandleLight_Engine\Button.h>
 #include <CandleLight_Engine\Panel.h>
 
+#include "GridShader.h"
 #include "StaticShader.h"
 #include "Box.h"
 //#include "Human.h"
@@ -49,6 +51,7 @@ private:
 
 	Window _window;
 	InputManager _inputManager;
+	GridShader _gridShader;
 	StaticShader _staticShader;
 	Camera _camera;
 	Timing _timer;
@@ -58,7 +61,7 @@ private:
 	CollisionManager _collisionManager;
 	Ground _ground;
 	Texture _sheetTex;
-	
+
 	ObjectMode _objectMode = ObjectMode::TILE;
 	SelectMode _selectMode = SelectMode::PLACE;
 
@@ -93,6 +96,8 @@ private:
 
 	void switchSelectMode(SelectMode& mode);
 	void clear();
+
+	void printHello() { printf("Hello\n"); }
 
 	//Player _player;
 	//std::vector<Human*> _humans;

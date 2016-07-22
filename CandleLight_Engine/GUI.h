@@ -14,6 +14,7 @@ enum GUIType
 {
 	NONE,
 	BUTTON,
+	RADIO_BUTTON,
 	PANEL
 };
 
@@ -30,6 +31,8 @@ public:
 
 	bool inBox(const glm::vec2& pos);
 
+	virtual void update() {}
+
 	const glm::vec2& getPosition() { return position; }
 	const glm::vec2& getDimension() { return dimension; }
 	const GUIType& getType() { return type; }
@@ -37,9 +40,12 @@ public:
 
 	void setPosition(glm::vec2& newPos) { position = newPos; }
 	void setParent(GUI* prnt) { parent = prnt; }
+	void setMouseOver(bool over) { mouseOver = over; }
+
+	void addChild(GUI* child) { _children.push_back(child); }
+	std::vector<GUI*>& getChildren() { return _children; }
 
 	std::function<void()> callback() const { return eventCallback; }
-
 	template<typename T, typename F, typename... Args>
 	void subscribeEvent(T instance, F func, Args... args)
 	{
@@ -50,8 +56,12 @@ public:
 protected:
 	GUI* parent = nullptr;
 	glm::vec2 position, dimension;
+	glm::vec4 uvRect;
 	Color color;
 	Texture texture;
 	call eventCallback = NULL;
 	GUIType type;
+	bool mouseOver = false;
+
+	std::vector<GUI*> _children;
 };

@@ -148,6 +148,7 @@
     <ClCompile Include="Loader.cpp" />
     <ClCompile Include="Panel.cpp" />
     <ClCompile Include="picoPNG.cpp" />
+    <ClCompile Include="RadioButton.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="ShaderProgram.cpp" />
@@ -164,6 +165,7 @@
     <ClInclude Include="Loader.h" />
     <ClInclude Include="Panel.h" />
     <ClInclude Include="picoPNG.h" />
+    <ClInclude Include="RadioButton.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="ShaderProgram.h" />

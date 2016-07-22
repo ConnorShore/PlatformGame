@@ -2,7 +2,7 @@
 
 Tile::Tile(const glm::vec2 & pos, const int& index, Texture& tex) : _position(pos), _index(index), _texture(tex)
 {
-	_spriteSheet.init(_texture, glm::vec2(8, 8));
+	_spriteSheet.init(_texture, glm::ivec2(8, 8));
 }
 
 void Tile::render(SpriteBatch & spriteBatch)

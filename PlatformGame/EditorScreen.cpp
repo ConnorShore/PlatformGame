@@ -28,20 +28,25 @@ void EditorScreen::init()
 	_spriteBatch.init();
 	_guiBatch.init();
 
-	Panel* panel = new Panel(glm::vec2(-0.98f, -0.98f), glm::vec2(0.45f, 1.95f), "Textures/GUI/panel.png", Color(255, 255, 255, 255));
+	Panel* panel = new Panel(glm::vec2(-0.98f, -0.98f), glm::vec2(0.45f, 1.95f), "Textures/GUI/panel.png", Color(255, 255, 255, 150));
 	_guis.push_back(panel);
 	
-	Button* button = new Button(panel, glm::vec2(0.1f, 0.87f), glm::vec2(0.15f, 0.1f), "Textures/GUI/button.png", Color(255, 255, 255, 255));
-	button->subscribeEvent(this, &EditorScreen::switchSelectMode, SelectMode::SELECT);
+	RadioButton* radio = new RadioButton(panel, glm::vec2(0.1f, 0.87f), "Textures/GUI/radio_button.png", Color(255, 255, 255, 200));
+	radio->setSelected(false);
+	radio->subscribeEvent(this, &EditorScreen::switchSelectMode, SelectMode::SELECT);
+	_guis.push_back(radio);
+
+	RadioButton* radio1 = new RadioButton(panel, glm::vec2(0.55f, 0.87f), "Textures/GUI/radio_button.png", Color(255, 255, 255, 200));
+	radio1->setSelected(true);
+	radio1->subscribeEvent(this, &EditorScreen::switchSelectMode, SelectMode::PLACE);
+	_guis.push_back(radio1);
+
+	Button* button = new Button(panel, glm::vec2(0.35f, 0.74f), glm::vec2(0.15f, 0.1f), "Textures/GUI/button.png", Color(255, 255, 255, 200));
+	button->subscribeEvent(this, &EditorScreen::clear);
 	_guis.push_back(button);
 
-	Button* button1 = new Button(panel, glm::vec2(0.55f, 0.87f), glm::vec2(0.15f, 0.1f), "Textures/GUI/button.png", Color(255, 255, 255, 255));
-	button1->subscribeEvent(this, &EditorScreen::switchSelectMode, SelectMode::PLACE);
-	_guis.push_back(button1);
-
-	Button* button2 = new Button(panel, glm::vec2(0.35f, 0.74f), glm::vec2(0.15f, 0.1f), "Textures/GUI/button.png", Color(255, 255, 255, 255));
-	button2->subscribeEvent(this, &EditorScreen::clear);
-	_guis.push_back(button2);
+	_gridShader.init("Shaders/gridShader.vert", "Shaders/gridShader.frag");
+	_gridShader.bindAttributes();
 
 	_staticShader.init("Shaders/staticShader.vert", "Shaders/staticShader.frag");
 	_staticShader.bindAttributes();
@@ -51,6 +56,8 @@ void EditorScreen::updateGUI()
 {
 	//Check button input
 	for (int i = 0; i < _guis.size(); i++) {
+		_guis[i]->update();
+
 		glm::vec2 pos = _camera.screenToGLCoords(_inputManager.getMousePos());
 
 		if (_guis[i]->inBox(pos))
@@ -62,19 +69,27 @@ void EditorScreen::updateGUI()
 
 		GUIType t = _guis[i]->getType();
 		if (_guis[i]->inBox(pos)) {
+			_guis[i]->setMouseOver(true);
 			_guiControl = true;
 			if (_inputManager.isKeyDown(SDL_BUTTON_LEFT)) {
 				switch (t) {
 				case BUTTON:
-					printf("Working\n ");
 					Button* button;
 					button = static_cast<Button*>(_guis[i]);
 					button->onClick();
+					break;
+				case RADIO_BUTTON:
+					RadioButton* radio;
+					radio = static_cast<RadioButton*>(_guis[i]);
+					radio->setSelected(true);
 					break;
 				case NONE:
 					break;
 				}
 			}
+		}
+		else {
+			_guis[i]->setMouseOver(false);
 		}
 	}
 }
@@ -100,14 +115,17 @@ void EditorScreen::input()
 			break;
 		case SDL_MOUSEBUTTONDOWN:
 			_inputManager.keyPressed(evnt.button.button);
-			if(!_guiControl)
-				updateMouseDown(evnt);
 			break;
 		case SDL_MOUSEBUTTONUP:
 			_inputManager.keyReleased(evnt.button.button);
 			//updateMouseUp(evnt);
 			break;
 		}
+	}
+
+	if (_inputManager.isKeyDown(SDL_BUTTON_LEFT) || _inputManager.isKeyDown(SDL_BUTTON_RIGHT)) {
+		if (!_guiControl)
+			updateMouseDown(evnt);
 	}
 
 	updateGUI();
@@ -123,6 +141,14 @@ void EditorScreen::update()
 void EditorScreen::render()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	//Grid
+
+	//_gridShader.start();
+	//_gridShader.getUniformLocations();
+	//_gridShader.loadPMatrix(_camera.getCameraMatrix());
+
+	//_gridShader.stop();
 
 	_staticShader.start();
 	_staticShader.getUniformLocations();
@@ -196,17 +222,18 @@ void EditorScreen::run()
 
 void EditorScreen::updateMouseDown(const SDL_Event& evnt)
 {
+	glm::vec2 pos = glm::vec2(_camera.screenToWorldCoords(glm::vec2(evnt.button.x, evnt.button.y)));
+
 	switch (evnt.button.button) {
 	case SDL_BUTTON_LEFT:
 		_mouseButtons[LEFT_BUTTON] = true;
-		if (_selectMode == SelectMode::PLACE) {
-			glm::vec2 pos = glm::vec2(_camera.screenToWorldCoords(glm::vec2(evnt.button.x, evnt.button.y)));
 
+		if (_selectMode == SelectMode::PLACE) {
 			switch (_objectMode) {
 			case ObjectMode::TILE:
 				pos.x = glm::floor(pos.x / TILE_SIZE) * TILE_SIZE;
 				pos.y = glm::floor(pos.y / TILE_SIZE) * TILE_SIZE;
-				_tiles.emplace_back(pos, _currentTileIndex, _sheetTex);	//Add array of 64 elements for index, and use mouse scroller to cycle through the different indexes
+				_tiles.emplace_back(pos, _currentTileIndex, _sheetTex);
 				break;
 			case ObjectMode::BOX:
 				Texture boxTex = ResourceManager::loadTexture("Textures/boxTex.png");
@@ -222,17 +249,21 @@ void EditorScreen::updateMouseDown(const SDL_Event& evnt)
 		}
 
 		break;
+
 	case SDL_BUTTON_RIGHT:
 		_mouseButtons[RIGHT_BUTTON] = true;
-		glm::vec2 pos = glm::vec2(_camera.screenToWorldCoords(glm::vec2(evnt.button.x, evnt.button.y)));
-		for (int i = 0; i < _tiles.size(); i++) {
-			if (pos.x > _tiles[i].getPosition().x && pos.y > _tiles[i].getPosition().y
-				&& pos.x <= _tiles[i].getPosition().x + TILE_SIZE && pos.y <= _tiles[i].getPosition().y + TILE_SIZE) {
-				_tiles[i] = _tiles.back();
-				_tiles.pop_back();
-				i--;
+
+		if (_selectMode == SelectMode::PLACE) {
+			pos = _camera.screenToWorldCoords(_inputManager.getMousePos());
+			for (int i = 0; i < _tiles.size(); i++) {
+				if (pos.x > _tiles[i].getPosition().x && pos.y > _tiles[i].getPosition().y
+					&& pos.x <= _tiles[i].getPosition().x + TILE_SIZE && pos.y <= _tiles[i].getPosition().y + TILE_SIZE) {
+					_tiles[i] = _tiles.back();
+					_tiles.pop_back();
+				}
 			}
 		}
+
 		break;
 	}
 }

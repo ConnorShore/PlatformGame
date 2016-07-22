@@ -16,8 +16,25 @@ Button::~Button()
 {
 }
 
+void Button::update()
+{
+	if (_enabled) {
+		if (mouseOver) {
+			color.a = 255;
+		}
+		else {
+			color.a = 200;
+		}
+	}
+	else {
+		color = Color(100, 100, 100, 100);
+	}
+}
+
 void Button::onClick()
 {
-	if(eventCallback != NULL)
-		eventCallback();
+	if (_enabled) {
+		if (eventCallback != NULL)
+			eventCallback();
+	}
 }

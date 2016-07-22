@@ -13,7 +13,6 @@ public:
 		dims = uvDims;
 	}
 
-
 	glm::vec4 getUVs(int index)
 	{
 		int xTile = index % dims.x;

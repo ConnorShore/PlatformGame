@@ -10,6 +10,6 @@ public:
 	~Panel();
 
 private:
-
+	std::vector<GUI*> _children;
 };
 
