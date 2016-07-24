@@ -20,6 +20,7 @@
 #include "Bullet.h"
 #include "Collision.h"
 #include "Ground.h"
+#include "Level.h"
 #include "Tile.h"
 
 const int NO_TILE = -1;
@@ -31,7 +32,9 @@ enum class ObjectMode
 {
 	TILE,
 	BOX,
-	GROUND
+	GROUND,
+	PLAYER,
+	HUMAN
 };
 
 enum class SelectMode
@@ -62,8 +65,9 @@ private:
 	SpriteBatch _guiBatch;
 	SpriteBatch _hudBatch;
 	CollisionManager _collisionManager;
-	Ground _ground;
+	Texture _nodeTex;
 	Texture _sheetTex;
+	Ground _ground;
 	SpriteFont* _spriteFont;
 
 	ObjectMode _objectMode = ObjectMode::TILE;
@@ -99,7 +103,9 @@ private:
 	void updateMouseDown(const SDL_Event& evnt);
 	void updateMouseWheel(const SDL_Event& evnt);
 
+	void saveLevel(const std::string& fileName, const std::string& texSheet, const std::vector<Tile> tiles, Ground& ground);
 	void switchSelectMode(SelectMode& mode);
+	void switchObjectMode(ObjectMode& mode);
 	void clear();
 
 	void printHello() { printf("Hello\n"); }

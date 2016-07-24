@@ -16,7 +16,7 @@ public:
 
 	void addVertex(const glm::vec2& vertex);
 
-	const std::vector<glm::vec2>& getVertices() { return _vertices; }
+	std::vector<glm::vec2>& getVertices() { return _vertices; }
 
 private:
 	b2Body* _body;

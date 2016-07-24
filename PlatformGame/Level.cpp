@@ -37,6 +37,20 @@ bool Level::saveLevel(const std::string name, const Player& player, const std::v
 	return true;
 }
 
+bool Level::saveLevel(const std::string& name, Ground& ground)
+{
+	std::ofstream level;
+	level.open("Levels/" + name, std::ios::app);
+	if (level.fail()) {
+		printf("Failed to create level: %s", name.c_str());
+		return false;
+	}
+
+	saveGround(level, ground);
+
+	level.close();
+}
+
 bool Level::loadLevel(const std::string name, b2World* world, Player& player, std::vector<Human*>& humans, std::vector<Box>& boxes, Ground& ground)
 {
 	std::ifstream level;
@@ -106,6 +120,103 @@ bool Level::loadLevel(const std::string name, b2World* world, Player& player, st
 	}
 	level.close();
 	printf("Level %s Loaded!\n", name.c_str());
+
+	return true;
+}
+
+bool Level::loadLevel(const std::string & name, b2World * world, std::vector<Tile>& tiles, Ground & ground)
+{
+	std::ifstream level;
+	level.open("Levels/" + name);
+	if (level.fail()) {
+		printf("Failed to open level: %s", name.c_str());
+		return false;
+	}
+
+	{
+		//Tiles
+		std::string tileSheet;
+		level >> tileSheet;
+
+		Texture tex = ResourceManager::loadTexture(tileSheet);
+
+		//Get position of first tile
+		int size;
+		level >> size;
+
+		for (int i = 0; i < size; i++) {
+			glm::vec2 pos;
+			int index;
+			level >> pos.x >> pos.y >> index;
+			tiles.emplace_back(pos, index, tex);
+		}
+	}
+
+	{
+		//Ground
+		glm::vec2 vert;
+		int numVerts;
+		level >> numVerts;
+		for (int i = 0; i < numVerts; i++) {
+			level >> vert.x >> vert.y;
+			ground.addVertex(vert);
+		}
+		ground.init(world, numVerts);
+	}
+
+	level.close();
+	return true;
+}
+
+bool Level::saveTiles(const std::string & name, const std::string & tileSheet, std::vector<Tile>& tiles)
+{
+	std::ofstream level;
+	level.open("Levels/" + name);
+	if (level.fail()) {
+		printf("Failed to create level: %s", name.c_str());
+		return false;
+	}
+
+	SpriteSheet ss;
+	ss.init(ResourceManager::loadTexture(tileSheet), glm::ivec2(8, 8));
+
+	level << tileSheet << "\n";
+	level << tiles.size() << "\n";
+	
+	for (Tile t : tiles) {
+		level << t.getPosition().x << ' ' << t.getPosition().y << ' ' << t.getIndex() << "\n";
+	}
+
+	level.close();
+
+	printf("Level %s Created!\n", name.c_str());
+	return true;
+}
+
+bool Level::loadTiles(const std::string & name, std::vector<Tile>& tiles)
+{
+	std::ifstream level;
+	level.open("Levels/" + name, std::ios::app);
+	if (level.fail()) {
+		printf("Failed to open level: %s", name.c_str());
+		return false;
+	}
+
+	std::string tileSheet;
+	level >> tileSheet;
+
+	Texture tex = ResourceManager::loadTexture(tileSheet);
+
+	//Get position of first tile
+	int size;
+	level >> size;
+
+	for (int i = 0; i < size; i++) {
+		glm::vec2 pos;
+		int index;
+		level >> pos.x >> pos.y >> index;
+		tiles.emplace_back(pos, index, tex);
+	}
 
 	return true;
 }
@@ -192,9 +303,4 @@ void Level::saveGround(std::ofstream& level, Ground & ground)
 	for (auto& vert : ground.getVertices()) {
 		level << vert.x << ' ' << vert.y << "\n";
 	}
-}
-
-void Level::saveTiles(std::ofstream & level, std::vector<Tile>& tiles)
-{
-
 }

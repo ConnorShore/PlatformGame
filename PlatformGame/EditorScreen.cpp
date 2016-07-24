@@ -23,6 +23,7 @@ void EditorScreen::init()
 	_world = std::make_unique<b2World>(gravity);
 
 	_sheetTex = ResourceManager::loadTexture("Textures/Tiles/test.png");
+	_nodeTex = ResourceManager::loadTexture("Textures/Editor/node.png");
 
 	_tileBatch.init();
 	_spriteBatch.init();
@@ -49,6 +50,24 @@ void EditorScreen::init()
 	button->setEnabled(true);
 	_guis.push_back(button);
 	_guiLabels.emplace_back(button, "Clear", 1.0f, Color(100,100,100,255), LabelPosition::CENTER);
+
+	RadioButton* ground = new RadioButton(panel, glm::vec2(0.25f, 0.45f), "Textures/GUI/radio_button.png", Color(255, 255, 255, 255));
+	ground->setSelected(false);
+	ground->subscribeEvent(this, &EditorScreen::switchObjectMode, ObjectMode::GROUND);
+	_guis.push_back(ground);
+	_guiLabels.emplace_back(ground, "Ground", 1.0f);
+
+	RadioButton* tile = new RadioButton(panel, glm::vec2(0.65f, 0.45f), "Textures/GUI/radio_button.png", Color(255, 255, 255, 255));
+	tile->setSelected(true);
+	tile->subscribeEvent(this, &EditorScreen::switchObjectMode, ObjectMode::TILE);
+	_guis.push_back(tile);
+	_guiLabels.emplace_back(tile, "Tiles", 1.0f);
+
+	Button* save = new Button(panel, glm::vec2(0.30f, 0.25f), glm::vec2(0.15f, 0.1f), "Textures/GUI/button.png", Color(255, 255, 255, 200));
+	save->subscribeEvent(this, &EditorScreen::saveLevel, "level1.txt", "Textures/Tiles/test.png", _tiles, _ground);
+	save->setEnabled(true);
+	_guis.push_back(save);
+	_guiLabels.emplace_back(save, "Save", 1.0f, Color(100, 100, 100, 255), LabelPosition::CENTER);
 
 	_spriteFont = new SpriteFont("Fonts/BEBAS.ttf", 32);
 
@@ -180,6 +199,13 @@ void EditorScreen::render()
 	for (int i = 0; i < _tiles.size(); i++) {
 		_tiles[i].render(_tileBatch);
 	}
+
+	for (auto& vert : _ground.getVertices()) {
+		float size = 0.25f;
+		glm::vec4 destRect(vert.x - size/2, vert.y - size/2, size, size);
+		_tileBatch.addToBatch(destRect, glm::vec4(0, 0, 1, 1), 1.0f, _nodeTex.id, Color(255, 255, 255, 255));
+	}
+
 	_tileBatch.end();
 	_tileBatch.renderBatch();
 
@@ -261,9 +287,13 @@ void EditorScreen::updateMouseDown(const SDL_Event& evnt)
 	switch (evnt.button.button) {
 	case SDL_BUTTON_LEFT:
 		_mouseButtons[LEFT_BUTTON] = true;
+		_mouseButtons[RIGHT_BUTTON] = false;
 
 		if (_selectMode == SelectMode::PLACE) {
 			switch (_objectMode) {
+			case ObjectMode::GROUND:
+				_ground.addVertex(pos);
+				break;
 			case ObjectMode::TILE:
 				pos.x = glm::floor(pos.x / TILE_SIZE) * TILE_SIZE;
 				pos.y = glm::floor(pos.y / TILE_SIZE) * TILE_SIZE;
@@ -286,18 +316,34 @@ void EditorScreen::updateMouseDown(const SDL_Event& evnt)
 
 	case SDL_BUTTON_RIGHT:
 		_mouseButtons[RIGHT_BUTTON] = true;
+		_mouseButtons[LEFT_BUTTON] = false;
+		pos = _camera.screenToWorldCoords(_inputManager.getMousePos());
 
 		if (_selectMode == SelectMode::PLACE) {
-			pos = _camera.screenToWorldCoords(_inputManager.getMousePos());
-			for (int i = 0; i < _tiles.size(); i++) {
-				if (pos.x > _tiles[i].getPosition().x && pos.y > _tiles[i].getPosition().y
-					&& pos.x <= _tiles[i].getPosition().x + TILE_SIZE && pos.y <= _tiles[i].getPosition().y + TILE_SIZE) {
-					_tiles[i] = _tiles.back();
-					_tiles.pop_back();
+			switch (_objectMode) {
+			case ObjectMode::GROUND:
+				float nodeSize;
+				nodeSize = 0.25f;
+				for (int i = 0; i < _ground.getVertices().size(); i++) {
+					glm::vec2 vert = _ground.getVertices()[i];
+					if (pos.x > vert.x - nodeSize/2 && pos.y > vert.y - nodeSize/2
+						&& pos.x <= vert.x + nodeSize/2 && pos.y <= vert.y + nodeSize/2) {
+						_ground.getVertices()[i] = _ground.getVertices().back();
+						_ground.getVertices().pop_back();
+					}
 				}
+				break;
+			case ObjectMode::TILE:
+				for (int i = 0; i < _tiles.size(); i++) {
+					if (pos.x > _tiles[i].getPosition().x && pos.y > _tiles[i].getPosition().y
+						&& pos.x <= _tiles[i].getPosition().x + TILE_SIZE && pos.y <= _tiles[i].getPosition().y + TILE_SIZE) {
+						_tiles[i] = _tiles.back();
+						_tiles.pop_back();
+					}
+				}
+				break;
 			}
 		}
-
 		break;
 	}
 }
@@ -323,8 +369,20 @@ void EditorScreen::switchSelectMode(SelectMode & mode)
 	_selectMode = mode;
 }
 
+void EditorScreen::switchObjectMode(ObjectMode & mode)
+{
+	_objectMode = mode;
+}
+
 void EditorScreen::clear()
 {
 	_tiles.clear();
 	_boxes.clear();
+	_ground.getVertices().clear();
+}
+
+void EditorScreen::saveLevel(const std::string& fileName, const std::string& texSheet, const std::vector<Tile> tiles, Ground& ground)
+{
+	Level::saveTiles(fileName, texSheet, _tiles);
+	Level::saveLevel(fileName, _ground);
 }

@@ -41,13 +41,13 @@ void MainGame::init()
 
 	Texture tex = ResourceManager::loadTexture("Textures/boxTex.png");
 
-	_ground.addVertex(glm::vec2(-10.0f, -10.0f));
-	_ground.addVertex(glm::vec2(-3.0f, -10.0f));
-	_ground.addVertex(glm::vec2(-3.0f, -11.0f));
-	_ground.addVertex(glm::vec2(21.0f, -11.0f));
-	_ground.addVertex(glm::vec2(21.0f, -10.0f));
-	_ground.addVertex(glm::vec2(26.0f, -10.0f));
-	_ground.init(_world.get(), _ground.getVertices().size());
+	//_ground.addVertex(glm::vec2(-10.0f, -10.0f));
+	//_ground.addVertex(glm::vec2(-3.0f, -10.0f));
+	//_ground.addVertex(glm::vec2(-3.0f, -11.0f));
+	//_ground.addVertex(glm::vec2(21.0f, -11.0f));
+	//_ground.addVertex(glm::vec2(21.0f, -10.0f));
+	//_ground.addVertex(glm::vec2(26.0f, -10.0f));
+	//_ground.init(_world.get(), _ground.getVertices().size());
 
 	//Setup boxes
 	for (int i = 0; i < 10; i++) {
@@ -61,7 +61,10 @@ void MainGame::init()
 	_player.addWeapon(new AK47(_player.getPosition(), glm::vec2(2.2f, 1.55f), glm::vec2(1.0f, -0.75f)));
 	_humans.push_back(&_player);
 
-	Level::loadTiles("TestLevel_tiles.txt", "Textures/Tiles/test.png", _tiles);
+	//Level::loadTiles("TestLevel_tiles.txt", "Textures/Tiles/test.png", _tiles);
+	//Level::loadTiles("tiles1.txt", _tiles);
+	Level::loadLevel("level1.txt", _world.get(), _tiles, _ground);
+	_ground.init(_world.get(), _ground.getVertices().size());
 	//Level::loadLevel("TestLevel.txt", _world.get(), _player, _humans, _boxes, _ground);
 
 	Panel* panel = new Panel(glm::vec2(-0.95f, -0.95f), glm::vec2(0.4f, 1.8f), "Textures/GUI/panel.png", Color(255, 255, 255, 150));
