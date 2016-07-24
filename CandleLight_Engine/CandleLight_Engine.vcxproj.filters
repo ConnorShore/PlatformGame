@@ -6,7 +6,6 @@
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="Loader.cpp" />
     <ClCompile Include="picoPNG.cpp" />
-    <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="ShaderProgram.cpp" />
     <ClCompile Include="SpriteBatch.cpp" />
@@ -21,7 +20,13 @@
     <ClCompile Include="Panel.cpp">
       <Filter>GUI</Filter>
     </ClCompile>
-    <ClCompile Include="RadioButton.cpp" />
+    <ClCompile Include="RadioButton.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteFont.cpp" />
+    <ClCompile Include="GUILabel.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
@@ -29,7 +34,6 @@
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="Loader.h" />
     <ClInclude Include="picoPNG.h" />
-    <ClInclude Include="Renderer.h" />
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="ShaderProgram.h" />
     <ClInclude Include="SpriteBatch.h" />
@@ -47,10 +51,11 @@
     <ClInclude Include="Panel.h">
       <Filter>GUI</Filter>
     </ClInclude>
-    <ClInclude Include="RadioButton.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="ReadMe.txt" />
+    <ClInclude Include="RadioButton.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteFont.h" />
+    <ClInclude Include="GUILabel.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="GUI">

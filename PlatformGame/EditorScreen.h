@@ -9,6 +9,8 @@
 #include <CandleLight_Engine\RadioButton.h>
 #include <CandleLight_Engine\Button.h>
 #include <CandleLight_Engine\Panel.h>
+#include <CandleLight_Engine\SpriteFont.h>
+#include <CandleLight_Engine\GUILabel.h>
 
 #include "GridShader.h"
 #include "StaticShader.h"
@@ -58,9 +60,11 @@ private:
 	SpriteBatch _spriteBatch;
 	SpriteBatch _tileBatch;
 	SpriteBatch _guiBatch;
+	SpriteBatch _hudBatch;
 	CollisionManager _collisionManager;
 	Ground _ground;
 	Texture _sheetTex;
+	SpriteFont* _spriteFont;
 
 	ObjectMode _objectMode = ObjectMode::TILE;
 	SelectMode _selectMode = SelectMode::PLACE;
@@ -69,6 +73,7 @@ private:
 	bool _guiControl = false;
 
 	std::vector<GUI*> _guis;
+	std::vector<GUILabel> _guiLabels;
 	std::vector<Tile> _tiles;
 	std::vector<Box> _boxes;
 

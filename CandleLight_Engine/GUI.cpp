@@ -32,8 +32,3 @@ bool GUI::inBox(const glm::vec2& pos)
 {
 	return (pos.x > position.x && pos.y > position.y && pos.x < (position.x + dimension.x) && pos.y < (position.y + dimension.y));
 }
-
-//void GUI::subscribeEvent(GUIEvent & e, bool(*evntHandler))
-//{
-//	
-//}

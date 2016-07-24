@@ -3,6 +3,7 @@
 #include "Camera.h"
 #include "SpriteBatch.h"
 #include "Texture.h"
+#include "SpriteFont.h"
 
 #include <glm/glm.hpp>
 #include <functional>

@@ -3,13 +3,21 @@
 #include <SDL\SDL.h>
 #include <string>
 
+enum class WindowFlags
+{
+	NONE,
+	WINDOWED,
+	FULLSCREEN,
+	FULLSCREEN_WINDOWED
+};
+
 class Window
 {
 public:
 	Window();
 	~Window();
 
-	void createWindow(const std::string& title, int x, int y, int width, int height);
+	void createWindow(const std::string& title, int x, int y, int width, int height, WindowFlags flags = WindowFlags::NONE);
 	void swapWindow();
 	void destroyWindow();
 

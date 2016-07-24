@@ -13,14 +13,27 @@ Window::~Window()
 {
 }
 
-void Window::createWindow(const std::string & title, int x, int y, int width, int height)
+void Window::createWindow(const std::string & title, int x, int y, int width, int height, WindowFlags flags /* NONE */)
 {
 	_width = width;
 	_height = height;
 
 	SDL_Init(SDL_INIT_EVERYTHING);
 
-	_window = SDL_CreateWindow(title.c_str(), x, y, width, height, SDL_WINDOW_OPENGL);
+	switch (flags) {
+	case WindowFlags::NONE:
+		_window = SDL_CreateWindow(title.c_str(), x, y, width, height, SDL_WINDOW_OPENGL);
+		break;
+	case WindowFlags::WINDOWED:
+		_window = SDL_CreateWindow(title.c_str(), x, y, width, height, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
+		break;
+	case WindowFlags::FULLSCREEN:
+		_window = SDL_CreateWindow(title.c_str(), x, y, width, height, SDL_WINDOW_OPENGL | SDL_WINDOW_FULLSCREEN);
+		break;
+	case WindowFlags::FULLSCREEN_WINDOWED:
+		_window = SDL_CreateWindow(title.c_str(), x, y, width, height, SDL_WINDOW_OPENGL | SDL_WINDOW_MAXIMIZED);
+		break;
+	}
 
 	if (_window == nullptr) {
 		printf("Failed to create SDL Window");

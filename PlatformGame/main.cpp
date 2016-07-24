@@ -1,4 +1,4 @@
-//#include "MainGame.h"
+#include "MainGame.h"
 #include "EditorScreen.h"
 
 int main(int argc, char** argv)

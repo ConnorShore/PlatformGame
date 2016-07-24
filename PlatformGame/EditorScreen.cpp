@@ -27,23 +27,30 @@ void EditorScreen::init()
 	_tileBatch.init();
 	_spriteBatch.init();
 	_guiBatch.init();
+	_hudBatch.init();
 
 	Panel* panel = new Panel(glm::vec2(-0.98f, -0.98f), glm::vec2(0.45f, 1.95f), "Textures/GUI/panel.png", Color(255, 255, 255, 150));
 	_guis.push_back(panel);
 	
-	RadioButton* radio = new RadioButton(panel, glm::vec2(0.1f, 0.87f), "Textures/GUI/radio_button.png", Color(255, 255, 255, 200));
+	RadioButton* radio = new RadioButton(panel, glm::vec2(0.25f, 0.87f), "Textures/GUI/radio_button.png", Color(255, 255, 255, 255));
 	radio->setSelected(false);
 	radio->subscribeEvent(this, &EditorScreen::switchSelectMode, SelectMode::SELECT);
 	_guis.push_back(radio);
+	_guiLabels.emplace_back(radio, "Select", 1.0f);
 
-	RadioButton* radio1 = new RadioButton(panel, glm::vec2(0.55f, 0.87f), "Textures/GUI/radio_button.png", Color(255, 255, 255, 200));
+	RadioButton* radio1 = new RadioButton(panel, glm::vec2(0.65f, 0.87f), "Textures/GUI/radio_button.png", Color(255, 255, 255, 255));
 	radio1->setSelected(true);
 	radio1->subscribeEvent(this, &EditorScreen::switchSelectMode, SelectMode::PLACE);
 	_guis.push_back(radio1);
+	_guiLabels.emplace_back(radio1, "Place", 1.0f);
 
-	Button* button = new Button(panel, glm::vec2(0.35f, 0.74f), glm::vec2(0.15f, 0.1f), "Textures/GUI/button.png", Color(255, 255, 255, 200));
+	Button* button = new Button(panel, glm::vec2(0.30f, 0.74f), glm::vec2(0.15f, 0.1f), "Textures/GUI/button.png", Color(255, 255, 255, 200));
 	button->subscribeEvent(this, &EditorScreen::clear);
+	button->setEnabled(true);
 	_guis.push_back(button);
+	_guiLabels.emplace_back(button, "Clear", 1.0f, Color(100,100,100,255), LabelPosition::CENTER);
+
+	_spriteFont = new SpriteFont("Fonts/BEBAS.ttf", 32);
 
 	_gridShader.init("Shaders/gridShader.vert", "Shaders/gridShader.frag");
 	_gridShader.bindAttributes();
@@ -128,6 +135,18 @@ void EditorScreen::input()
 			updateMouseDown(evnt);
 	}
 
+	if (_inputManager.isKeyDown(SDLK_ESCAPE)) {
+		_isRunning = false;
+	}
+
+	if (_inputManager.isKeyDown(SDLK_e)) {
+		_camera.setScale(_camera.getScale() + 0.1f);
+	}
+
+	if (_inputManager.isKeyDown(SDLK_q)) {
+		_camera.setScale(_camera.getScale() - 0.1f);
+	}
+
 	updateGUI();
 }
 
@@ -184,6 +203,21 @@ void EditorScreen::render()
 
 	_guiBatch.end();
 	_guiBatch.renderBatch();
+
+	//Font
+	//char buffer[256];
+	_hudBatch.begin();
+
+	//_spriteFont->draw(_hudBatch, buffer, glm::vec2(-10.0f, 0.0f), glm::vec2(1.0f / _camera.getScale()), 1.0f, Color(255, 255, 255, 255));
+	//sprintf(buffer, "Number of Tiles: %d", _tiles.size());
+
+	for (int i = 0; i < _guiLabels.size(); i++) {
+		_guiLabels[i].render(_hudBatch, _camera);
+	}
+
+	_hudBatch.end();
+	_hudBatch.renderBatch();
+
 	_staticShader.stop();
 
 	_window.swapWindow();
