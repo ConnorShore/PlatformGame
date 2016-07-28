@@ -34,10 +34,18 @@ void MainGame::init()
 	_tileBatch.init();
 	_spriteBatch.init();
 	_guiBatch.init();
+	_backgroundBatch.init();
+
+	Background back1;
+	back1.init("Textures/testBack.png", glm::vec2(-20.0f), glm::vec2(100, 25), 0, 2);
+	_backgrounds.push_back(back1);
+	Background back2;
+	back2.init("Textures/testBack2.png", glm::vec2(-20.0f), glm::vec2(100, 25), 1, 2);
+	_backgrounds.push_back(back2);
 
 	Texture tex = ResourceManager::loadTexture("Textures/boxTex.png");
 
-	_player.humanInit(_world.get(), glm::vec2(0.0f, -5.0f), glm::vec2(1.0f, 1.9f), glm::vec2(10, 1), "Textures/ss_player_base.png");
+	_player.humanInit(_world.get(), glm::vec2(0.0f, -8.0f), glm::vec2(1.0f, 1.9f), glm::vec2(10, 1), "Textures/ss_player_base.png");
 	_player.addWeapon(new AK47(_player.getPosition(), glm::vec2(1.0f, -0.75f)));
 	_player.addWeapon(new AK47(_player.getPosition(), glm::vec2(2.2f, 1.55f), glm::vec2(1.0f, -0.75f)));
 	_humans.push_back(&_player);
@@ -118,6 +126,9 @@ void MainGame::update()
 	_camera.setPosition(glm::vec2(_player.getPosition().x + _player.getDimension().x / 2.0f, _player.getPosition().y + _player.getDimension().y / 2.0f));
 	_camera.update();
 
+	for (auto& back : _backgrounds)
+		back.update(_camera);
+
 	for (int i = 0; i < _bullets.size(); i++) {
 		if (_bullets[i]->getBody()->IsActive() == false) {
 			_world->DestroyBody(_bullets[i]->getBody());
@@ -142,6 +153,15 @@ void MainGame::render()
 	_staticShader.getUniformLocations();
 	_staticShader.loadPMatrix(_camera.getCameraMatrix());
 	_staticShader.loadTexture();
+
+	//Backgrounds
+	_backgroundBatch.begin(SortType::BACK_TO_FRONT);
+
+	for (auto& back : _backgrounds)
+		back.render(_backgroundBatch);
+
+	_backgroundBatch.end();
+	_backgroundBatch.renderBatch();
 
 	//Tiles
 	_tileBatch.begin();

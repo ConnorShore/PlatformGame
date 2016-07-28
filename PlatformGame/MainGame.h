@@ -10,6 +10,7 @@
 #include <CandleLight_Engine\GUI.h>
 #include <CandleLight_Engine\Panel.h>
 #include <CandleLight_Engine\Button.h>
+#include <CandleLight_Engine\Background.h>
 
 #include "StaticShader.h"
 #include "Box.h"
@@ -19,7 +20,6 @@
 #include "Collision.h"
 #include "Ground.h"
 #include "Tile.h"
-
 
 
 enum class GameState {PLAY, PAUSED, EXIT};
@@ -44,6 +44,7 @@ private:
 	SpriteBatch _spriteBatch;
 	SpriteBatch _tileBatch;
 	SpriteBatch _guiBatch;
+	SpriteBatch _backgroundBatch;
 	CollisionManager _collisionManager;
 	Ground _ground;
 
@@ -56,6 +57,7 @@ private:
 	std::vector<Human*> _humans;
 	std::vector<Bullet*> _bullets;
 	std::vector<GUI*> _guis;
+	std::vector<Background> _backgrounds;
 
 	int _screenWidth = 1280;
 	int _screenHeight = 720;
