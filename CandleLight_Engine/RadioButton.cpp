@@ -25,7 +25,8 @@ void RadioButton::onSelect()
 		for (auto& button : parent->getChildren()) {
 			if (button->getType() == RADIO_BUTTON && button != this) {
 				RadioButton* b = static_cast<RadioButton*>(button);
-				b->onDeselect();
+				if(b->getGroup() == _group)
+					b->onDeselect();
 			}
 		}
 	}

@@ -10,8 +10,8 @@ public:
 	Loader();
 	~Loader();
 
-	Texture loadPNG(std::string filePath);
-	bool loadFile(const std::string& fileName, std::vector<unsigned char>& buffer);
+	static Texture loadPNG(const std::string& filePath);
+	static bool loadFile(const std::string& fileName, std::vector<unsigned char>& buffer);
 
 private:
 

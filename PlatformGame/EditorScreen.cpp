@@ -3,7 +3,6 @@
 #include <CandleLight_Engine\ResourceManager.h>
 #include "Level.h"
 
-
 EditorScreen::EditorScreen() : _isRunning(true)
 {
 }
@@ -19,11 +18,12 @@ void EditorScreen::init()
 	_camera.init(_screenWidth, _screenHeight);
 	_camera.setScale(30.0f);
 
-	b2Vec2 gravity(0, -20.0f);
+	b2Vec2 gravity(0.0f, 0.0f);
 	_world = std::make_unique<b2World>(gravity);
 
 	_sheetTex = ResourceManager::loadTexture("Textures/Tiles/test.png");
 	_nodeTex = ResourceManager::loadTexture("Textures/Editor/node.png");
+	_playerTex = ResourceManager::loadTexture("Textures/Editor/playerTex.png");
 
 	_tileBatch.init();
 	_spriteBatch.init();
@@ -52,19 +52,28 @@ void EditorScreen::init()
 	_guiLabels.emplace_back(button, "Clear", 1.0f, Color(100,100,100,255), LabelPosition::CENTER);
 
 	RadioButton* ground = new RadioButton(panel, glm::vec2(0.25f, 0.45f), "Textures/GUI/radio_button.png", Color(255, 255, 255, 255));
+	ground->setGroup(1);
 	ground->setSelected(false);
 	ground->subscribeEvent(this, &EditorScreen::switchObjectMode, ObjectMode::GROUND);
 	_guis.push_back(ground);
 	_guiLabels.emplace_back(ground, "Ground", 1.0f);
 
-	RadioButton* tile = new RadioButton(panel, glm::vec2(0.65f, 0.45f), "Textures/GUI/radio_button.png", Color(255, 255, 255, 255));
+	RadioButton* tile = new RadioButton(panel, glm::vec2(0.5f, 0.45f), "Textures/GUI/radio_button.png", Color(255, 255, 255, 255));
+	tile->setGroup(1);
 	tile->setSelected(true);
 	tile->subscribeEvent(this, &EditorScreen::switchObjectMode, ObjectMode::TILE);
 	_guis.push_back(tile);
-	_guiLabels.emplace_back(tile, "Tiles", 1.0f);
+	_guiLabels.emplace_back(tile, "Tile", 1.0f);
+
+	RadioButton* box = new RadioButton(panel, glm::vec2(0.75f, 0.45f), "Textures/GUI/radio_button.png", Color(255, 255, 255, 255));
+	box->setGroup(1);
+	box->setSelected(false);
+	box->subscribeEvent(this, &EditorScreen::switchObjectMode, ObjectMode::BOX);
+	_guis.push_back(box);
+	_guiLabels.emplace_back(box, "Box", 1.0f);
 
 	Button* save = new Button(panel, glm::vec2(0.30f, 0.25f), glm::vec2(0.15f, 0.1f), "Textures/GUI/button.png", Color(255, 255, 255, 200));
-	save->subscribeEvent(this, &EditorScreen::saveLevel, "level1.txt", "Textures/Tiles/test.png", _tiles, _ground);
+	save->subscribeEvent(this, &EditorScreen::saveLevel, "level1.txt", "Textures/Tiles/test.png");
 	save->setEnabled(true);
 	_guis.push_back(save);
 	_guiLabels.emplace_back(save, "Save", 1.0f, Color(100, 100, 100, 255), LabelPosition::CENTER);
@@ -166,6 +175,23 @@ void EditorScreen::input()
 		_camera.setScale(_camera.getScale() - 0.1f);
 	}
 
+	//MoveCamera
+	float CAM_SPEED = 0.25f;
+	if (_inputManager.isKeyDown(SDLK_LSHIFT)) CAM_SPEED = 0.75f;
+
+	if (_inputManager.isKeyDown(SDLK_s)) {
+		_camera.setPosition(_camera.getPosition() - glm::vec2(0.0f, CAM_SPEED));
+	}
+	else if (_inputManager.isKeyDown(SDLK_w)) {
+		_camera.setPosition(_camera.getPosition() + glm::vec2(0.0f, CAM_SPEED));
+	}
+	if (_inputManager.isKeyDown(SDLK_d)) {
+		_camera.setPosition(_camera.getPosition() + glm::vec2(CAM_SPEED, 0.0f));
+	}
+	else if (_inputManager.isKeyDown(SDLK_a)) {
+		_camera.setPosition(_camera.getPosition() - glm::vec2(CAM_SPEED, 0.0f));
+	}
+
 	updateGUI();
 }
 
@@ -179,14 +205,6 @@ void EditorScreen::update()
 void EditorScreen::render()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-	//Grid
-
-	//_gridShader.start();
-	//_gridShader.getUniformLocations();
-	//_gridShader.loadPMatrix(_camera.getCameraMatrix());
-
-	//_gridShader.stop();
 
 	_staticShader.start();
 	_staticShader.getUniformLocations();
@@ -224,18 +242,14 @@ void EditorScreen::render()
 	_guiBatch.begin();
 
 	for (int i = 0; i < _guis.size(); i++) {
-		_guis[i]->render(_guiBatch);	//< TODO: Make follow camera at all times
+		_guis[i]->render(_guiBatch);
 	}
 
 	_guiBatch.end();
 	_guiBatch.renderBatch();
 
 	//Font
-	//char buffer[256];
 	_hudBatch.begin();
-
-	//_spriteFont->draw(_hudBatch, buffer, glm::vec2(-10.0f, 0.0f), glm::vec2(1.0f / _camera.getScale()), 1.0f, Color(255, 255, 255, 255));
-	//sprintf(buffer, "Number of Tiles: %d", _tiles.size());
 
 	for (int i = 0; i < _guiLabels.size(); i++) {
 		_guiLabels[i].render(_hudBatch, _camera);
@@ -290,6 +304,7 @@ void EditorScreen::updateMouseDown(const SDL_Event& evnt)
 		_mouseButtons[RIGHT_BUTTON] = false;
 
 		if (_selectMode == SelectMode::PLACE) {
+			Texture tex;
 			switch (_objectMode) {
 			case ObjectMode::GROUND:
 				_ground.addVertex(pos);
@@ -300,9 +315,9 @@ void EditorScreen::updateMouseDown(const SDL_Event& evnt)
 				_tiles.emplace_back(pos, _currentTileIndex, _sheetTex);
 				break;
 			case ObjectMode::BOX:
-				Texture boxTex = ResourceManager::loadTexture("Textures/boxTex.png");
+				tex = ResourceManager::loadTexture("Textures/boxTex.png");
 				Box box;
-				box.init(_world.get(), pos, glm::vec2(1.0f), boxTex, 1.0f);
+				box.init(_world.get(), pos, glm::vec2(1.0f), tex, 1.0f);
 				_boxes.push_back(box);
 				break;
 			}
@@ -317,6 +332,7 @@ void EditorScreen::updateMouseDown(const SDL_Event& evnt)
 	case SDL_BUTTON_RIGHT:
 		_mouseButtons[RIGHT_BUTTON] = true;
 		_mouseButtons[LEFT_BUTTON] = false;
+
 		pos = _camera.screenToWorldCoords(_inputManager.getMousePos());
 
 		if (_selectMode == SelectMode::PLACE) {
@@ -381,8 +397,9 @@ void EditorScreen::clear()
 	_ground.getVertices().clear();
 }
 
-void EditorScreen::saveLevel(const std::string& fileName, const std::string& texSheet, const std::vector<Tile> tiles, Ground& ground)
+void EditorScreen::saveLevel(const std::string& fileName, const std::string& texSheet)
 {
+
 	Level::saveTiles(fileName, texSheet, _tiles);
-	Level::saveLevel(fileName, _ground);
+	Level::saveEditorLevel(fileName, _ground, _boxes);
 }

@@ -9,7 +9,7 @@ Loader::Loader()
 {
 }
 
-Texture Loader::loadPNG(std::string filePath)
+Texture Loader::loadPNG(const std::string& filePath)
 {
 	Texture texture;
 
@@ -46,6 +46,7 @@ Texture Loader::loadPNG(std::string filePath)
 
 	texture.width = width;
 	texture.height = height;
+	texture.filePath = filePath;
 
 	printf("Texture %s loaded\n", filePath.c_str());
 

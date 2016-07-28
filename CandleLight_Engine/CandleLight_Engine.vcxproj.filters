@@ -27,6 +27,7 @@
     <ClCompile Include="GUILabel.cpp">
       <Filter>GUI</Filter>
     </ClCompile>
+    <ClCompile Include="TextureCache.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
@@ -56,6 +57,8 @@
     </ClInclude>
     <ClInclude Include="SpriteFont.h" />
     <ClInclude Include="GUILabel.h" />
+    <ClInclude Include="..\PlatformGame\Agent.h" />
+    <ClInclude Include="TextureCache.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="GUI">

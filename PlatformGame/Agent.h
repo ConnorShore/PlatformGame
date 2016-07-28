@@ -36,6 +36,8 @@ public:
 	uint16 getCollisionCategory() { return _collisionCategory; }
 	uint16 getCollisionMask() { return _collisionMask; }
 
+	void setPosition(const glm::vec2& pos) {  }
+
 protected:
 	Texture _texture;
 	SpriteSheet _spritesheet;

@@ -17,6 +17,9 @@ public:
 	void onSelect();
 	void onDeselect();
 
+	void setGroup(int group) { _group = group; }
+	int getGroup() const { return _group; }
+
 	void setSelected(bool select) 
 	{
 		if (select)

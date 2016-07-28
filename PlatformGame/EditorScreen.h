@@ -33,7 +33,7 @@ enum class ObjectMode
 	TILE,
 	BOX,
 	GROUND,
-	PLAYER,
+	SPAWN,	//< Player spawn points (Campfires)
 	HUMAN
 };
 
@@ -65,6 +65,7 @@ private:
 	SpriteBatch _guiBatch;
 	SpriteBatch _hudBatch;
 	CollisionManager _collisionManager;
+	Texture _playerTex;
 	Texture _nodeTex;
 	Texture _sheetTex;
 	Ground _ground;
@@ -103,7 +104,7 @@ private:
 	void updateMouseDown(const SDL_Event& evnt);
 	void updateMouseWheel(const SDL_Event& evnt);
 
-	void saveLevel(const std::string& fileName, const std::string& texSheet, const std::vector<Tile> tiles, Ground& ground);
+	void saveLevel(const std::string& fileName, const std::string& texSheet);
 	void switchSelectMode(SelectMode& mode);
 	void switchObjectMode(ObjectMode& mode);
 	void clear();
