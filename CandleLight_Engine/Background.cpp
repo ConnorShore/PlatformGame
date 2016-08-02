@@ -25,13 +25,16 @@ void Background::update(Camera & camera)
 {
 	switch (_depth) {
 	case 0:
-		_position.x = (camera.getPosition().x * 0.4f) + _offset.x;
+		_position.x = (camera.getPosition().x * 0.9f) + _offset.x;
+		_position.y = camera.getPosition().y + _offset.y / 2.0f;
 		break;
 	case 1:
-		_position.x = (camera.getPosition().x * 0.2f) + _offset.x;
+		_position.x = (camera.getPosition().x * 0.7f) + _offset.x;
+		_position.y = (camera.getPosition().y * 0.5f) + _offset.y / 1.15f;
 		break;
 	case 2:
-		_position.x = (camera.getPosition().x * 0.1f) + _offset.x;
+		_position.x = (camera.getPosition().x * 0.4f) + _offset.x;
+		_position.y = (camera.getPosition().y * 0.22f) + _offset.y;
 		break;
 	default:
 		printf("%f is not a valid background depth", _depth);

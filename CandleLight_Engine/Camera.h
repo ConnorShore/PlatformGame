@@ -23,6 +23,9 @@ public:
 	void setScale(float newScale) { _scale = newScale; _needsUpdating = true; }
 
 private:
+	const int MAX_SCREEN_WIDTH = 2560;
+	const int MAX_SCREEN_HEIGHT = 1440;
+	float _screenScaleX, _screenScaleY;
 	int _screenWidth, _screenHeight;
 	bool _needsUpdating;
 	glm::vec2 _position;

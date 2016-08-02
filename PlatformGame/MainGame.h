@@ -59,8 +59,8 @@ private:
 	std::vector<GUI*> _guis;
 	std::vector<Background> _backgrounds;
 
-	int _screenWidth = 1280;
-	int _screenHeight = 720;
+	int _screenWidth = 1920;
+	int _screenHeight = 1080;
 
 	void init();
 	void input();

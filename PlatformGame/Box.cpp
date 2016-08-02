@@ -34,7 +34,7 @@ void Box::init(b2World* world, const glm::vec2& position, const glm::vec2& dimen
 	fixtureDef.shape = &dynamicBox;
 	fixtureDef.density = 1.0f;
 	fixtureDef.friction = 0.25f;
-	fixtureDef.filter.categoryBits = CATEGORY_ENVIRONMENT;
+	fixtureDef.filter.categoryBits = CATEGORY_NEUTRAL;
 	fixtureDef.filter.maskBits = MASK_ALL;
 	_fixture = _body->CreateFixture(&fixtureDef);
 }

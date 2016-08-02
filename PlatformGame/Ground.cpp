@@ -26,7 +26,6 @@ void Ground::init(b2World * world, const int size)
 
 	b2FixtureDef fixDef;
 	fixDef.shape = &chain;
-	fixDef.density = 0.0f;
 	fixDef.filter.categoryBits = CATEGORY_ENVIRONMENT;
 	fixDef.filter.maskBits = MASK_ALL;
 	_body->CreateFixture(&fixDef);

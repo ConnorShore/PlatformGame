@@ -29,7 +29,7 @@ void MainGame::init()
 	_world.get()->SetContactListener(&_collisionManager);
 
 	_camera.init(_screenWidth, _screenHeight);
-	_camera.setScale(37.0f);
+	_camera.setScale(65.0f);
 
 	_tileBatch.init();
 	_spriteBatch.init();
@@ -37,11 +37,14 @@ void MainGame::init()
 	_backgroundBatch.init();
 
 	Background back1;
-	back1.init("Textures/testBack.png", glm::vec2(-20.0f), glm::vec2(100, 25), 0, 2);
+	back1.init("Textures/Mountains/sky.png", glm::vec2(-22.0f), glm::vec2(100, 25), 0, 5);
 	_backgrounds.push_back(back1);
 	Background back2;
-	back2.init("Textures/testBack2.png", glm::vec2(-20.0f), glm::vec2(100, 25), 1, 2);
+	back2.init("Textures/Mountains/mountains_back.png", glm::vec2(-22.0f), glm::vec2(100, 25), 1, 5);
 	_backgrounds.push_back(back2);
+	Background back3;
+	back3.init("Textures/Mountains/mountains_front.png", glm::vec2(-22.0f), glm::vec2(100, 25), 2, 5);
+	_backgrounds.push_back(back3);
 
 	Texture tex = ResourceManager::loadTexture("Textures/boxTex.png");
 

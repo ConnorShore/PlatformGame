@@ -54,7 +54,7 @@ void Window::createWindow(const std::string & title, int x, int y, int width, in
 	}
 
 	glClearColor(0.05f, 0.0f, 0.25f, 1.0f);
-
+	glViewport(0, 0, width, height);
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }

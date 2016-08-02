@@ -16,7 +16,7 @@ void EditorScreen::init()
 {
 	_window.createWindow("Level Editor", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, _screenWidth, _screenHeight);
 	_camera.init(_screenWidth, _screenHeight);
-	_camera.setScale(30.0f);
+	_camera.setScale(40.0f);
 
 	b2Vec2 gravity(0.0f, 0.0f);
 	_world = std::make_unique<b2World>(gravity);

@@ -39,7 +39,7 @@ public:
 			if (bodyAName->name == "box" && bodyBName->name == "bullet") {
 				bodyAName->health -= bodyBName->damage;
 				bodyBName->health = 0.0f;
-			}	
+			}
 		}
 	}
 
