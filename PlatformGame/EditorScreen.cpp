@@ -16,7 +16,7 @@ void EditorScreen::init()
 {
 	_window.createWindow("Level Editor", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, _screenWidth, _screenHeight);
 	_camera.init(_screenWidth, _screenHeight);
-	_camera.setScale(40.0f);
+	_camera.setScale(60.0f);
 
 	b2Vec2 gravity(0.0f, 0.0f);
 	_world = std::make_unique<b2World>(gravity);
@@ -28,7 +28,18 @@ void EditorScreen::init()
 	_tileBatch.init();
 	_spriteBatch.init();
 	_guiBatch.init();
-	_hudBatch.init();
+	_hudBatch.init();	
+	_backgroundBatch.init();
+
+	Background back1;
+	back1.init("Textures/Mountains/sky.png", glm::vec2(-22.0f), glm::vec2(100, 25), 0, 5);
+	_backgrounds.push_back(back1);
+	Background back2;
+	back2.init("Textures/Mountains/mountains_back.png", glm::vec2(-22.0f), glm::vec2(100, 25), 1, 5);
+	_backgrounds.push_back(back2);
+	Background back3;
+	back3.init("Textures/Mountains/mountains_front.png", glm::vec2(-22.0f), glm::vec2(100, 25), 2, 5);
+	_backgrounds.push_back(back3);
 
 	Panel* panel = new Panel(glm::vec2(-0.98f, -0.98f), glm::vec2(0.45f, 1.95f), "Textures/GUI/panel.png", Color(255, 255, 255, 150));
 	_guis.push_back(panel);
@@ -37,13 +48,13 @@ void EditorScreen::init()
 	radio->setSelected(false);
 	radio->subscribeEvent(this, &EditorScreen::switchSelectMode, SelectMode::SELECT);
 	_guis.push_back(radio);
-	_guiLabels.emplace_back(radio, "Select", 1.0f);
+	_guiLabels.emplace_back(radio, "Select", 1.0f, Color(0, 0, 0, 255));
 
 	RadioButton* radio1 = new RadioButton(panel, glm::vec2(0.65f, 0.87f), "Textures/GUI/radio_button.png", Color(255, 255, 255, 255));
 	radio1->setSelected(true);
 	radio1->subscribeEvent(this, &EditorScreen::switchSelectMode, SelectMode::PLACE);
 	_guis.push_back(radio1);
-	_guiLabels.emplace_back(radio1, "Place", 1.0f);
+	_guiLabels.emplace_back(radio1, "Place", 1.0f, Color(0,0,0,255));
 
 	Button* button = new Button(panel, glm::vec2(0.30f, 0.74f), glm::vec2(0.15f, 0.1f), "Textures/GUI/button.png", Color(255, 255, 255, 200));
 	button->subscribeEvent(this, &EditorScreen::clear);
@@ -51,26 +62,32 @@ void EditorScreen::init()
 	_guis.push_back(button);
 	_guiLabels.emplace_back(button, "Clear", 1.0f, Color(100,100,100,255), LabelPosition::CENTER);
 
+	Checkbox* background = new Checkbox(panel, glm::vec2(0.3f, 0.6f), "Textures/GUI/radio_button.png", Color(255, 255, 255, 255));
+	background->setSelected(true);
+	background->subscribeEvent(this, &EditorScreen::toggleBackground);
+	_guis.push_back(background);
+	_guiLabels.emplace_back(background, "Background", 1.0f, Color(0, 0, 0, 255));
+
 	RadioButton* ground = new RadioButton(panel, glm::vec2(0.25f, 0.45f), "Textures/GUI/radio_button.png", Color(255, 255, 255, 255));
 	ground->setGroup(1);
 	ground->setSelected(false);
 	ground->subscribeEvent(this, &EditorScreen::switchObjectMode, ObjectMode::GROUND);
 	_guis.push_back(ground);
-	_guiLabels.emplace_back(ground, "Ground", 1.0f);
+	_guiLabels.emplace_back(ground, "Ground", 1.0f, Color(0, 0, 0, 255));
 
 	RadioButton* tile = new RadioButton(panel, glm::vec2(0.5f, 0.45f), "Textures/GUI/radio_button.png", Color(255, 255, 255, 255));
 	tile->setGroup(1);
 	tile->setSelected(true);
 	tile->subscribeEvent(this, &EditorScreen::switchObjectMode, ObjectMode::TILE);
 	_guis.push_back(tile);
-	_guiLabels.emplace_back(tile, "Tile", 1.0f);
+	_guiLabels.emplace_back(tile, "Tile", 1.0f, Color(0, 0, 0, 255));
 
 	RadioButton* box = new RadioButton(panel, glm::vec2(0.75f, 0.45f), "Textures/GUI/radio_button.png", Color(255, 255, 255, 255));
 	box->setGroup(1);
 	box->setSelected(false);
 	box->subscribeEvent(this, &EditorScreen::switchObjectMode, ObjectMode::BOX);
 	_guis.push_back(box);
-	_guiLabels.emplace_back(box, "Box", 1.0f);
+	_guiLabels.emplace_back(box, "Box", 1.0f, Color(0, 0, 0, 255));
 
 	Button* save = new Button(panel, glm::vec2(0.30f, 0.25f), glm::vec2(0.15f, 0.1f), "Textures/GUI/button.png", Color(255, 255, 255, 200));
 	save->subscribeEvent(this, &EditorScreen::saveLevel, "level1.txt", "Textures/Tiles/test.png");
@@ -117,6 +134,12 @@ void EditorScreen::updateGUI()
 					RadioButton* radio;
 					radio = static_cast<RadioButton*>(_guis[i]);
 					radio->setSelected(true);
+					break;
+				case CHECKBOX:
+					Checkbox* check;
+					check = static_cast<Checkbox*>(_guis[i]);
+					check->onClick();
+					_inputManager.keyReleased(SDL_BUTTON_LEFT);
 					break;
 				case NONE:
 					break;
@@ -197,7 +220,12 @@ void EditorScreen::input()
 
 void EditorScreen::update()
 {
-	_camera.update();
+	_camera.update();	
+	
+	if (_showBackgrounds) {
+		for (auto& back : _backgrounds)
+			back.update(_camera);
+	}
 
 	_world->Step(1 / 60.0f, 0, 0);
 }
@@ -210,6 +238,17 @@ void EditorScreen::render()
 	_staticShader.getUniformLocations();
 	_staticShader.loadPMatrix(_camera.getCameraMatrix());
 	_staticShader.loadTexture();
+
+	//Backgrounds
+	if (_showBackgrounds) {
+		_backgroundBatch.begin(SortType::BACK_TO_FRONT);
+
+		for (auto& back : _backgrounds)
+			back.render(_backgroundBatch);
+
+		_backgroundBatch.end();
+		_backgroundBatch.renderBatch();
+	}
 
 	//Tiles
 	_tileBatch.begin();
@@ -388,6 +427,14 @@ void EditorScreen::switchSelectMode(SelectMode & mode)
 void EditorScreen::switchObjectMode(ObjectMode & mode)
 {
 	_objectMode = mode;
+}
+
+void EditorScreen::toggleBackground()
+{
+	if (_showBackgrounds)
+		_showBackgrounds = false;
+	else
+		_showBackgrounds = true;
 }
 
 void EditorScreen::clear()

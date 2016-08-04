@@ -29,6 +29,9 @@
     </ClCompile>
     <ClCompile Include="TextureCache.cpp" />
     <ClCompile Include="Background.cpp" />
+    <ClCompile Include="Checkbox.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
@@ -60,6 +63,9 @@
     <ClInclude Include="GUILabel.h" />
     <ClInclude Include="TextureCache.h" />
     <ClInclude Include="Background.h" />
+    <ClInclude Include="Checkbox.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="GUI">

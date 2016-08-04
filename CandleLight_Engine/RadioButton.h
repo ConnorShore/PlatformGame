@@ -9,7 +9,6 @@
 class RadioButton : public GUI
 {
 public:
-	const float SIZE = 0.1f;
 	RadioButton(GUI* parent, glm::vec2& position, const std::string& texPath, Color color);
 	RadioButton(glm::vec2& position, const std::string& texPath, Color color);
 	

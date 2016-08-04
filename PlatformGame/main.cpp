@@ -3,8 +3,8 @@
 
 int main(int argc, char** argv)
 {
-	MainGame game;
-	game.run();
+	//MainGame game;
+	//game.run();
 
 	EditorScreen editor;
 	editor.run();

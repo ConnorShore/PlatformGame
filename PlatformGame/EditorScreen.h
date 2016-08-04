@@ -7,16 +7,16 @@
 #include <CandleLight_Engine\SpriteBatch.h>
 #include <CandleLight_Engine\GUI.h>
 #include <CandleLight_Engine\RadioButton.h>
+#include <CandleLight_Engine\Checkbox.h>
 #include <CandleLight_Engine\Button.h>
 #include <CandleLight_Engine\Panel.h>
 #include <CandleLight_Engine\SpriteFont.h>
 #include <CandleLight_Engine\GUILabel.h>
+#include <CandleLight_Engine\Background.h>
 
 #include "GridShader.h"
 #include "StaticShader.h"
 #include "Box.h"
-//#include "Human.h"
-//#include "Player.h"
 #include "Bullet.h"
 #include "Collision.h"
 #include "Ground.h"
@@ -64,6 +64,7 @@ private:
 	SpriteBatch _tileBatch;
 	SpriteBatch _guiBatch;
 	SpriteBatch _hudBatch;
+	SpriteBatch _backgroundBatch;
 	CollisionManager _collisionManager;
 	Texture _playerTex;
 	Texture _nodeTex;
@@ -76,11 +77,13 @@ private:
 
 	bool _isRunning;
 	bool _guiControl = false;
+	bool _showBackgrounds = true;
 
 	std::vector<GUI*> _guis;
 	std::vector<GUILabel> _guiLabels;
 	std::vector<Tile> _tiles;
 	std::vector<Box> _boxes;
+	std::vector<Background> _backgrounds;
 
 	bool _mouseButtons[2];
 
@@ -107,6 +110,7 @@ private:
 	void saveLevel(const std::string& fileName, const std::string& texSheet);
 	void switchSelectMode(SelectMode& mode);
 	void switchObjectMode(ObjectMode& mode);
+	void toggleBackground();
 	void clear();
 
 	void printHello() { printf("Hello\n"); }

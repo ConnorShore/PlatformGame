@@ -8,14 +8,14 @@
 #include <glm/glm.hpp>
 #include <functional>
 
-//TODO: Make this the Widget class and add mouse over, and onClick calls and have button extend this class.
-//TODO: Make button also have ability to parent a widget
+//TODO: Add isActive so you can hide/show GUI elements
 
 enum GUIType
 {
 	NONE,
 	BUTTON,
 	RADIO_BUTTON,
+	CHECKBOX,
 	PANEL
 };
 
