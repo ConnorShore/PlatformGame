@@ -41,7 +41,7 @@ void Player::input(InputManager inputManager, Camera& camera)
 
 	if (inputManager.isKeyDown(SDLK_w)) {
 		if (_canJump && _onGround) {
-			_body->ApplyLinearImpulse(b2Vec2(0.0f, 5.0), _body->GetPosition());
+			_body->ApplyLinearImpulse(b2Vec2(0.0f, 8.0), _body->GetPosition());
 			_canJump = false;
 		}
 	}

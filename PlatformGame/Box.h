@@ -20,7 +20,8 @@ public:
 	void update();
 	void render(SpriteBatch& spriteBatch);
 
-	glm::vec2& getPosition() const { return glm::vec2(_body->GetPosition().x, _body->GetPosition().y); }
+	glm::vec2 getPosition() const { return _position; }
+	glm::vec2& getBox2DPosition() const { return glm::vec2(_body->GetPosition().x, _body->GetPosition().y); }
 	glm::vec2 getDimension() const { return _dimension; }
 	Texture getTexture() const { return _texture; }
 	b2Body* getBody() const { return _body; }
@@ -28,7 +29,7 @@ public:
 
 private:
 	Damagable* _damageStats = new Damagable;
-	glm::vec2 _dimension;
+	glm::vec2 _position, _dimension;
 	Texture _texture;
 	float _depth;
 	b2Body* _body = nullptr;

@@ -79,7 +79,7 @@ private:
 	bool _guiControl = false;
 	bool _showBackgrounds = true;
 	bool _gridSnap = true;
-	bool _drag = true;
+	bool _drag = false;
 
 	std::vector<GUI*> _guis;
 	std::vector<GUILabel> _guiLabels;

@@ -12,6 +12,7 @@ Box::~Box()
 
 void Box::init(b2World* world, const glm::vec2& position, const glm::vec2& dimension, const Texture& texture, float depth /*1.0f*/)
 {
+	_position = position;
 	_dimension = dimension;
 	_texture = texture;
 	_depth = depth;
@@ -48,7 +49,7 @@ void Box::update()
 void Box::render(SpriteBatch& spriteBatch)
 {
 	glm::vec4 destRect;
-	destRect.x = _body->GetPosition().x - _dimension.x / 2.0f;
+	destRect.x = _body->GetPosition().x -_dimension.x / 2.0f;
 	destRect.y = _body->GetPosition().y - _dimension.y / 2.0f;
 	destRect.z = _dimension.x;
 	destRect.w = _dimension.y;

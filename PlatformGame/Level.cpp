@@ -244,7 +244,7 @@ void Level::saveObjects(std::ofstream& level, const std::vector<Box>& boxes)
 	//Boxes
 	level << boxes.size() << "\n";
 	for (auto& box : boxes) {
-		level << box.getPosition().x << ' ' << box.getPosition().y << ' ' << box.getDimension().x << ' ' << box.getDimension().y << ' ' << box.getTexture().filePath << "\n";
+		level << box.getBox2DPosition().x << ' ' << box.getBox2DPosition().y << ' ' << box.getDimension().x << ' ' << box.getDimension().y << ' ' << box.getTexture().filePath << "\n";
 	}
 }
 

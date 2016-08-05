@@ -24,7 +24,7 @@ void MainGame::init()
 	_currentState = GameState::PLAY;
 	_gameControl = GameControl::GAME;
 
-	b2Vec2 gravity(0, -20.0f);
+	b2Vec2 gravity(0, -30.0f);
 	_world = std::make_unique<b2World>(gravity);
 	_world.get()->SetContactListener(&_collisionManager);
 

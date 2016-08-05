@@ -62,20 +62,20 @@ void EditorScreen::init()
 	_guis.push_back(button);
 	_guiLabels.emplace_back(button, "Clear", 1.0f, Color(100,100,100,255), LabelPosition::CENTER);
 
-	Checkbox* background = new Checkbox(panel, glm::vec2(0.25f, 0.6f), "Textures/GUI/radio_button.png", Color(255, 255, 255, 255));
+	Checkbox* background = new Checkbox(panel, glm::vec2(0.25f, 0.6f), "Textures/GUI/checkbox.png", Color(255, 255, 255, 255));
 	background->setSelected(true);
 	background->subscribeEvent(this, &EditorScreen::toggleBackground);
 	_guis.push_back(background);
 	_guiLabels.emplace_back(background, "Background", 0.65f, Color(0, 0, 0, 255));
 
-	Checkbox* gridMove = new Checkbox(panel, glm::vec2(0.5f, 0.6f), "Textures/GUI/radio_button.png", Color(255, 255, 255, 255));
+	Checkbox* gridMove = new Checkbox(panel, glm::vec2(0.5f, 0.6f), "Textures/GUI/checkbox.png", Color(255, 255, 255, 255));
 	gridMove->setSelected(true);
 	gridMove->subscribeEvent(this, &EditorScreen::toggleGridSnap);
 	_guis.push_back(gridMove);
 	_guiLabels.emplace_back(gridMove, "Snap Grid", 0.65f, Color(0, 0, 0, 255));
 
-	Checkbox* drag = new Checkbox(panel, glm::vec2(0.75f, 0.6f), "Textures/GUI/radio_button.png", Color(255, 255, 255, 255));
-	drag->setSelected(true);
+	Checkbox* drag = new Checkbox(panel, glm::vec2(0.75f, 0.6f), "Textures/GUI/checkbox.png", Color(255, 255, 255, 255));
+	drag->setSelected(false);
 	drag->subscribeEvent(this, &EditorScreen::toggleDrag);
 	_guis.push_back(drag);
 	_guiLabels.emplace_back(drag, "Drag", 0.65f, Color(0, 0, 0, 255));
@@ -118,6 +118,8 @@ void EditorScreen::init()
 
 void EditorScreen::updateGUI()
 {
+	//TODO: Put this in a GUI manager
+
 	//Check button input
 	for (int i = 0; i < _guis.size(); i++) {
 		_guis[i]->update();
@@ -386,14 +388,11 @@ void EditorScreen::updateMouseDown(const SDL_Event& evnt)
 			//Select Mode
 			
 		}
-
 		break;
 
 	case SDL_BUTTON_RIGHT:
 		_mouseButtons[RIGHT_BUTTON] = true;
 		_mouseButtons[LEFT_BUTTON] = false;
-
-		pos = _camera.screenToWorldCoords(_inputManager.getMousePos());
 
 		if (_selectMode == SelectMode::PLACE) {
 			switch (_objectMode) {
@@ -415,6 +414,15 @@ void EditorScreen::updateMouseDown(const SDL_Event& evnt)
 						&& pos.x <= _tiles[i].getPosition().x + TILE_SIZE && pos.y <= _tiles[i].getPosition().y + TILE_SIZE) {
 						_tiles[i] = _tiles.back();
 						_tiles.pop_back();
+					}
+				}
+				break;
+			case ObjectMode::BOX:
+				for (int i = 0; i < _boxes.size(); i++) {
+					if (pos.x > _boxes[i].getPosition().x - _boxes[i].getDimension().x/2.0f && pos.y > _boxes[i].getPosition().y - _boxes[i].getDimension().y/2.0f
+						&& pos.x <= _boxes[i].getPosition().x + _boxes[i].getDimension().x/2.0f && pos.y <= _boxes[i].getPosition().y + _boxes[i].getDimension().y/2.0f) {
+						_boxes[i] = _boxes.back();
+						_boxes.pop_back();
 					}
 				}
 				break;
