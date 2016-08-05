@@ -126,11 +126,11 @@ void MainGame::update()
 		human->humanUpdate();
 	}
 
-	_camera.setPosition(glm::vec2(_player.getPosition().x + _player.getDimension().x / 2.0f, _player.getPosition().y + _player.getDimension().y / 2.0f));
+	_camera.setPosition(glm::vec2(_player.getPosition().x + _player.getDimension().x / 2.0f, (_player.getPosition().y + _player.getDimension().y / 2.0f) + 2.0f));
 	_camera.update();
 
 	for (auto& back : _backgrounds)
-		back.update(_camera);
+		back.update(_camera.getPosition());
 
 	for (int i = 0; i < _bullets.size(); i++) {
 		if (_bullets[i]->getBody()->IsActive() == false) {

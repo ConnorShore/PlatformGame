@@ -16,12 +16,12 @@ void EditorScreen::init()
 {
 	_window.createWindow("Level Editor", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, _screenWidth, _screenHeight);
 	_camera.init(_screenWidth, _screenHeight);
-	_camera.setScale(60.0f);
+	_camera.setScale(65.0f);
 
 	b2Vec2 gravity(0.0f, 0.0f);
 	_world = std::make_unique<b2World>(gravity);
 
-	_sheetTex = ResourceManager::loadTexture("Textures/Tiles/test.png");
+	_sheetTex = ResourceManager::loadTexture("Textures/Tiles/mountains.png");
 	_nodeTex = ResourceManager::loadTexture("Textures/Editor/node.png");
 	_playerTex = ResourceManager::loadTexture("Textures/Editor/playerTex.png");
 
@@ -62,11 +62,23 @@ void EditorScreen::init()
 	_guis.push_back(button);
 	_guiLabels.emplace_back(button, "Clear", 1.0f, Color(100,100,100,255), LabelPosition::CENTER);
 
-	Checkbox* background = new Checkbox(panel, glm::vec2(0.3f, 0.6f), "Textures/GUI/radio_button.png", Color(255, 255, 255, 255));
+	Checkbox* background = new Checkbox(panel, glm::vec2(0.25f, 0.6f), "Textures/GUI/radio_button.png", Color(255, 255, 255, 255));
 	background->setSelected(true);
 	background->subscribeEvent(this, &EditorScreen::toggleBackground);
 	_guis.push_back(background);
-	_guiLabels.emplace_back(background, "Background", 1.0f, Color(0, 0, 0, 255));
+	_guiLabels.emplace_back(background, "Background", 0.65f, Color(0, 0, 0, 255));
+
+	Checkbox* gridMove = new Checkbox(panel, glm::vec2(0.5f, 0.6f), "Textures/GUI/radio_button.png", Color(255, 255, 255, 255));
+	gridMove->setSelected(true);
+	gridMove->subscribeEvent(this, &EditorScreen::toggleGridSnap);
+	_guis.push_back(gridMove);
+	_guiLabels.emplace_back(gridMove, "Snap Grid", 0.65f, Color(0, 0, 0, 255));
+
+	Checkbox* drag = new Checkbox(panel, glm::vec2(0.75f, 0.6f), "Textures/GUI/radio_button.png", Color(255, 255, 255, 255));
+	drag->setSelected(true);
+	drag->subscribeEvent(this, &EditorScreen::toggleDrag);
+	_guis.push_back(drag);
+	_guiLabels.emplace_back(drag, "Drag", 0.65f, Color(0, 0, 0, 255));
 
 	RadioButton* ground = new RadioButton(panel, glm::vec2(0.25f, 0.45f), "Textures/GUI/radio_button.png", Color(255, 255, 255, 255));
 	ground->setGroup(1);
@@ -90,7 +102,7 @@ void EditorScreen::init()
 	_guiLabels.emplace_back(box, "Box", 1.0f, Color(0, 0, 0, 255));
 
 	Button* save = new Button(panel, glm::vec2(0.30f, 0.25f), glm::vec2(0.15f, 0.1f), "Textures/GUI/button.png", Color(255, 255, 255, 200));
-	save->subscribeEvent(this, &EditorScreen::saveLevel, "level1.txt", "Textures/Tiles/test.png");
+	save->subscribeEvent(this, &EditorScreen::saveLevel, "level1.txt", "Textures/Tiles/mountains.png");
 	save->setEnabled(true);
 	_guis.push_back(save);
 	_guiLabels.emplace_back(save, "Save", 1.0f, Color(100, 100, 100, 255), LabelPosition::CENTER);
@@ -216,6 +228,9 @@ void EditorScreen::input()
 	}
 
 	updateGUI();
+
+	if(!_drag)
+		_inputManager.keyReleased(SDL_BUTTON_LEFT);
 }
 
 void EditorScreen::update()
@@ -224,7 +239,7 @@ void EditorScreen::update()
 	
 	if (_showBackgrounds) {
 		for (auto& back : _backgrounds)
-			back.update(_camera);
+			back.update(_camera.getPosition());
 	}
 
 	_world->Step(1 / 60.0f, 0, 0);
@@ -349,8 +364,14 @@ void EditorScreen::updateMouseDown(const SDL_Event& evnt)
 				_ground.addVertex(pos);
 				break;
 			case ObjectMode::TILE:
-				pos.x = glm::floor(pos.x / TILE_SIZE) * TILE_SIZE;
-				pos.y = glm::floor(pos.y / TILE_SIZE) * TILE_SIZE;
+				if (_gridSnap) {
+					pos.x = glm::floor(pos.x / TILE_SIZE) * TILE_SIZE;
+					pos.y = glm::floor(pos.y / TILE_SIZE) * TILE_SIZE;
+				} else {
+					pos.x -= TILE_SIZE / 2.0f;
+					pos.y -= TILE_SIZE / 2.0f;
+				}
+
 				_tiles.emplace_back(pos, _currentTileIndex, _sheetTex);
 				break;
 			case ObjectMode::BOX:
@@ -435,6 +456,22 @@ void EditorScreen::toggleBackground()
 		_showBackgrounds = false;
 	else
 		_showBackgrounds = true;
+}
+
+void EditorScreen::toggleGridSnap()
+{
+	if (_gridSnap)
+		_gridSnap = false;
+	else
+		_gridSnap = true;
+}
+
+void EditorScreen::toggleDrag()
+{
+	if (_drag)
+		_drag = false;
+	else
+		_drag = true;
 }
 
 void EditorScreen::clear()

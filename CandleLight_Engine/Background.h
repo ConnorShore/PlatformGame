@@ -11,7 +11,7 @@ public:
 	~Background();
 
 	void init(const std::string& filePath, const glm::vec2& position, const glm::vec2& dimension, int depth, int numRepeats);
-	void update(Camera& camera);
+	void update(const glm::vec2& position);
 	void render(SpriteBatch& spriteBatch);
 
 private:

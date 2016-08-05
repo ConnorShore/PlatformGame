@@ -78,6 +78,8 @@ private:
 	bool _isRunning;
 	bool _guiControl = false;
 	bool _showBackgrounds = true;
+	bool _gridSnap = true;
+	bool _drag = true;
 
 	std::vector<GUI*> _guis;
 	std::vector<GUILabel> _guiLabels;
@@ -87,7 +89,7 @@ private:
 
 	bool _mouseButtons[2];
 
-	int _tileIndices[64];
+	int _tileIndices[128];
 	int _currentTileIndex = 0;
 
 	int _selectedTile = NO_TILE;
@@ -111,6 +113,9 @@ private:
 	void switchSelectMode(SelectMode& mode);
 	void switchObjectMode(ObjectMode& mode);
 	void toggleBackground();
+	void toggleGridSnap();
+	void toggleDrag();
+	
 	void clear();
 
 	void printHello() { printf("Hello\n"); }

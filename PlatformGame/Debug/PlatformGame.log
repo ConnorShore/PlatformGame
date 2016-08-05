@@ -1,13 +1,5 @@
-﻿  EditorScreen.cpp
-c:\users\user\documents\visual studio 2015\projects\platformgame\candlelight_engine\spritefont.h(34): warning C4099: 'Texture': type name first seen using 'struct' now seen using 'class'
-  c:\users\user\documents\visual studio 2015\projects\platformgame\candlelight_engine\texture.h(6): note: see declaration of 'Texture'
-c:\users\user\documents\visual studio 2015\projects\platformgame\platformgame\box.h(11): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-c:\users\user\documents\visual studio 2015\projects\platformgame\platformgame\editorscreen.cpp(110): warning C4018: '<': signed/unsigned mismatch
-c:\users\user\documents\visual studio 2015\projects\platformgame\platformgame\editorscreen.cpp(172): warning C4244: 'argument': conversion from 'Sint32' to 'float', possible loss of data
-c:\users\user\documents\visual studio 2015\projects\platformgame\platformgame\editorscreen.cpp(256): warning C4018: '<': signed/unsigned mismatch
-c:\users\user\documents\visual studio 2015\projects\platformgame\platformgame\editorscreen.cpp(272): warning C4018: '<': signed/unsigned mismatch
-c:\users\user\documents\visual studio 2015\projects\platformgame\platformgame\editorscreen.cpp(283): warning C4018: '<': signed/unsigned mismatch
-c:\users\user\documents\visual studio 2015\projects\platformgame\platformgame\editorscreen.cpp(293): warning C4018: '<': signed/unsigned mismatch
-c:\users\user\documents\visual studio 2015\projects\platformgame\platformgame\editorscreen.cpp(382): warning C4018: '<': signed/unsigned mismatch
-c:\users\user\documents\visual studio 2015\projects\platformgame\platformgame\editorscreen.cpp(392): warning C4018: '<': signed/unsigned mismatch
-  PlatformGame.vcxproj -> C:\Users\user\documents\visual studio 2015\Projects\PlatformGame\Debug\PlatformGame.exe
+﻿  main.cpp
+c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\candlelight_engine\spritefont.h(34): warning C4099: 'Texture': type name first seen using 'struct' now seen using 'class'
+  c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\candlelight_engine\texture.h(6): note: see declaration of 'Texture'
+c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\platformgame\box.h(11): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+  PlatformGame.vcxproj -> C:\Users\cjshore12\Documents\Visual Studio 2015\Projects\PlatformGame\Debug\PlatformGame.exe

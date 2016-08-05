@@ -102,7 +102,7 @@ bool Level::saveTiles(const std::string & name, const std::string & tileSheet, s
 	}
 
 	SpriteSheet ss;
-	ss.init(ResourceManager::loadTexture(tileSheet), glm::ivec2(8, 8));
+	ss.init(ResourceManager::loadTexture(tileSheet), glm::ivec2(16, 16));
 
 	level << tileSheet << "\n";
 	level << tiles.size() << "\n";
