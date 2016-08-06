@@ -153,6 +153,7 @@
     <ClCompile Include="ShaderProgram.cpp" />
     <ClCompile Include="SpriteBatch.cpp" />
     <ClCompile Include="SpriteFont.cpp" />
+    <ClCompile Include="StaticShader.cpp" />
     <ClCompile Include="TextureCache.cpp" />
     <ClCompile Include="Timing.cpp" />
     <ClCompile Include="Window.cpp" />
@@ -166,6 +167,7 @@
     <ClInclude Include="DebugRenderer.h" />
     <ClInclude Include="GUILabel.h" />
     <ClInclude Include="InputManager.h" />
+    <ClInclude Include="Light.h" />
     <ClInclude Include="Loader.h" />
     <ClInclude Include="Panel.h" />
     <ClInclude Include="picoPNG.h" />
@@ -175,6 +177,7 @@
     <ClInclude Include="SpriteBatch.h" />
     <ClInclude Include="SpriteFont.h" />
     <ClInclude Include="SpriteSheet.h" />
+    <ClInclude Include="StaticShader.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TextureCache.h" />
     <ClInclude Include="Timing.h" />

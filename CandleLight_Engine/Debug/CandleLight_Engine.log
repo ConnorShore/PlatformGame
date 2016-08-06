@@ -1,5 +1,17 @@
-﻿  Background.cpp
-c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\candlelight_engine\background.cpp(40): warning C4477: 'printf' : format string '%f' requires an argument of type 'double', but variadic argument 1 has type 'int'
+﻿  StaticShader.cpp
+c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\candlelight_engine\staticshader.h(3): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\candlelight_engine\staticshader.cpp(54): warning C4018: '<': signed/unsigned mismatch
+  Generating Code...
+  Skipping... (no relevant changes detected)
+  SpriteFont.cpp
+  SpriteBatch.cpp
+  RadioButton.cpp
+  Panel.cpp
+  GUILabel.cpp
+  GUI.cpp
+  Checkbox.cpp
+  Button.cpp
+  Background.cpp
 glew32.lib(glew32.dll) : warning LNK4006: __NULL_IMPORT_DESCRIPTOR already defined in SDL2.lib(SDL2.dll); second definition ignored
 glew32.lib(glew32.dll) : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
 glew32s.lib(glew.obj) : warning LNK4006: _glewGetExtension@4 already defined in glew32.lib(glew32.dll); second definition ignored

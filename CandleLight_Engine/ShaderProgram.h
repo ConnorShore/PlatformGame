@@ -23,8 +23,10 @@ protected:
 	void bindAttribute(int attrib, std::string name);
 	void loadInt(int location, int value);
 	void loadFloat(int location, float value);
-	void loadVector3f(int location, glm::vec3 vector);
-	void loadMatrix4f(int location, glm::mat4 matrix);
+	void loadVector2f(int location, glm::vec2& vector);
+	void loadVector3f(int location, glm::vec3& vector);
+	void loadVector4f(int location, glm::vec4& vector);
+	void loadMatrix4f(int location, glm::mat4& matrix);
 
 	virtual void bindAttributes() = 0;
 	virtual void getUniformLocations() = 0;

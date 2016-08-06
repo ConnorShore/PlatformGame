@@ -11,8 +11,9 @@
 #include <CandleLight_Engine\Panel.h>
 #include <CandleLight_Engine\Button.h>
 #include <CandleLight_Engine\Background.h>
+#include <CandleLight_Engine\Light.h>
+#include <CandleLight_Engine\StaticShader.h>
 
-#include "StaticShader.h"
 #include "Box.h"
 #include "Human.h"
 #include "Player.h"
@@ -47,6 +48,7 @@ private:
 	SpriteBatch _backgroundBatch;
 	CollisionManager _collisionManager;
 	Ground _ground;
+	Light _pLight;
 
 	Player _player;
 
@@ -58,6 +60,7 @@ private:
 	std::vector<Bullet*> _bullets;
 	std::vector<GUI*> _guis;
 	std::vector<Background> _backgrounds;
+	std::vector<Light> _lights;
 
 	int _screenWidth = 1920;
 	int _screenHeight = 1080;

@@ -56,6 +56,37 @@ void MainGame::init()
 	Level::loadLevel("level1.txt", _world.get(), _tiles, _ground, _boxes);
 	_ground.init(_world.get(), _ground.getVertices().size());
 
+	Light light;
+	light.color = Color(255, 255, 255, 255);
+	light.position = glm::vec2(10, -19);
+	light.intensity = 0.01f;
+	light.size = 0.2f;
+	_lights.push_back(light);
+
+	light.color = Color(255, 0, 255, 255);
+	light.position = glm::vec2(14, - 20.75);
+	light.intensity = 0.02f;
+	light.size = 0.2f;
+	_lights.push_back(light);
+
+	light.color = Color(255, 0, 0, 255);
+	light.position = glm::vec2(40, -23);
+	light.intensity = 0.2f;
+	light.size = 0.2f;
+	_lights.push_back(light);
+
+	light.color = Color(255, 255, 0, 255);
+	light.position = glm::vec2(22, -23);
+	light.intensity = 0.25f;
+	light.size = 0.2f;
+	_lights.push_back(light);
+
+	light.color = Color(255, 255, 255, 255);
+	light.position = glm::vec2(30, -23);
+	light.intensity = 0.25f;
+	light.size = 0.2f;
+	_lights.push_back(light);
+
 	_staticShader.init("Shaders/staticShader.vert", "Shaders/staticShader.frag");
 	_staticShader.bindAttributes();
 }
@@ -156,6 +187,7 @@ void MainGame::render()
 	_staticShader.getUniformLocations();
 	_staticShader.loadPMatrix(_camera.getCameraMatrix());
 	_staticShader.loadTexture();
+	_staticShader.loadAmbientFactor(0.15f);
 
 	//Backgrounds
 	_backgroundBatch.begin(SortType::BACK_TO_FRONT);
@@ -192,10 +224,14 @@ void MainGame::render()
 
 	_staticShader.loadPMatrix(_camera.getTransformationMatrix());
 
+	//Lights
+	_staticShader.loadLights(_lights);
+
+	//GUIS
 	_guiBatch.begin();
 
 	for (int i = 0; i < _guis.size(); i++) {
-		_guis[i]->render(_guiBatch);	//< TODO: Make follow camera at all times
+		_guis[i]->render(_guiBatch);
 	}
 
 	_guiBatch.end();

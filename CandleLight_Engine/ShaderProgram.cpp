@@ -109,12 +109,22 @@ void ShaderProgram::loadFloat(int location, float value)
 	glUniform1f(location, value);
 }
 
-void ShaderProgram::loadVector3f(int location, glm::vec3 vector)
+void ShaderProgram::loadVector2f(int location, glm::vec2& vector)
+{
+	glUniform2f(location, vector.x, vector.y);
+}
+
+void ShaderProgram::loadVector3f(int location, glm::vec3& vector)
 {
 	glUniform3f(location, vector.x, vector.y, vector.z);
 }
 
-void ShaderProgram::loadMatrix4f(int location, glm::mat4 matrix)
+void ShaderProgram::loadVector4f(int location, glm::vec4& vector)
+{
+	glUniform4f(location, vector.x, vector.y, vector.z, vector.w);
+}
+
+void ShaderProgram::loadMatrix4f(int location, glm::mat4& matrix)
 {
 	glUniformMatrix4fv(location, 1, GL_FALSE, &(matrix[0][0]));
 }

@@ -32,6 +32,7 @@
     <ClCompile Include="Checkbox.cpp">
       <Filter>GUI</Filter>
     </ClCompile>
+    <ClCompile Include="StaticShader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
@@ -66,6 +67,8 @@
     <ClInclude Include="Checkbox.h">
       <Filter>GUI</Filter>
     </ClInclude>
+    <ClInclude Include="Light.h" />
+    <ClInclude Include="StaticShader.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="GUI">

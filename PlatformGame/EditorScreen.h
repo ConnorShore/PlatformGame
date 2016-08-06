@@ -13,9 +13,9 @@
 #include <CandleLight_Engine\SpriteFont.h>
 #include <CandleLight_Engine\GUILabel.h>
 #include <CandleLight_Engine\Background.h>
+#include <CandleLight_Engine\StaticShader.h>
 
 #include "GridShader.h"
-#include "StaticShader.h"
 #include "Box.h"
 #include "Bullet.h"
 #include "Collision.h"
