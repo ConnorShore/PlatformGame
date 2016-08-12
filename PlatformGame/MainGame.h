@@ -12,7 +12,7 @@
 #include <CandleLight_Engine\Button.h>
 #include <CandleLight_Engine\Background.h>
 #include <CandleLight_Engine\Light.h>
-#include <CandleLight_Engine\StaticShader.h>
+#include <CandleLight_Engine\FrameBuffer.h>
 
 #include "Box.h"
 #include "Human.h"
@@ -21,6 +21,8 @@
 #include "Collision.h"
 #include "Ground.h"
 #include "Tile.h"
+#include "StaticShader.h"
+#include "LightShader.h"
 
 
 enum class GameState {PLAY, PAUSED, EXIT};
@@ -40,17 +42,21 @@ private:
 	GameControl _gameControl;
 	InputManager _inputManager;
 	StaticShader _staticShader;
+	LightShader _lightShader;
 	Camera _camera;
 	Timing _timer;
 	SpriteBatch _spriteBatch;
 	SpriteBatch _tileBatch;
 	SpriteBatch _guiBatch;
 	SpriteBatch _backgroundBatch;
+	SpriteBatch _lightBatch;
 	CollisionManager _collisionManager;
 	Ground _ground;
-	Light _pLight;
-
+	FrameBuffer _lightFBuffer;
+	Texture _lightMap;
 	Player _player;
+	Light light;
+	Texture _lightTex;
 
 	std::unique_ptr<b2World> _world;
 
@@ -68,6 +74,8 @@ private:
 	void init();
 	void input();
 	void update();
+	void renderGeometry();
+	void renderLights();
 	void render();
 	void gameLoop();
 	void cleanUp();

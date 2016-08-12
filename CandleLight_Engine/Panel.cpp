@@ -12,6 +12,11 @@ Panel::Panel(glm::vec2 & position, glm::vec2 & dimension, const std::string & te
 	type = PANEL;
 }
 
+Panel::Panel(glm::vec2 & position, glm::vec2 & dimension, Texture & tex, Color col) : GUI(position, dimension, tex, col)
+{
+	type = PANEL;
+}
+
 Panel::~Panel()
 {
 }

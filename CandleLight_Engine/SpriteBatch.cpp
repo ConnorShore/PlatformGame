@@ -126,6 +126,7 @@ void SpriteBatch::renderBatch()
 	glBindVertexArray(_vaoID);
 
 	for (int i = 0; i < _renderBatches.size(); i++) {
+		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, _renderBatches[i].texture);
 		glDrawArrays(GL_TRIANGLES, _renderBatches[i].offset, _renderBatches[i].numVertices);
 	}

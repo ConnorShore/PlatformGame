@@ -11,7 +11,8 @@
 
 MainGame::MainGame()
 {
-	
+	//Bind light texture to fbo
+	//Render scene
 }
 
 MainGame::~MainGame()
@@ -28,22 +29,39 @@ void MainGame::init()
 	_world = std::make_unique<b2World>(gravity);
 	_world.get()->SetContactListener(&_collisionManager);
 
+	//_gBuffer.init(_screenWidth, _screenHeight);
+	_lightFBuffer.createFrameBuffer();
+	_lightMap.id = _lightFBuffer.addTextureAttachment(_screenWidth, _screenHeight, 0);
+	_lightFBuffer.unbindBuffer();
+
+	_lightTex = ResourceManager::loadTexture("Textures/light.png");
+
 	_camera.init(_screenWidth, _screenHeight);
 	_camera.setScale(65.0f);
+
+	_staticShader.init("Shaders/staticShader.vert", "Shaders/staticShader.frag");
+	_staticShader.bindAttributes();
+
+	_lightShader.init("Shaders/lightShader.vert", "Shaders/lightShader.frag");
+	_lightShader.bindAttributes();
 
 	_tileBatch.init();
 	_spriteBatch.init();
 	_guiBatch.init();
 	_backgroundBatch.init();
+	_lightBatch.init();
 
 	Background back1;
 	back1.init("Textures/Mountains/sky.png", glm::vec2(-22.0f), glm::vec2(100, 25), 0, 5);
+	back1.setAlpha(100);
 	_backgrounds.push_back(back1);
 	Background back2;
 	back2.init("Textures/Mountains/mountains_back.png", glm::vec2(-22.0f), glm::vec2(100, 25), 1, 5);
+	back2.setAlpha(100);
 	_backgrounds.push_back(back2);
 	Background back3;
 	back3.init("Textures/Mountains/mountains_front.png", glm::vec2(-22.0f), glm::vec2(100, 25), 2, 5);
+	back3.setAlpha(100);
 	_backgrounds.push_back(back3);
 
 	Texture tex = ResourceManager::loadTexture("Textures/boxTex.png");
@@ -56,39 +74,32 @@ void MainGame::init()
 	Level::loadLevel("level1.txt", _world.get(), _tiles, _ground, _boxes);
 	_ground.init(_world.get(), _ground.getVertices().size());
 
-	Light light;
-	light.color = Color(255, 255, 255, 255);
-	light.position = glm::vec2(10, -19);
-	light.intensity = 0.01f;
-	light.size = 0.2f;
-	_lights.push_back(light);
 
-	light.color = Color(255, 0, 255, 255);
-	light.position = glm::vec2(14, - 20.75);
-	light.intensity = 0.02f;
-	light.size = 0.2f;
-	_lights.push_back(light);
+	Light light1;
+	light1.color = Color(255, 0, 255, 255);
+	light1.position = glm::vec2(14, - 20.75);
+	light1.size = 12.0f;
+	_lights.push_back(light1);
 
-	light.color = Color(255, 0, 0, 255);
-	light.position = glm::vec2(40, -23);
-	light.intensity = 0.2f;
-	light.size = 0.2f;
-	_lights.push_back(light);
+	light1.color = Color(255, 0, 0, 255);
+	light1.position = glm::vec2(40, -20);
+	light1.size = 14.0f;
+	_lights.push_back(light1);
 
-	light.color = Color(255, 255, 0, 255);
-	light.position = glm::vec2(22, -23);
-	light.intensity = 0.25f;
-	light.size = 0.2f;
-	_lights.push_back(light);
+	light1.color = Color(255, 255, 0, 255);
+	light1.position = glm::vec2(22, -20);
+	light1.size = 5.0f;
+	_lights.push_back(light1);
+
+	light1.color = Color(255, 255, 255, 255);
+	light1.position = glm::vec2(30, -23);
+	light1.size = 10.0f;
+	_lights.push_back(light1);
 
 	light.color = Color(255, 255, 255, 255);
-	light.position = glm::vec2(30, -23);
-	light.intensity = 0.25f;
-	light.size = 0.2f;
+	light.position = _player.getPosition();
+	light.size = 10.0f;
 	_lights.push_back(light);
-
-	_staticShader.init("Shaders/staticShader.vert", "Shaders/staticShader.frag");
-	_staticShader.bindAttributes();
 }
 
 void MainGame::input()
@@ -122,6 +133,8 @@ void MainGame::input()
 
 	//Player input
 	_player.input(_inputManager, _camera);
+
+	light.position = _player.getPosition();
 
 	if (_inputManager.isKeyDown(SDLK_e)) {
 		_camera.setScale(_camera.getScale() + 0.25f);
@@ -179,15 +192,20 @@ void MainGame::update()
 	_world->Step(1 / 60.0f, 6, 2);
 }
 
-void MainGame::render()
+void MainGame::renderGeometry()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	_staticShader.start();
 	_staticShader.getUniformLocations();
 	_staticShader.loadPMatrix(_camera.getCameraMatrix());
+	_staticShader.loadResolution(glm::vec2(_screenWidth, _screenHeight));
 	_staticShader.loadTexture();
-	_staticShader.loadAmbientFactor(0.15f);
+	_staticShader.loadAmbient(glm::vec4(1.0f, 1.0f, 1.0f, 0.25f));
+
+	//Bind lightmap
+	glActiveTexture(GL_TEXTURE1);
+	glBindTexture(GL_TEXTURE_2D, 0);
 
 	//Backgrounds
 	_backgroundBatch.begin(SortType::BACK_TO_FRONT);
@@ -197,6 +215,9 @@ void MainGame::render()
 
 	_backgroundBatch.end();
 	_backgroundBatch.renderBatch();
+
+	glActiveTexture(GL_TEXTURE1);
+	glBindTexture(GL_TEXTURE_2D, _lightMap.id);
 
 	//Tiles
 	_tileBatch.begin();
@@ -216,28 +237,47 @@ void MainGame::render()
 	for (int i = 0; i < _bullets.size(); i++)
 		_bullets[i]->render(_spriteBatch);
 
-	for(int i = 0; i < _boxes.size(); i++)
+	for (int i = 0; i < _boxes.size(); i++)
 		_boxes[i].render(_spriteBatch);
 
 	_spriteBatch.end();
 	_spriteBatch.renderBatch();
 
-	_staticShader.loadPMatrix(_camera.getTransformationMatrix());
-
-	//Lights
-	_staticShader.loadLights(_lights);
-
-	//GUIS
-	_guiBatch.begin();
-
-	for (int i = 0; i < _guis.size(); i++) {
-		_guis[i]->render(_guiBatch);
-	}
-
-	_guiBatch.end();
-	_guiBatch.renderBatch();
-
 	_staticShader.stop();
+}
+
+void MainGame::renderLights()
+{
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	glBlendFunc(GL_ONE, GL_ONE);
+
+	_lightShader.start();
+	_lightShader.getUniformLocations();
+	_lightShader.loadPMatrix(_camera.getCameraMatrix());
+	_lightShader.loadTextures();
+
+	_lightBatch.begin();
+
+	for (auto& light : _lights) {
+		light.render(_lightBatch, _lightTex);
+	}
+	light.render(_lightBatch, _lightTex);
+
+	_lightBatch.end();
+	_lightBatch.renderBatch();
+
+	_lightShader.stop();
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+}
+
+void MainGame::render()
+{
+	_lightFBuffer.bindBuffer();
+	renderLights();
+	_lightFBuffer.unbindBuffer();
+
+	renderGeometry();
 
 	_window.swapWindow();
 }

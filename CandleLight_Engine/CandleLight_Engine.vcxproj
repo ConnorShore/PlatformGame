@@ -141,6 +141,7 @@
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Checkbox.cpp" />
+    <ClCompile Include="FrameBuffer.cpp" />
     <ClCompile Include="GUI.cpp" />
     <ClCompile Include="DebugRenderer.cpp" />
     <ClCompile Include="GUILabel.cpp" />
@@ -153,7 +154,6 @@
     <ClCompile Include="ShaderProgram.cpp" />
     <ClCompile Include="SpriteBatch.cpp" />
     <ClCompile Include="SpriteFont.cpp" />
-    <ClCompile Include="StaticShader.cpp" />
     <ClCompile Include="TextureCache.cpp" />
     <ClCompile Include="Timing.cpp" />
     <ClCompile Include="Window.cpp" />
@@ -163,6 +163,7 @@
     <ClInclude Include="Button.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Checkbox.h" />
+    <ClInclude Include="FrameBuffer.h" />
     <ClInclude Include="GUI.h" />
     <ClInclude Include="DebugRenderer.h" />
     <ClInclude Include="GUILabel.h" />
@@ -177,7 +178,6 @@
     <ClInclude Include="SpriteBatch.h" />
     <ClInclude Include="SpriteFont.h" />
     <ClInclude Include="SpriteSheet.h" />
-    <ClInclude Include="StaticShader.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TextureCache.h" />
     <ClInclude Include="Timing.h" />

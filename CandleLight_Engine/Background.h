@@ -14,8 +14,11 @@ public:
 	void update(const glm::vec2& position);
 	void render(SpriteBatch& spriteBatch);
 
+	void setAlpha(int a) { _alpha = a; }
+
 private:
 	glm::vec2 _position, _dimension, _offset;
 	Texture _texture;
 	int _depth, _numRepeats;
+	int _alpha;
 };

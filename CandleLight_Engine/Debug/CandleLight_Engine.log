@@ -1,17 +1,47 @@
-﻿  StaticShader.cpp
-c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\candlelight_engine\staticshader.h(3): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\candlelight_engine\staticshader.cpp(54): warning C4018: '<': signed/unsigned mismatch
-  Generating Code...
-  Skipping... (no relevant changes detected)
+﻿  Window.cpp
+  Timing.cpp
+c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\candlelight_engine\timing.cpp(45): warning C4244: 'argument': conversion from 'float' to 'Uint32', possible loss of data
+  TextureCache.cpp
   SpriteFont.cpp
+c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\candlelight_engine\spritefont.cpp(96): warning C4018: '<': signed/unsigned mismatch
+c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\candlelight_engine\spritefont.cpp(106): warning C4244: '*=': conversion from 'float' to 'unsigned char', possible loss of data
   SpriteBatch.cpp
+c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\candlelight_engine\spritebatch.cpp(128): warning C4018: '<': signed/unsigned mismatch
+c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\candlelight_engine\spritebatch.cpp(160): warning C4018: '<': signed/unsigned mismatch
+  ShaderProgram.cpp
+  ResourceManager.cpp
   RadioButton.cpp
+c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\candlelight_engine\spritefont.h(34): warning C4099: 'Texture': type name first seen using 'struct' now seen using 'class'
+  c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\candlelight_engine\texture.h(6): note: see declaration of 'Texture'
+  picoPNG.cpp
   Panel.cpp
+c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\candlelight_engine\spritefont.h(34): warning C4099: 'Texture': type name first seen using 'struct' now seen using 'class'
+  c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\candlelight_engine\texture.h(6): note: see declaration of 'Texture'
+  Loader.cpp
+c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\candlelight_engine\loader.cpp(30): warning C4477: 'printf' : format string '%s' requires an argument of type 'char *', but variadic argument 1 has type 'std::string'
+c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\candlelight_engine\loader.cpp(68): warning C4244: '=': conversion from 'std::streamoff' to 'long', possible loss of data
+c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\candlelight_engine\loader.cpp(74): warning C4244: '-=': conversion from 'std::streamoff' to 'long', possible loss of data
+c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\candlelight_engine\loader.cpp(61): warning C4477: 'printf' : format string '%s' requires an argument of type 'char *', but variadic argument 1 has type 'const std::string'
+  InputManager.cpp
+c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\candlelight_engine\inputmanager.cpp(30): warning C4244: 'argument': conversion from 'Sint32' to 'float', possible loss of data
   GUILabel.cpp
+c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\candlelight_engine\texture.h(6): warning C4099: 'Texture': type name first seen using 'class' now seen using 'struct'
+  c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\candlelight_engine\texture.h(6): note: see declaration of 'Texture'
+  DebugRenderer.cpp
   GUI.cpp
+c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\candlelight_engine\spritefont.h(34): warning C4099: 'Texture': type name first seen using 'struct' now seen using 'class'
+  c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\candlelight_engine\texture.h(6): note: see declaration of 'Texture'
+  FrameBuffer.cpp
   Checkbox.cpp
+c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\candlelight_engine\spritefont.h(34): warning C4099: 'Texture': type name first seen using 'struct' now seen using 'class'
+  c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\candlelight_engine\texture.h(6): note: see declaration of 'Texture'
+  Camera.cpp
   Button.cpp
+c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\candlelight_engine\spritefont.h(34): warning C4099: 'Texture': type name first seen using 'struct' now seen using 'class'
+  c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\candlelight_engine\texture.h(6): note: see declaration of 'Texture'
   Background.cpp
+c:\users\cjshore12\documents\visual studio 2015\projects\platformgame\candlelight_engine\background.cpp(41): warning C4477: 'printf' : format string '%f' requires an argument of type 'double', but variadic argument 1 has type 'int'
+  Generating Code...
 glew32.lib(glew32.dll) : warning LNK4006: __NULL_IMPORT_DESCRIPTOR already defined in SDL2.lib(SDL2.dll); second definition ignored
 glew32.lib(glew32.dll) : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
 glew32s.lib(glew.obj) : warning LNK4006: _glewGetExtension@4 already defined in glew32.lib(glew32.dll); second definition ignored

@@ -3,14 +3,19 @@
 #include <glm\glm.hpp>
 
 #include "Vertex.h"
+#include "SpriteBatch.h"
+#include "Texture.h"
 
 struct Light
 {
-	Light(glm::vec2& pos, float intense, float sz, Color& col) : position(pos), intensity(intense), size(sz), color(col) {}
-	Light() : position(glm::vec2(0.0f)), intensity(0.0f), size(0.0f), color(Color(255, 255, 255, 255)) {}
+	void render(SpriteBatch& spriteBatch, Texture& tex)
+	{
+		glm::vec4 destRect(position.x - size / 2.0f, position.y - size / 2.0f, size, size);
+		spriteBatch.addToBatch(destRect, glm::vec4(0,0,1,1), 0.0f, tex.id, color);
+	}
 
 	glm::vec2 position;
-	float intensity;
 	float size;
+	float intensity;
 	Color color;
 };

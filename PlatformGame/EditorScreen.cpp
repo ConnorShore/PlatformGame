@@ -109,9 +109,6 @@ void EditorScreen::init()
 
 	_spriteFont = new SpriteFont("Fonts/BEBAS.ttf", 32);
 
-	_gridShader.init("Shaders/gridShader.vert", "Shaders/gridShader.frag");
-	_gridShader.bindAttributes();
-
 	_staticShader.init("Shaders/staticShader.vert", "Shaders/staticShader.frag");
 	_staticShader.bindAttributes();
 }
