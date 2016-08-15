@@ -51,11 +51,13 @@ void MainGame::init()
 	_lightBatch.init();
 	
 	//TODO: Make GUI pos based on GL coords nad dimensions based on world coords
-	TiledPanel* inventory = new TiledPanel(glm::vec2(-0.25f), glm::vec2(0.5f, 0.5f), "Textures/GUI/panel.png", Color(255, 255, 255, 255), 0.05f);
+	TiledPanel* inventory = new TiledPanel(_camera.pixelToGL(glm::vec2(-720, -720)), _camera.pixelToGL(glm::vec2(1440, 1440)), "Textures/GUI/panel.png", Color(255, 255, 255, 255), _camera.pixelToGL(glm::vec2(144)));
 	_guis.push_back(inventory);
-	Icon icon("Textures/GUI/icon.png");
-	for (int i = 0; i < 80; i++)
-		inventory->addTile(icon);
+	for (int i = 0; i < 34; i++) {
+		Icon* icon = new Icon("Textures/GUI/icon.png");
+		inventory->addTile(*icon);
+		_guis.push_back(icon);
+	}
 
 	//Background back1;
 	//back1.init("Textures/Mountains/sky.png", glm::vec2(-22.0f), glm::vec2(100, 25), 0, 5);
@@ -114,6 +116,7 @@ void MainGame::input()
 
 	//Check button input
 	for (int i = 0; i < _guis.size(); i++) {
+		if (!_guis[i]->isVisible()) break;
 		glm::vec2 pos = _camera.screenToGLCoords(_inputManager.getMousePos());
 		GUIType t = _guis[i]->getType();
 		if (_guis[i]->inBox(pos)) {
@@ -124,6 +127,11 @@ void MainGame::input()
 						Button* button;
 						button = static_cast<Button*>(_guis[i]);
 						button->onClick();
+						break;
+					case ICON:
+						Icon* icon;
+						icon = static_cast<Icon*>(_guis[i]);
+						if (icon->inBox(pos)) printf("in box\n");
 						break;
 					case NONE:
 						break;
@@ -148,6 +156,18 @@ void MainGame::input()
 
 	if (_inputManager.isKeyDown(SDLK_q)) {
 		_camera.setScale(_camera.getScale() - 0.25f);
+	}
+
+	if (_inputManager.isKeyDown(SDLK_i)) {
+		if (_guis[0]->isVisible()) {
+			for (int i = 0; i < _guis.size(); i++)
+				_guis[i]->setVisible(false);
+		}
+		else {
+			for (int i = 0; i < _guis.size(); i++)
+				_guis[i]->setVisible(true);
+		}
+		_inputManager.keyReleased(SDLK_i);
 	}
 }
 
@@ -255,8 +275,10 @@ void MainGame::renderGeometry()
 
 	_guiBatch.begin();
 
-	for (auto& gui : _guis)
-		gui->render(_guiBatch);
+	for (auto& gui : _guis) {
+		if(gui->isVisible())
+			gui->render(_guiBatch);
+	}
 	
 	_guiBatch.end();
 	_guiBatch.renderBatch();

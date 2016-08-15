@@ -13,6 +13,7 @@ public:
 	glm::vec2 screenToWorldCoords(glm::vec2 screenCoords);
 	glm::vec2 screenToGLCoords(glm::vec2 screenCoords);
 	void createTransformMatrix();
+	glm::vec2 pixelToGL(glm::vec2 pixelCoords);
 
 	glm::vec2 getPosition() const { return _position; }
 	glm::mat4 getCameraMatrix() const { return _cameraMatrix; }

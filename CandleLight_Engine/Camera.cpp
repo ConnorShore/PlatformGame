@@ -70,3 +70,11 @@ void Camera::createTransformMatrix()
 	glm::vec3 scale(_scale / _screenScaleX, _scale / _screenScaleY, 0.0f);
 	_transformMatrix = glm::scale(glm::mat4(1.0f), scale) * _cameraMatrix;
 }
+
+glm::vec2 Camera::pixelToGL(glm::vec2 pixelCoords)
+{
+	glm::vec2 newCoords;
+	newCoords.x = (pixelCoords.x / _screenWidth) / _screenScaleX;
+	newCoords.y = (pixelCoords.y / _screenHeight) / _screenScaleY;
+	return newCoords;
+}

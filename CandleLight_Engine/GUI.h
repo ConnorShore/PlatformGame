@@ -40,6 +40,7 @@ public:
 	const glm::vec2& getDimension() { return dimension; }
 	const GUIType& getType() { return type; }
 	GUI* getParent() { return parent; }
+	bool isVisible() { return visible; }
 
 	void setPosition(glm::vec2& newPos) { position = newPos; }
 	void setDimension(glm::vec2& newDim) { dimension = newDim; }
@@ -49,6 +50,7 @@ public:
 		position = (position * parent->getDimension() + parent->getPosition());
 	}
 	void setMouseOver(bool over) { mouseOver = over; }
+	void setVisible(bool vis) { visible = vis; }
 
 	void addChild(GUI* child) { _children.push_back(child); }
 	std::vector<GUI*>& getChildren() { return _children; }
@@ -70,6 +72,7 @@ protected:
 	call eventCallback = NULL;
 	GUIType type;
 	bool mouseOver = false;
+	bool visible = true;
 
 	std::vector<GUI*> _children;
 };
