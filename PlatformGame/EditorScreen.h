@@ -13,8 +13,11 @@
 #include <CandleLight_Engine\SpriteFont.h>
 #include <CandleLight_Engine\GUILabel.h>
 #include <CandleLight_Engine\Background.h>
+#include <CandleLight_Engine\Light.h>
+#include <CandleLight_Engine\FrameBuffer.h>
 
 #include "StaticShader.h"
+#include "LightShader.h"
 #include "Box.h"
 #include "Bullet.h"
 #include "Collision.h"
@@ -33,7 +36,8 @@ enum class ObjectMode
 	BOX,
 	GROUND,
 	SPAWN,	//< Player spawn points (Campfires)
-	HUMAN
+	HUMAN,
+	LIGHT
 };
 
 enum class SelectMode
@@ -56,6 +60,7 @@ private:
 	Window _window;
 	InputManager _inputManager;
 	StaticShader _staticShader;
+	LightShader _lightShader;
 	Camera _camera;
 	Timing _timer;
 	SpriteBatch _spriteBatch;
@@ -63,12 +68,18 @@ private:
 	SpriteBatch _guiBatch;
 	SpriteBatch _hudBatch;
 	SpriteBatch _backgroundBatch;
+	SpriteBatch _lightBatch;
 	CollisionManager _collisionManager;
 	Texture _playerTex;
 	Texture _nodeTex;
 	Texture _sheetTex;
+	Texture _lightMap;
+	Texture _lightTex;
 	Ground _ground;
 	SpriteFont* _spriteFont;
+	FrameBuffer _lightFBuffer;
+
+	Light _selectedLight;
 
 	ObjectMode _objectMode = ObjectMode::TILE;
 	SelectMode _selectMode = SelectMode::PLACE;
@@ -84,6 +95,7 @@ private:
 	std::vector<Tile> _tiles;
 	std::vector<Box> _boxes;
 	std::vector<Background> _backgrounds;
+	std::vector<Light> _lights;
 
 	bool _mouseButtons[2];
 
@@ -93,13 +105,17 @@ private:
 	int _selectedTile = NO_TILE;
 	int _selectedBox = NO_BOX;
 
-	int _screenWidth = 1600;
-	int _screenHeight = 960;
+	int _screenWidth = 1920;
+	int _screenHeight = 1080;
+
+	float _ambient = 1.0f;
 
 	void init();
 	void updateGUI();
 	void input();
 	void update();
+	void renderGeometry();
+	void renderLights();
 	void render();
 	void gameLoop();
 	void cleanUp();

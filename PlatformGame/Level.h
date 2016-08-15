@@ -4,6 +4,7 @@
 #include <vector>
 
 #include <Box2D\Box2D.h>
+#include <CandleLight_Engine\Light.h>
 
 #include "Player.h"
 #include "Human.h"
@@ -17,9 +18,9 @@ public:
 	Level();
 	~Level();
 
-	static bool saveEditorLevel(const std::string& name, Ground& ground, const std::vector<Box>& boxes);
+	static bool saveEditorLevel(const std::string& name, Ground& ground, const std::vector<Box>& boxes, const std::vector<Light>& lights);
 
-	static bool loadLevel(const std::string& name, b2World* world, std::vector<Tile>& tiles, Ground& ground, std::vector<Box>& boxes);
+	static bool loadLevel(const std::string& name, b2World* world, std::vector<Tile>& tiles, Ground& ground, std::vector<Box>& boxes, std::vector<Light>& lights);
 
 	static bool saveTiles(const std::string& name, const std::string& tileSheet, std::vector<Tile>& tiles);
 
@@ -31,5 +32,6 @@ public:
 private:
 	static void saveObjects(std::ofstream& level, const std::vector<Box>& boxes);
 	static void saveGround(std::ofstream& level, Ground& ground);
+	static void saveLights(std::ofstream& level, const std::vector<Light>& lights);
 };
 

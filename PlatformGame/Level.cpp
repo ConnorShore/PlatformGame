@@ -18,7 +18,7 @@ Level::~Level()
 {
 }
 
-bool Level::saveEditorLevel(const std::string& name, Ground& ground, const std::vector<Box>& boxes)
+bool Level::saveEditorLevel(const std::string& name, Ground& ground, const std::vector<Box>& boxes, const std::vector<Light>& lights)
 {
 	std::ofstream level;
 	level.open("Levels/" + name, std::ios::app);
@@ -29,11 +29,12 @@ bool Level::saveEditorLevel(const std::string& name, Ground& ground, const std::
 
 	saveGround(level, ground);
 	saveObjects(level, boxes);
+	saveLights(level, lights);
 
 	level.close();
 }
 
-bool Level::loadLevel(const std::string & name, b2World * world, std::vector<Tile>& tiles, Ground & ground, std::vector<Box>& boxes)
+bool Level::loadLevel(const std::string & name, b2World * world, std::vector<Tile>& tiles, Ground & ground, std::vector<Box>& boxes, std::vector<Light>& lights)
 {
 	std::ifstream level;
 	level.open("Levels/" + name);
@@ -85,6 +86,25 @@ bool Level::loadLevel(const std::string & name, b2World * world, std::vector<Til
 			Texture tex = ResourceManager::loadTexture(texPath);
 			b.init(world, pos, dim, tex);
 			boxes.push_back(b);
+		}
+	}
+
+	{
+		//Lights
+		glm::vec2 pos;
+		Color color;
+		float size;
+		std::string texPath;
+		int numLights;
+		level >> numLights;
+		for (int i = 0; i < numLights; i++) {
+			level >> pos.x >> pos.y >> color.r >> color.g >> color.b >> color.a >> size >> texPath;
+			Light light;
+			light.position = pos;
+			light.color = color;
+			light.size = size;
+			light.texture = ResourceManager::loadTexture(texPath);
+			lights.push_back(light);
 		}
 	}
 
@@ -253,5 +273,15 @@ void Level::saveGround(std::ofstream& level, Ground & ground)
 	level << ground.getVertices().size() << "\n";
 	for (auto& vert : ground.getVertices()) {
 		level << vert.x << ' ' << vert.y << "\n";
+	}
+}
+
+void Level::saveLights(std::ofstream & level, const std::vector<Light>& lights)
+{
+	level << lights.size() << "\n";
+	for (auto& light : lights) {
+		level << light.position.x << ' ' << light.position.y << ' ' 
+			<< light.color.r << ' ' << light.color.g << ' ' << light.color.b << ' ' << light.color.a << ' ' 
+			<< light.size << ' ' << light.texture.filePath << "\n";
 	}
 }

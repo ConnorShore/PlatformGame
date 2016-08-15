@@ -9,6 +9,7 @@
 #include <CandleLight_Engine\SpriteBatch.h>
 #include <CandleLight_Engine\GUI.h>
 #include <CandleLight_Engine\Panel.h>
+#include <CandleLight_Engine\TiledPanel.h>
 #include <CandleLight_Engine\Button.h>
 #include <CandleLight_Engine\Background.h>
 #include <CandleLight_Engine\Light.h>

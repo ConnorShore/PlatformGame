@@ -27,9 +27,9 @@ GLuint ShaderProgram::loadShader(const std::string& file, GLuint type)
 
 	//Compile shader
 	if (type == GL_VERTEX_SHADER)
-		printf("Compiling vertex shader\n");
+		printf("Compiling vertex shader: %s\n", file.c_str());
 	else if (type == GL_FRAGMENT_SHADER)
-		printf("Compiling fragment shader\n");
+		printf("Compiling fragment shader: %s\n", file.c_str());
 
 	const char* shaderPointer = input.c_str();
 
@@ -41,7 +41,7 @@ GLuint ShaderProgram::loadShader(const std::string& file, GLuint type)
 	glGetShaderiv(shaderID, GL_INFO_LOG_LENGTH, &InfoLogLength);
 	std::vector<char> ShaderErrorMessage(InfoLogLength);
 	glGetShaderInfoLog(shaderID, InfoLogLength, NULL, ShaderErrorMessage.data());
-	fprintf(stdout, "%s\n", ShaderErrorMessage.data());
+	if(ShaderErrorMessage.data() != NULL) fprintf(stdout, "%s\n", ShaderErrorMessage.data());
 
 	return shaderID;
 }
@@ -67,7 +67,7 @@ void ShaderProgram::init(const std::string& vertexFile, const std::string& fragm
 	glGetProgramiv(_programID, GL_INFO_LOG_LENGTH, &InfoLogLength);
 	std::vector<char> ProgramErrorMessage(InfoLogLength, int(1));
 	glGetProgramInfoLog(_programID, InfoLogLength, NULL, ProgramErrorMessage.data());
-	fprintf(stdout, "%s\n", ProgramErrorMessage.data());
+	if(ProgramErrorMessage.data() != NULL) fprintf(stdout, "%s\n", ProgramErrorMessage.data());
 }
 
 void ShaderProgram::start()

@@ -29,7 +29,6 @@ void MainGame::init()
 	_world = std::make_unique<b2World>(gravity);
 	_world.get()->SetContactListener(&_collisionManager);
 
-	//_gBuffer.init(_screenWidth, _screenHeight);
 	_lightFBuffer.createFrameBuffer();
 	_lightMap.id = _lightFBuffer.addTextureAttachment(_screenWidth, _screenHeight, 0);
 	_lightFBuffer.unbindBuffer();
@@ -50,19 +49,26 @@ void MainGame::init()
 	_guiBatch.init();
 	_backgroundBatch.init();
 	_lightBatch.init();
+	
+	//TODO: Make GUI pos based on GL coords nad dimensions based on world coords
+	TiledPanel* inventory = new TiledPanel(glm::vec2(-0.25f), glm::vec2(0.5f, 0.5f), "Textures/GUI/panel.png", Color(255, 255, 255, 255), 0.05f);
+	_guis.push_back(inventory);
+	Icon icon("Textures/GUI/icon.png");
+	for (int i = 0; i < 80; i++)
+		inventory->addTile(icon);
 
-	Background back1;
-	back1.init("Textures/Mountains/sky.png", glm::vec2(-22.0f), glm::vec2(100, 25), 0, 5);
-	back1.setAlpha(100);
-	_backgrounds.push_back(back1);
-	Background back2;
-	back2.init("Textures/Mountains/mountains_back.png", glm::vec2(-22.0f), glm::vec2(100, 25), 1, 5);
-	back2.setAlpha(100);
-	_backgrounds.push_back(back2);
-	Background back3;
-	back3.init("Textures/Mountains/mountains_front.png", glm::vec2(-22.0f), glm::vec2(100, 25), 2, 5);
-	back3.setAlpha(100);
-	_backgrounds.push_back(back3);
+	//Background back1;
+	//back1.init("Textures/Mountains/sky.png", glm::vec2(-22.0f), glm::vec2(100, 25), 0, 5);
+	//back1.setAlpha(100);
+	//_backgrounds.push_back(back1);
+	//Background back2;
+	//back2.init("Textures/Mountains/mountains_back.png", glm::vec2(-22.0f), glm::vec2(100, 25), 1, 5);
+	//back2.setAlpha(100);
+	//_backgrounds.push_back(back2);
+	//Background back3;
+	//back3.init("Textures/Mountains/mountains_front.png", glm::vec2(-22.0f), glm::vec2(100, 25), 2, 5);
+	//back3.setAlpha(100);
+	//_backgrounds.push_back(back3);
 
 	Texture tex = ResourceManager::loadTexture("Textures/boxTex.png");
 
@@ -71,35 +77,35 @@ void MainGame::init()
 	_player.addWeapon(new AK47(_player.getPosition(), glm::vec2(2.2f, 1.55f), glm::vec2(1.0f, -0.75f)));
 	_humans.push_back(&_player);
 
-	Level::loadLevel("level1.txt", _world.get(), _tiles, _ground, _boxes);
+	Level::loadLevel("level1.txt", _world.get(), _tiles, _ground, _boxes, _lights);
 	_ground.init(_world.get(), _ground.getVertices().size());
 
 
-	Light light1;
-	light1.color = Color(255, 0, 255, 255);
-	light1.position = glm::vec2(14, - 20.75);
-	light1.size = 12.0f;
-	_lights.push_back(light1);
+	//Light light1;
+	//light1.color = Color(255, 0, 255, 255);
+	//light1.position = glm::vec2(14, - 20.75);
+	//light1.size = 12.0f;
+	//_lights.push_back(light1);
 
-	light1.color = Color(255, 0, 0, 255);
-	light1.position = glm::vec2(40, -20);
-	light1.size = 14.0f;
-	_lights.push_back(light1);
+	//light1.color = Color(255, 0, 0, 255);
+	//light1.position = glm::vec2(40, -20);
+	//light1.size = 14.0f;
+	//_lights.push_back(light1);
 
-	light1.color = Color(255, 255, 0, 255);
-	light1.position = glm::vec2(22, -20);
-	light1.size = 5.0f;
-	_lights.push_back(light1);
+	//light1.color = Color(255, 255, 0, 255);
+	//light1.position = glm::vec2(22, -20);
+	//light1.size = 5.0f;
+	//_lights.push_back(light1);
 
-	light1.color = Color(255, 255, 255, 255);
-	light1.position = glm::vec2(30, -23);
-	light1.size = 10.0f;
-	_lights.push_back(light1);
+	//light1.color = Color(255, 255, 255, 255);
+	//light1.position = glm::vec2(30, -23);
+	//light1.size = 10.0f;
+	//_lights.push_back(light1);
 
-	light.color = Color(255, 255, 255, 255);
-	light.position = _player.getPosition();
-	light.size = 10.0f;
-	_lights.push_back(light);
+	//light.color = Color(255, 255, 255, 255);
+	//light.position = _player.getPosition();
+	//light.size = 10.0f;
+	//_lights.push_back(light);
 }
 
 void MainGame::input()
@@ -203,10 +209,6 @@ void MainGame::renderGeometry()
 	_staticShader.loadTexture();
 	_staticShader.loadAmbient(glm::vec4(1.0f, 1.0f, 1.0f, 0.25f));
 
-	//Bind lightmap
-	glActiveTexture(GL_TEXTURE1);
-	glBindTexture(GL_TEXTURE_2D, 0);
-
 	//Backgrounds
 	_backgroundBatch.begin(SortType::BACK_TO_FRONT);
 
@@ -216,6 +218,7 @@ void MainGame::renderGeometry()
 	_backgroundBatch.end();
 	_backgroundBatch.renderBatch();
 
+	//Bind lightmap
 	glActiveTexture(GL_TEXTURE1);
 	glBindTexture(GL_TEXTURE_2D, _lightMap.id);
 
@@ -243,6 +246,21 @@ void MainGame::renderGeometry()
 	_spriteBatch.end();
 	_spriteBatch.renderBatch();
 
+	//unbind lightmap to not effect backgrounds
+	glActiveTexture(GL_TEXTURE1);
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	_staticShader.loadAmbient(glm::vec4(1.0f));
+	_staticShader.loadPMatrix(_camera.getTransformationMatrix());
+
+	_guiBatch.begin();
+
+	for (auto& gui : _guis)
+		gui->render(_guiBatch);
+	
+	_guiBatch.end();
+	_guiBatch.renderBatch();
+
 	_staticShader.stop();
 }
 
@@ -260,9 +278,9 @@ void MainGame::renderLights()
 	_lightBatch.begin();
 
 	for (auto& light : _lights) {
-		light.render(_lightBatch, _lightTex);
+		light.render(_lightBatch);
 	}
-	light.render(_lightBatch, _lightTex);
+	//light.render(_lightBatch);
 
 	_lightBatch.end();
 	_lightBatch.renderBatch();

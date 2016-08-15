@@ -13,10 +13,12 @@
 enum GUIType
 {
 	NONE,
+	ICON,
 	BUTTON,
 	RADIO_BUTTON,
 	CHECKBOX,
-	PANEL
+	PANEL,
+	TILED_PANEL
 };
 
 class GUI
@@ -28,7 +30,7 @@ public:
 	GUI(glm::vec2& pos, glm::vec2& dim, Texture& tex, Color& col);
 	GUI();
 
-	void render(SpriteBatch& spriteBatch);
+	virtual void render(SpriteBatch& spriteBatch);
 
 	bool inBox(const glm::vec2& pos);
 
@@ -40,7 +42,12 @@ public:
 	GUI* getParent() { return parent; }
 
 	void setPosition(glm::vec2& newPos) { position = newPos; }
-	void setParent(GUI* prnt) { parent = prnt; }
+	void setDimension(glm::vec2& newDim) { dimension = newDim; }
+	void setParent(GUI* prnt) 
+	{ 
+		parent = prnt; 
+		position = (position * parent->getDimension() + parent->getPosition());
+	}
 	void setMouseOver(bool over) { mouseOver = over; }
 
 	void addChild(GUI* child) { _children.push_back(child); }

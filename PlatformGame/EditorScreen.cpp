@@ -21,28 +21,43 @@ void EditorScreen::init()
 	b2Vec2 gravity(0.0f, 0.0f);
 	_world = std::make_unique<b2World>(gravity);
 
+	_lightFBuffer.createFrameBuffer();
+	_lightMap.id = _lightFBuffer.addTextureAttachment(_screenWidth, _screenHeight, 0);
+	_lightFBuffer.unbindBuffer();
+
+	_staticShader.init("Shaders/staticShader.vert", "Shaders/staticShader.frag");
+	_staticShader.bindAttributes();
+
+	_lightShader.init("Shaders/lightShader.vert", "Shaders/lightShader.frag");
+	_lightShader.bindAttributes();
+
 	_sheetTex = ResourceManager::loadTexture("Textures/Tiles/mountains.png");
 	_nodeTex = ResourceManager::loadTexture("Textures/Editor/node.png");
 	_playerTex = ResourceManager::loadTexture("Textures/Editor/playerTex.png");
+	_lightTex = ResourceManager::loadTexture("Textures/light.png");
 
 	_tileBatch.init();
 	_spriteBatch.init();
 	_guiBatch.init();
 	_hudBatch.init();	
 	_backgroundBatch.init();
+	_lightBatch.init();
 
-	Background back1;
-	back1.init("Textures/Mountains/sky.png", glm::vec2(-22.0f), glm::vec2(100, 25), 0, 5);
-	_backgrounds.push_back(back1);
-	Background back2;
-	back2.init("Textures/Mountains/mountains_back.png", glm::vec2(-22.0f), glm::vec2(100, 25), 1, 5);
-	_backgrounds.push_back(back2);
-	Background back3;
-	back3.init("Textures/Mountains/mountains_front.png", glm::vec2(-22.0f), glm::vec2(100, 25), 2, 5);
-	_backgrounds.push_back(back3);
+	//Background back1;
+	//back1.init("Textures/Mountains/sky.png", glm::vec2(-22.0f), glm::vec2(100, 25), 0, 5);
+	//_backgrounds.push_back(back1);
+	//Background back2;
+	//back2.init("Textures/Mountains/mountains_back.png", glm::vec2(-22.0f), glm::vec2(100, 25), 1, 5);
+	//_backgrounds.push_back(back2);
+	//Background back3;
+	//back3.init("Textures/Mountains/mountains_front.png", glm::vec2(-22.0f), glm::vec2(100, 25), 2, 5);
+	//_backgrounds.push_back(back3);
 
 	Panel* panel = new Panel(glm::vec2(-0.98f, -0.98f), glm::vec2(0.45f, 1.95f), "Textures/GUI/panel.png", Color(255, 255, 255, 150));
 	_guis.push_back(panel);
+
+	Panel* propsPanel = new Panel(glm::vec2(0.75f, 0.20f), glm::vec2(0.22f, 0.78f), "Textures/GUI/panel.png", Color(255, 255, 255, 150));
+	_guis.push_back(propsPanel);
 	
 	RadioButton* radio = new RadioButton(panel, glm::vec2(0.25f, 0.87f), "Textures/GUI/radio_button.png", Color(255, 255, 255, 255));
 	radio->setSelected(false);
@@ -80,37 +95,45 @@ void EditorScreen::init()
 	_guis.push_back(drag);
 	_guiLabels.emplace_back(drag, "Drag", 0.65f, Color(0, 0, 0, 255));
 
-	RadioButton* ground = new RadioButton(panel, glm::vec2(0.25f, 0.45f), "Textures/GUI/radio_button.png", Color(255, 255, 255, 255));
+	RadioButton* ground = new RadioButton(panel, glm::vec2(0.2f, 0.45f), "Textures/GUI/radio_button.png", Color(255, 255, 255, 255));
 	ground->setGroup(1);
 	ground->setSelected(false);
 	ground->subscribeEvent(this, &EditorScreen::switchObjectMode, ObjectMode::GROUND);
 	_guis.push_back(ground);
 	_guiLabels.emplace_back(ground, "Ground", 1.0f, Color(0, 0, 0, 255));
 
-	RadioButton* tile = new RadioButton(panel, glm::vec2(0.5f, 0.45f), "Textures/GUI/radio_button.png", Color(255, 255, 255, 255));
+	RadioButton* tile = new RadioButton(panel, glm::vec2(0.4f, 0.45f), "Textures/GUI/radio_button.png", Color(255, 255, 255, 255));
 	tile->setGroup(1);
 	tile->setSelected(true);
 	tile->subscribeEvent(this, &EditorScreen::switchObjectMode, ObjectMode::TILE);
 	_guis.push_back(tile);
 	_guiLabels.emplace_back(tile, "Tile", 1.0f, Color(0, 0, 0, 255));
 
-	RadioButton* box = new RadioButton(panel, glm::vec2(0.75f, 0.45f), "Textures/GUI/radio_button.png", Color(255, 255, 255, 255));
+	RadioButton* box = new RadioButton(panel, glm::vec2(0.6f, 0.45f), "Textures/GUI/radio_button.png", Color(255, 255, 255, 255));
 	box->setGroup(1);
 	box->setSelected(false);
 	box->subscribeEvent(this, &EditorScreen::switchObjectMode, ObjectMode::BOX);
 	_guis.push_back(box);
 	_guiLabels.emplace_back(box, "Box", 1.0f, Color(0, 0, 0, 255));
 
+	RadioButton* light = new RadioButton(panel, glm::vec2(0.8f, 0.45f), "Textures/GUI/radio_button.png", Color(255, 255, 255, 255));
+	light->setGroup(1);
+	light->setSelected(false);
+	light->subscribeEvent(this, &EditorScreen::switchObjectMode, ObjectMode::LIGHT);
+	_guis.push_back(light);
+	_guiLabels.emplace_back(light, "Light", 1.0f, Color(0, 0, 0, 255));
+
 	Button* save = new Button(panel, glm::vec2(0.30f, 0.25f), glm::vec2(0.15f, 0.1f), "Textures/GUI/button.png", Color(255, 255, 255, 200));
-	save->subscribeEvent(this, &EditorScreen::saveLevel, "level1.txt", "Textures/Tiles/mountains.png");
+	save->subscribeEvent(this, &EditorScreen::saveLevel, "level2.txt", "Textures/Tiles/mountains.png");
 	save->setEnabled(true);
 	_guis.push_back(save);
 	_guiLabels.emplace_back(save, "Save", 1.0f, Color(100, 100, 100, 255), LabelPosition::CENTER);
 
-	_spriteFont = new SpriteFont("Fonts/BEBAS.ttf", 32);
+	_selectedLight.size = 10.0f;
+	_selectedLight.color = Color(255, 255, 255, 255);
+	_selectedLight.texture = _lightTex;
 
-	_staticShader.init("Shaders/staticShader.vert", "Shaders/staticShader.frag");
-	_staticShader.bindAttributes();
+	_spriteFont = new SpriteFont("Fonts/BEBAS.ttf", 32);
 }
 
 void EditorScreen::updateGUI()
@@ -119,12 +142,14 @@ void EditorScreen::updateGUI()
 
 	//Check button input
 	for (int i = 0; i < _guis.size(); i++) {
+
 		_guis[i]->update();
 
 		glm::vec2 pos = _camera.screenToGLCoords(_inputManager.getMousePos());
 
-		if (_guis[i]->inBox(pos))
+		if (_guis[i]->inBox(pos)) {
 			_guiControl = true;
+		}
 		else if (_guis[i]->getParent() != nullptr && _guis[i]->getParent()->inBox(pos))
 			_guiControl = true;
 		else
@@ -132,8 +157,8 @@ void EditorScreen::updateGUI()
 
 		GUIType t = _guis[i]->getType();
 		if (_guis[i]->inBox(pos)) {
-			_guis[i]->setMouseOver(true);
 			_guiControl = true;
+			_guis[i]->setMouseOver(true);
 			if (_inputManager.isKeyDown(SDL_BUTTON_LEFT)) {
 				switch (t) {
 				case BUTTON:
@@ -179,6 +204,7 @@ void EditorScreen::input()
 			break;
 		case SDL_MOUSEWHEEL:
 			updateMouseWheel(evnt);
+			_selectedLight.position = _camera.screenToWorldCoords(_inputManager.getMousePos());
 		case SDL_MOUSEMOTION:
 			_inputManager.setMousePos(evnt.motion.x, evnt.motion.y);
 			break;
@@ -241,17 +267,32 @@ void EditorScreen::update()
 			back.update(_camera.getPosition());
 	}
 
+	switch (_objectMode) {
+	case ObjectMode::TILE:
+		break;
+	case ObjectMode::LIGHT:
+		_selectedLight.position = _camera.screenToWorldCoords(_inputManager.getMousePos());
+		break;
+	case ObjectMode::BOX:
+		break;
+	}
+
 	_world->Step(1 / 60.0f, 0, 0);
 }
 
-void EditorScreen::render()
+void EditorScreen::renderGeometry()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	_staticShader.start();
 	_staticShader.getUniformLocations();
 	_staticShader.loadPMatrix(_camera.getCameraMatrix());
+	_staticShader.loadResolution(glm::vec2(_screenWidth, _screenHeight));
 	_staticShader.loadTexture();
+	_staticShader.loadAmbient(glm::vec4(1.0f, 1.0f, 1.0f, _ambient));
+
+	glActiveTexture(GL_TEXTURE1);
+	glBindTexture(GL_TEXTURE_2D, _lightMap.id);
 
 	//Backgrounds
 	if (_showBackgrounds) {
@@ -273,7 +314,7 @@ void EditorScreen::render()
 
 	for (auto& vert : _ground.getVertices()) {
 		float size = 0.25f;
-		glm::vec4 destRect(vert.x - size/2, vert.y - size/2, size, size);
+		glm::vec4 destRect(vert.x - size / 2, vert.y - size / 2, size, size);
 		_tileBatch.addToBatch(destRect, glm::vec4(0, 0, 1, 1), 1.0f, _nodeTex.id, Color(255, 255, 255, 255));
 	}
 
@@ -289,9 +330,14 @@ void EditorScreen::render()
 	_spriteBatch.end();
 	_spriteBatch.renderBatch();
 
-	//GUIs
+	glActiveTexture(GL_TEXTURE1);
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	//TODO: Make shader for stuff not effected by light
+	_staticShader.loadAmbient(glm::vec4(1.0f));
 	_staticShader.loadPMatrix(_camera.getTransformationMatrix());
 
+	//GUIs
 	_guiBatch.begin();
 
 	for (int i = 0; i < _guis.size(); i++) {
@@ -312,6 +358,42 @@ void EditorScreen::render()
 	_hudBatch.renderBatch();
 
 	_staticShader.stop();
+}
+
+void EditorScreen::renderLights()
+{
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	glBlendFunc(GL_ONE, GL_ONE);
+
+	_lightShader.start();
+	_lightShader.getUniformLocations();
+	_lightShader.loadPMatrix(_camera.getCameraMatrix());
+	_lightShader.loadTextures();
+
+	_lightBatch.begin();
+
+	if (!_guiControl && _objectMode == ObjectMode::LIGHT && _selectMode == SelectMode::PLACE) 
+		_selectedLight.render(_lightBatch);
+
+	for (int i = 0; i < _lights.size(); i++) {
+		_lights[i].render(_lightBatch);
+	}
+
+	_lightBatch.end();
+	_lightBatch.renderBatch();
+
+	_lightShader.stop();
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+}
+
+void EditorScreen::render()
+{
+	_lightFBuffer.bindBuffer();
+	renderLights();
+	_lightFBuffer.unbindBuffer();
+
+	renderGeometry();
 
 	_window.swapWindow();
 }
@@ -373,6 +455,17 @@ void EditorScreen::updateMouseDown(const SDL_Event& evnt)
 
 				_tiles.emplace_back(pos, _currentTileIndex, _sheetTex);
 				break;
+			case ObjectMode::LIGHT:
+				tex = _lightTex;
+				{
+					Light light;
+					light.position = _selectedLight.position;
+					light.size = _selectedLight.size;
+					light.color = _selectedLight.color;
+					light.texture = _lightTex;
+					_lights.push_back(light);
+				}
+				break;
 			case ObjectMode::BOX:
 				tex = ResourceManager::loadTexture("Textures/boxTex.png");
 				Box box;
@@ -433,14 +526,32 @@ void EditorScreen::updateMouseWheel(const SDL_Event & evnt)
 {
 	if (_selectMode == SelectMode::PLACE) {
 		switch (_objectMode) {
-		case ObjectMode::TILE:
-			if (evnt.wheel.y > 0.0f) {
-				if (_currentTileIndex < 63) _currentTileIndex++;
-			}
-			else {
-				if (_currentTileIndex > 0) _currentTileIndex--;
-			}
-			printf("%d\n", _currentTileIndex);
+			case ObjectMode::TILE:
+				if (evnt.wheel.y > 0.0f) {
+					if (_currentTileIndex < 63) _currentTileIndex++;
+				}
+				else {
+					if (_currentTileIndex > 0) _currentTileIndex--;
+				}
+				printf("%d\n", _currentTileIndex);
+				break;
+
+			case ObjectMode::LIGHT:
+				if (evnt.wheel.y > 0.0f) {
+					_selectedLight.size += 0.1f;
+				} else {
+					_selectedLight.size -= 0.1f;
+				}
+				break;
+		}
+	}
+	else {
+		//Select mode
+		if (evnt.wheel.y > 0.0f) {
+			_ambient += 0.01f;
+		}
+		else {
+			_ambient -= 0.01f;
 		}
 	}
 }
@@ -484,11 +595,12 @@ void EditorScreen::clear()
 	_tiles.clear();
 	_boxes.clear();
 	_ground.getVertices().clear();
+	_lights.clear();
 }
 
 void EditorScreen::saveLevel(const std::string& fileName, const std::string& texSheet)
 {
 
 	Level::saveTiles(fileName, texSheet, _tiles);
-	Level::saveEditorLevel(fileName, _ground, _boxes);
+	Level::saveEditorLevel(fileName, _ground, _boxes, _lights);
 }
