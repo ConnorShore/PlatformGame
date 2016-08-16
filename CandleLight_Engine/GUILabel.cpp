@@ -3,6 +3,7 @@
 
 GUILabel::GUILabel(GUI * parent, const char* text, float size, Color color, /* WHITE */ LabelPosition labelPos /* ABOVE */)
 {
+	_parent = parent;
 	_position = glm::vec2(parent->getPosition().x + (parent->getDimension().x / 2.0f), parent->getPosition().y + (parent->getDimension().y / 2.0f));
 	_labelText = text;
 	_size = size;
@@ -14,11 +15,11 @@ GUILabel::GUILabel(GUI * parent, const char* text, float size, Color color, /* W
 	switch (_labelPos) {
 		case LabelPosition::ABOVE:
 			_justification = Justification::MIDDLE;
-			_drawPos = glm::vec2(_position.x, _position.y + parent->getDimension().y + TEXT_PADDING);
+			_drawPos = glm::vec2(_position.x, _position.y + parent->getDimension().y/2 + TEXT_PADDING);
 			break;
 		case LabelPosition::BELOW:
 			_justification = Justification::MIDDLE;
-			_drawPos = glm::vec2(_position.x, _position.y - parent->getDimension().y - TEXT_PADDING);
+			_drawPos = glm::vec2(_position.x, _position.y - parent->getDimension().y/2 - TEXT_PADDING);
 			break;
 		case LabelPosition::RIGHT:
 			_justification = Justification::LEFT;
@@ -42,7 +43,9 @@ GUILabel::~GUILabel()
 
 void GUILabel::render(SpriteBatch & spriteBatch, Camera& camera)
 {
-	char buffer[256];
-	sprintf_s(buffer, _labelText);
-	_spriteFont->draw(spriteBatch, buffer, _drawPos, glm::vec2(_size * TEXT_SCALE), 1.0f, _labelColor, _justification);
+	if (_parent->isVisible()) {
+		char buffer[256];
+		sprintf_s(buffer, _labelText);
+		_spriteFont->draw(spriteBatch, buffer, _drawPos, glm::vec2(_size * TEXT_SCALE), 1.0f, _labelColor, _justification);
+	}
 }

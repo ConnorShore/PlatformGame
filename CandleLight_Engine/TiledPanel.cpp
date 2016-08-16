@@ -2,8 +2,8 @@
 #include "ResourceManager.h"
 
 
-TiledPanel::TiledPanel(GUI * prnt, glm::vec2 & position, glm::vec2 & dimension, const std::string & texPath, Color col, glm::vec2& tileSize, Sort sort /* DOWN */)
-	: GUI(prnt, position, dimension, ResourceManager::loadTexture(texPath), col)
+TiledPanel::TiledPanel(GUI * prnt, glm::vec2 & position, glm::vec2 & dimension, const std::string & texPath, Color col, glm::vec2& tileSize, Sort sort /* DOWN */, bool autoPos /* TRUE */)
+	: GUI(prnt, position, dimension, ResourceManager::loadTexture(texPath), col, autoPos)
 {
 	type = TILED_PANEL;
 	_sortType = sort;

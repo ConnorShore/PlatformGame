@@ -86,6 +86,7 @@ private:
 	ObjectMode _objectMode = ObjectMode::TILE;
 	SelectMode _selectMode = SelectMode::PLACE;
 
+	Panel* properties;
 	TiledPanel* tileSelector;
 
 	bool _isRunning;

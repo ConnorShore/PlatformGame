@@ -14,7 +14,7 @@ EditorScreen::~EditorScreen()
 
 void EditorScreen::init()
 {
-	_window.createWindow("Level Editor", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, _screenWidth, _screenHeight, WindowFlags::FULLSCREEN);
+	_window.createWindow("Level Editor", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, _screenWidth, _screenHeight);
 	_camera.init(_screenWidth, _screenHeight);
 	_camera.setScale(65.0f);
 
@@ -53,18 +53,9 @@ void EditorScreen::init()
 	back3.init("Textures/Mountains/mountains_front.png", glm::vec2(-22.0f), glm::vec2(100, 25), 2, 5);
 	_backgrounds.push_back(back3);
 
-	Panel* panel = new Panel(glm::vec2(-0.98f, -0.98f), glm::vec2(0.45f, 1.95f), "Textures/GUI/panel.png", Color(255, 255, 255, 150));
+	//Selection Panel
+	Panel* panel = new Panel(glm::vec2(-1.0f, -1.0f), glm::vec2(0.35f, 2.0f), "Textures/GUI/panel.png", Color(100, 100, 100, 255));
 	_guis.push_back(panel);
-
-	Texture tileSelectorTex = ResourceManager::loadTexture("Textures/Tiles/test.png");
-	tileSelector = new TiledPanel(_camera.pixelToGL(glm::vec2(1400, 300)), _camera.pixelToGL(glm::vec2(1060, 1060)), "Textures/GUI/panel.png", Color(255, 255, 255, 150), _camera.pixelToGL(glm::vec2(50)), Sort::UP);
-	_guis.push_back(tileSelector);
-	for (int i = 0; i < 256; i++) {
-		Icon* icon = new Icon(tileSelectorTex, glm::ivec2(16,16), i);
-		icon->subscribeEvent(this, &EditorScreen::setTileIndex, i);
-		tileSelector->addTile(*icon);
-		_guis.push_back(icon);
-	}
 	
 	RadioButton* radio = new RadioButton(panel, glm::vec2(0.25f, 0.87f), "Textures/GUI/radio_button.png", Color(255, 255, 255, 255));
 	radio->setSelected(false);
@@ -88,47 +79,47 @@ void EditorScreen::init()
 	background->setSelected(true);
 	background->subscribeEvent(this, &EditorScreen::toggleBackground);
 	_guis.push_back(background);
-	_guiLabels.emplace_back(background, "Background", 0.65f, Color(0, 0, 0, 255));
+	_guiLabels.emplace_back(background, "Background", 0.45f, Color(0, 0, 0, 255));
 
 	Checkbox* gridMove = new Checkbox(panel, glm::vec2(0.5f, 0.6f), "Textures/GUI/checkbox.png", Color(255, 255, 255, 255));
 	gridMove->setSelected(true);
 	gridMove->subscribeEvent(this, &EditorScreen::toggleGridSnap);
 	_guis.push_back(gridMove);
-	_guiLabels.emplace_back(gridMove, "Snap Grid", 0.65f, Color(0, 0, 0, 255));
+	_guiLabels.emplace_back(gridMove, "Snap Grid", 0.45f, Color(0, 0, 0, 255));
 
 	Checkbox* drag = new Checkbox(panel, glm::vec2(0.75f, 0.6f), "Textures/GUI/checkbox.png", Color(255, 255, 255, 255));
 	drag->setSelected(false);
 	drag->subscribeEvent(this, &EditorScreen::toggleDrag);
 	_guis.push_back(drag);
-	_guiLabels.emplace_back(drag, "Drag", 0.65f, Color(0, 0, 0, 255));
+	_guiLabels.emplace_back(drag, "Drag", 0.45f, Color(0, 0, 0, 255));
 
 	RadioButton* ground = new RadioButton(panel, glm::vec2(0.2f, 0.45f), "Textures/GUI/radio_button.png", Color(255, 255, 255, 255));
 	ground->setGroup(1);
 	ground->setSelected(false);
 	ground->subscribeEvent(this, &EditorScreen::switchObjectMode, ObjectMode::GROUND);
 	_guis.push_back(ground);
-	_guiLabels.emplace_back(ground, "Ground", 1.0f, Color(0, 0, 0, 255));
+	_guiLabels.emplace_back(ground, "Ground", 0.75f, Color(0, 0, 0, 255));
 
 	RadioButton* tile = new RadioButton(panel, glm::vec2(0.4f, 0.45f), "Textures/GUI/radio_button.png", Color(255, 255, 255, 255));
 	tile->setGroup(1);
 	tile->setSelected(true);
 	tile->subscribeEvent(this, &EditorScreen::switchObjectMode, ObjectMode::TILE);
 	_guis.push_back(tile);
-	_guiLabels.emplace_back(tile, "Tile", 1.0f, Color(0, 0, 0, 255));
+	_guiLabels.emplace_back(tile, "Tile", 0.75f, Color(0, 0, 0, 255));
 
 	RadioButton* box = new RadioButton(panel, glm::vec2(0.6f, 0.45f), "Textures/GUI/radio_button.png", Color(255, 255, 255, 255));
 	box->setGroup(1);
 	box->setSelected(false);
 	box->subscribeEvent(this, &EditorScreen::switchObjectMode, ObjectMode::BOX);
 	_guis.push_back(box);
-	_guiLabels.emplace_back(box, "Box", 1.0f, Color(0, 0, 0, 255));
+	_guiLabels.emplace_back(box, "Box", 0.75f, Color(0, 0, 0, 255));
 
 	RadioButton* light = new RadioButton(panel, glm::vec2(0.8f, 0.45f), "Textures/GUI/radio_button.png", Color(255, 255, 255, 255));
 	light->setGroup(1);
 	light->setSelected(false);
 	light->subscribeEvent(this, &EditorScreen::switchObjectMode, ObjectMode::LIGHT);
 	_guis.push_back(light);
-	_guiLabels.emplace_back(light, "Light", 1.0f, Color(0, 0, 0, 255));
+	_guiLabels.emplace_back(light, "Light", 0.75f, Color(0, 0, 0, 255));
 
 	Button* save = new Button(panel, glm::vec2(0.30f, 0.25f), glm::vec2(0.15f, 0.1f), "Textures/GUI/button.png", Color(255, 255, 255, 200));
 	save->subscribeEvent(this, &EditorScreen::saveLevel, "level2.txt", "Textures/Tiles/mountains.png");
@@ -141,6 +132,22 @@ void EditorScreen::init()
 	exit->setEnabled(true);
 	_guis.push_back(exit);
 	_guiLabels.emplace_back(exit, "Exit", 1.0f, Color(100, 100, 100, 255), LabelPosition::CENTER);
+
+	//Properties Panel
+	properties = new Panel(_camera.pixelToGL(glm::vec2(1450, -1440)), _camera.pixelToGL(glm::vec2(1110, 2880)), "Textures/GUI/panel.png", Color(100, 100, 100, 255));
+	_guis.push_back(properties);
+
+	Texture tileSelectorTex = ResourceManager::loadTexture("Textures/Tiles/mountains_selector.png");
+	tileSelector = new TiledPanel(properties, _camera.pixelToGL(glm::vec2(1475, 300)), _camera.pixelToGL(glm::vec2(1060, 1060)), "Textures/GUI/panel.png", Color(180, 180, 180, 180), _camera.pixelToGL(glm::vec2(50)), Sort::UP, false);
+	_guis.push_back(tileSelector);
+	_guiLabels.emplace_back(tileSelector, "Tile Selector", 0.85, Color(0, 0, 0, 255));
+
+	for (int i = 0; i < 256; i++) {
+		Icon* icon = new Icon(tileSelectorTex, glm::ivec2(16, 16), i);
+		icon->subscribeEvent(this, &EditorScreen::setTileIndex, i);
+		tileSelector->addTile(*icon);
+		_guis.push_back(icon);
+	}
 
 	_selectedLight.size = 10.0f;
 	_selectedLight.color = Color(255, 255, 255, 255);
@@ -160,11 +167,6 @@ void EditorScreen::updateGUI()
 		_guis[i]->update();
 
 		glm::vec2 pos = _camera.screenToGLCoords(_inputManager.getMousePos());
-
-		//if (_guis[i]->inBox(pos) || (_guis[i]->getParent() != nullptr && _guis[i]->getParent()->inBox(pos)))
-		//	_guiControl = true;
-		//else
-		//	_guiControl = false;
 
 		GUIType t = _guis[i]->getType();
 		if (_guis[i]->inBox(pos)) {
@@ -252,6 +254,17 @@ void EditorScreen::input()
 
 	if (_inputManager.isKeyDown(SDLK_q)) {
 		_camera.setScale(_camera.getScale() - 0.1f);
+	}
+
+	if (_inputManager.isKeyDown(SDLK_h)) {
+		if (properties->isVisible()) {
+			properties->setVisible(false);
+		}
+		else {
+			properties->setVisible(true);
+		}
+
+		_inputManager.keyReleased(SDLK_h);
 	}
 
 	//MoveCamera

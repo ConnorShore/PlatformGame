@@ -26,7 +26,7 @@ class GUI
 public:
 	typedef std::function<void()> call;
 
-	GUI(GUI* prnt, glm::vec2& pos, glm::vec2& dim, Texture& tex, Color& col);
+	GUI(GUI* prnt, glm::vec2& pos, glm::vec2& dim, Texture& tex, Color& col, bool autoPos = true);
 	GUI(glm::vec2& pos, glm::vec2& dim, Texture& tex, Color& col);
 	GUI();
 
@@ -41,6 +41,7 @@ public:
 	const GUIType& getType() { return type; }
 	GUI* getParent() { return parent; }
 	bool isVisible() { return visible; }
+	Color getColor() { return color; }
 
 	void setPosition(glm::vec2& newPos) { position = newPos; }
 	void setDimension(glm::vec2& newDim) { dimension = newDim; }

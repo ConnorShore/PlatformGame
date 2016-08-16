@@ -8,7 +8,7 @@ enum class Sort {UP, DOWN};
 class TiledPanel : public GUI
 {
 public:
-	TiledPanel(GUI* prnt, glm::vec2& position, glm::vec2& dimension, const std::string& texPath, Color col, glm::vec2& tileSize, Sort sort = Sort::DOWN);
+	TiledPanel(GUI* prnt, glm::vec2& position, glm::vec2& dimension, const std::string& texPath, Color col, glm::vec2& tileSize, Sort sort = Sort::DOWN, bool autoPos = true);
 	TiledPanel(glm::vec2& position, glm::vec2& dimension, const std::string& texPath, Color col, glm::vec2& tileSize, Sort sort = Sort::DOWN);
 	~TiledPanel();
 

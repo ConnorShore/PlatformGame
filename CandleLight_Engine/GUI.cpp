@@ -2,11 +2,16 @@
 
 
 
-GUI::GUI(GUI * prnt, glm::vec2 & pos, glm::vec2 & dim, Texture & tex, Color & col)
+GUI::GUI(GUI * prnt, glm::vec2 & pos, glm::vec2 & dim, Texture & tex, Color & col, bool autoPos /* TRUE */)
 {
 	parent = prnt;
 	parent->addChild(this);
-	position = (pos * parent->getDimension() + parent->getPosition());
+
+	if(autoPos) 
+		position = (pos * parent->getDimension() + parent->getPosition());
+	else 
+		position = pos;
+
 	dimension = dim;
 	texture = tex;
 	color = col;

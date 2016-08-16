@@ -24,6 +24,7 @@ public:
 	void render(SpriteBatch& spriteBatch, Camera& camera);
 
 private:
+	GUI* _parent;
 	SpriteFont* _spriteFont;
 	Color _labelColor;
 	LabelPosition _labelPos;
@@ -34,5 +35,5 @@ private:
 	const char* _labelFont = "Fonts/BEBAS.ttf";
 
 	const float TEXT_SCALE = 0.001f;
-	const float TEXT_PADDING = 0.005f;
+	const float TEXT_PADDING = 0.025f;
 };
