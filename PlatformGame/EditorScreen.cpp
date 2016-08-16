@@ -14,7 +14,7 @@ EditorScreen::~EditorScreen()
 
 void EditorScreen::init()
 {
-	_window.createWindow("Level Editor", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, _screenWidth, _screenHeight);
+	_window.createWindow("Level Editor", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, _screenWidth, _screenHeight, WindowFlags::FULLSCREEN);
 	_camera.init(_screenWidth, _screenHeight);
 	_camera.setScale(65.0f);
 
@@ -43,21 +43,28 @@ void EditorScreen::init()
 	_backgroundBatch.init();
 	_lightBatch.init();
 
-	//Background back1;
-	//back1.init("Textures/Mountains/sky.png", glm::vec2(-22.0f), glm::vec2(100, 25), 0, 5);
-	//_backgrounds.push_back(back1);
-	//Background back2;
-	//back2.init("Textures/Mountains/mountains_back.png", glm::vec2(-22.0f), glm::vec2(100, 25), 1, 5);
-	//_backgrounds.push_back(back2);
-	//Background back3;
-	//back3.init("Textures/Mountains/mountains_front.png", glm::vec2(-22.0f), glm::vec2(100, 25), 2, 5);
-	//_backgrounds.push_back(back3);
+	Background back1;
+	back1.init("Textures/Mountains/sky.png", glm::vec2(-22.0f), glm::vec2(100, 25), 0, 5);
+	_backgrounds.push_back(back1);
+	Background back2;
+	back2.init("Textures/Mountains/mountains_back.png", glm::vec2(-22.0f), glm::vec2(100, 25), 1, 5);
+	_backgrounds.push_back(back2);
+	Background back3;
+	back3.init("Textures/Mountains/mountains_front.png", glm::vec2(-22.0f), glm::vec2(100, 25), 2, 5);
+	_backgrounds.push_back(back3);
 
 	Panel* panel = new Panel(glm::vec2(-0.98f, -0.98f), glm::vec2(0.45f, 1.95f), "Textures/GUI/panel.png", Color(255, 255, 255, 150));
 	_guis.push_back(panel);
 
-	Panel* propsPanel = new Panel(glm::vec2(0.75f, 0.20f), glm::vec2(0.22f, 0.78f), "Textures/GUI/panel.png", Color(255, 255, 255, 150));
-	_guis.push_back(propsPanel);
+	Texture tileSelectorTex = ResourceManager::loadTexture("Textures/Tiles/test.png");
+	tileSelector = new TiledPanel(_camera.pixelToGL(glm::vec2(1400, 300)), _camera.pixelToGL(glm::vec2(1060, 1060)), "Textures/GUI/panel.png", Color(255, 255, 255, 150), _camera.pixelToGL(glm::vec2(50)), Sort::UP);
+	_guis.push_back(tileSelector);
+	for (int i = 0; i < 256; i++) {
+		Icon* icon = new Icon(tileSelectorTex, glm::ivec2(16,16), i);
+		icon->subscribeEvent(this, &EditorScreen::setTileIndex, i);
+		tileSelector->addTile(*icon);
+		_guis.push_back(icon);
+	}
 	
 	RadioButton* radio = new RadioButton(panel, glm::vec2(0.25f, 0.87f), "Textures/GUI/radio_button.png", Color(255, 255, 255, 255));
 	radio->setSelected(false);
@@ -129,6 +136,12 @@ void EditorScreen::init()
 	_guis.push_back(save);
 	_guiLabels.emplace_back(save, "Save", 1.0f, Color(100, 100, 100, 255), LabelPosition::CENTER);
 
+	Button* exit = new Button(panel, glm::vec2(0.30f, 0.15f), glm::vec2(0.15f, 0.1f), "Textures/GUI/button.png", Color(255, 255, 255, 200));
+	exit->subscribeEvent(this, &EditorScreen::quit);
+	exit->setEnabled(true);
+	_guis.push_back(exit);
+	_guiLabels.emplace_back(exit, "Exit", 1.0f, Color(100, 100, 100, 255), LabelPosition::CENTER);
+
 	_selectedLight.size = 10.0f;
 	_selectedLight.color = Color(255, 255, 255, 255);
 	_selectedLight.texture = _lightTex;
@@ -141,23 +154,21 @@ void EditorScreen::updateGUI()
 	//TODO: Put this in a GUI manager
 
 	//Check button input
+	bool setControl = false;
 	for (int i = 0; i < _guis.size(); i++) {
 
 		_guis[i]->update();
 
 		glm::vec2 pos = _camera.screenToGLCoords(_inputManager.getMousePos());
 
-		if (_guis[i]->inBox(pos)) {
-			_guiControl = true;
-		}
-		else if (_guis[i]->getParent() != nullptr && _guis[i]->getParent()->inBox(pos))
-			_guiControl = true;
-		else
-			_guiControl = false;
+		//if (_guis[i]->inBox(pos) || (_guis[i]->getParent() != nullptr && _guis[i]->getParent()->inBox(pos)))
+		//	_guiControl = true;
+		//else
+		//	_guiControl = false;
 
 		GUIType t = _guis[i]->getType();
 		if (_guis[i]->inBox(pos)) {
-			_guiControl = true;
+			setControl = true;
 			_guis[i]->setMouseOver(true);
 			if (_inputManager.isKeyDown(SDL_BUTTON_LEFT)) {
 				switch (t) {
@@ -177,6 +188,12 @@ void EditorScreen::updateGUI()
 					check->onClick();
 					_inputManager.keyReleased(SDL_BUTTON_LEFT);
 					break;
+				case ICON:
+					Icon* icon;
+					icon = static_cast<Icon*>(_guis[i]);
+					icon->onSelect();
+					_inputManager.keyReleased(SDL_BUTTON_LEFT);
+					break;
 				case NONE:
 					break;
 				}
@@ -186,6 +203,8 @@ void EditorScreen::updateGUI()
 			_guis[i]->setMouseOver(false);
 		}
 	}
+
+	_guiControl = setControl;
 }
 
 void EditorScreen::input()
@@ -528,7 +547,7 @@ void EditorScreen::updateMouseWheel(const SDL_Event & evnt)
 		switch (_objectMode) {
 			case ObjectMode::TILE:
 				if (evnt.wheel.y > 0.0f) {
-					if (_currentTileIndex < 63) _currentTileIndex++;
+					if (_currentTileIndex < 255) _currentTileIndex++;
 				}
 				else {
 					if (_currentTileIndex > 0) _currentTileIndex--;
@@ -564,6 +583,15 @@ void EditorScreen::switchSelectMode(SelectMode & mode)
 void EditorScreen::switchObjectMode(ObjectMode & mode)
 {
 	_objectMode = mode;
+	if (_objectMode == ObjectMode::TILE)
+		tileSelector->setVisible(true);
+	else
+		tileSelector->setVisible(false);
+}
+
+void EditorScreen::setTileIndex(int index)
+{
+	_currentTileIndex = index;
 }
 
 void EditorScreen::toggleBackground()
@@ -598,9 +626,14 @@ void EditorScreen::clear()
 	_lights.clear();
 }
 
+void EditorScreen::quit()
+{
+	SDL_Quit();
+	exit(0);
+}
+
 void EditorScreen::saveLevel(const std::string& fileName, const std::string& texSheet)
 {
-
 	Level::saveTiles(fileName, texSheet, _tiles);
 	Level::saveEditorLevel(fileName, _ground, _boxes, _lights);
 }

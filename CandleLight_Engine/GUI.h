@@ -50,7 +50,15 @@ public:
 		position = (position * parent->getDimension() + parent->getPosition());
 	}
 	void setMouseOver(bool over) { mouseOver = over; }
-	void setVisible(bool vis) { visible = vis; }
+	void setVisible(bool vis) 
+	{ 
+		visible = vis; 
+		if (_children.size() > 0) {
+			for (int i = 0; i < _children.size(); i++) {
+				_children[i]->setVisible(vis);
+			}
+		}
+	}
 
 	void addChild(GUI* child) { _children.push_back(child); }
 	std::vector<GUI*>& getChildren() { return _children; }

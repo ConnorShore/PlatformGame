@@ -25,8 +25,10 @@ GUI::GUI()
 
 void GUI::render(SpriteBatch & spriteBatch)
 {
-	glm::vec4 destRect(position.x, position.y, dimension.x, dimension.y);
-	spriteBatch.addToBatch(destRect, uvRect, 1.0f, texture.id, color);
+	if (visible) {
+		glm::vec4 destRect(position.x, position.y, dimension.x, dimension.y);
+		spriteBatch.addToBatch(destRect, uvRect, 1.0f, texture.id, color);
+	}
 }
 
 bool GUI::inBox(const glm::vec2& pos)

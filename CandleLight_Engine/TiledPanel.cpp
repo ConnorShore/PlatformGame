@@ -2,19 +2,21 @@
 #include "ResourceManager.h"
 
 
-TiledPanel::TiledPanel(GUI * prnt, glm::vec2 & position, glm::vec2 & dimension, const std::string & texPath, Color col, glm::vec2& tileSize)
+TiledPanel::TiledPanel(GUI * prnt, glm::vec2 & position, glm::vec2 & dimension, const std::string & texPath, Color col, glm::vec2& tileSize, Sort sort /* DOWN */)
 	: GUI(prnt, position, dimension, ResourceManager::loadTexture(texPath), col)
 {
 	type = TILED_PANEL;
+	_sortType = sort;
 	_tileSize = tileSize;
 	_maxSize = getMaxSize();
 	createLayout();
 }
 
-TiledPanel::TiledPanel(glm::vec2 & position, glm::vec2 & dimension, const std::string & texPath, Color col, glm::vec2& tileSize)
+TiledPanel::TiledPanel(glm::vec2 & position, glm::vec2 & dimension, const std::string & texPath, Color col, glm::vec2& tileSize, Sort sort /* DOWN */)
 	: GUI(position, dimension, ResourceManager::loadTexture(texPath), col)
 {
 	type = TILED_PANEL;
+	_sortType = sort;
 	_tileSize = tileSize;
 	_maxSize = getMaxSize();
 	createLayout();
@@ -31,11 +33,12 @@ void TiledPanel::addTile(Icon& tile)
 		int num = _tiles.size();
 		tile.setPosition(setLayout(num));
 		tile.setParent(this);
+		_children.push_back(&tile);
 		tile.setVisible(visible);
 		_tiles.push_back(tile);
 	}
-	else{}
-		//printf("Tile pane full\n");
+	else
+		printf("Tile pane full\n");
 }
 
 glm::vec2 TiledPanel::setLayout(int index)
@@ -46,7 +49,10 @@ glm::vec2 TiledPanel::setLayout(int index)
 	sizeX = _tileSize.x + _padding.x;
 	sizeY = _tileSize.y + _padding.y;
 	pos.x = (index % _gridNums.x) * (sizeX / dimension.x) + (_padding.x/1.5f);
-	pos.y = ((1.0f - (sizeY / dimension.y)) + (index / _gridNums.x) * -(sizeY / dimension.y)) + _padding.y/2.0f;
+	if(_sortType == Sort::DOWN)
+		pos.y = ((1.0f - (sizeY / dimension.y)) + (index / _gridNums.x) * -(sizeY / dimension.y)) + _padding.y/2.0f;
+	else
+		pos.y = ((index / _gridNums.x) * (sizeY / dimension.y)) + _padding.y / 2.0f;
 	return pos;
 }
 

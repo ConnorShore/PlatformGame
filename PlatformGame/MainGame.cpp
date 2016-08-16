@@ -48,7 +48,6 @@ void MainGame::init()
 	_backgroundBatch.init();
 	_lightBatch.init();
 	
-	//TODO: Make GUI pos based on GL coords nad dimensions based on world coords
 	TiledPanel* inventory = new TiledPanel(_camera.pixelToGL(glm::vec2(-720, -720)), _camera.pixelToGL(glm::vec2(1440, 1440)), "Textures/GUI/panel.png", Color(255, 255, 255, 255), _camera.pixelToGL(glm::vec2(144)));
 	inventory->setVisible(false);
 	_guis.push_back(inventory);

@@ -15,6 +15,8 @@
 #include <CandleLight_Engine\Background.h>
 #include <CandleLight_Engine\Light.h>
 #include <CandleLight_Engine\FrameBuffer.h>
+#include <CandleLight_Engine\TiledPanel.h>
+#include <CandleLight_Engine\Icon.h>
 
 #include "StaticShader.h"
 #include "LightShader.h"
@@ -84,6 +86,8 @@ private:
 	ObjectMode _objectMode = ObjectMode::TILE;
 	SelectMode _selectMode = SelectMode::PLACE;
 
+	TiledPanel* tileSelector;
+
 	bool _isRunning;
 	bool _guiControl = false;
 	bool _showBackgrounds = true;
@@ -99,7 +103,7 @@ private:
 
 	bool _mouseButtons[2];
 
-	int _tileIndices[128];
+	int _tileIndices[256];
 	int _currentTileIndex = 0;
 
 	int _selectedTile = NO_TILE;
@@ -126,11 +130,13 @@ private:
 	void saveLevel(const std::string& fileName, const std::string& texSheet);
 	void switchSelectMode(SelectMode& mode);
 	void switchObjectMode(ObjectMode& mode);
+	void setTileIndex(int index);
 	void toggleBackground();
 	void toggleGridSnap();
 	void toggleDrag();
 	
 	void clear();
+	void quit();
 
 	void printHello() { printf("Hello\n"); }
 
