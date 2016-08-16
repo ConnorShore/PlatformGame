@@ -11,9 +11,10 @@ GUI::GUI(GUI * prnt, glm::vec2 & pos, glm::vec2 & dim, Texture & tex, Color & co
 	texture = tex;
 	color = col;
 	uvRect = glm::vec4(0.0f, 0.0f, 1.0f, 1.0f);
+	visible = prnt->isVisible();
 }
 
-GUI::GUI(glm::vec2 & pos, glm::vec2 & dim, Texture & tex, Color& col) : position(pos), dimension(dim), texture(tex), color(col)
+GUI::GUI(glm::vec2 & pos, glm::vec2 & dim, Texture & tex, Color& col) : position(pos), dimension(dim), texture(tex), color(col), visible(true)
 {
 	uvRect = glm::vec4(0.0f, 0.0f, 1.0f, 1.0f);
 }

@@ -17,8 +17,11 @@ private:
 	std::vector<Icon> _tiles;
 	int _maxSize;
 	glm::vec2 _tileSize;
+	glm::ivec2 _gridNums;
+	glm::vec2 _padding;
 
-	glm::vec2 createLayout(int index);
+	glm::vec2 setLayout(int index);
+	void createLayout();
 	int getMaxSize();
 };
 

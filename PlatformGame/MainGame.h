@@ -69,8 +69,8 @@ private:
 	std::vector<Background> _backgrounds;
 	std::vector<Light> _lights;
 
-	int _screenWidth = 1920;
-	int _screenHeight = 1080;
+	int _screenWidth = 1280;
+	int _screenHeight = 720;
 
 	void init();
 	void input();
