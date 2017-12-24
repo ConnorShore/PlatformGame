@@ -1,3 +1,4 @@
 ﻿  Game.cpp
-  EngineTester.vcxproj -> C:\Users\user\documents\visual studio 2015\Projects\PlatformGame\Debug\EngineTester.exe
-  EngineTester.vcxproj -> C:\Users\user\documents\visual studio 2015\Projects\PlatformGame\Debug\EngineTester.pdb (Full PDB)
+c:\users\conner\documents\platformgame\candlelight_engine\component.h(28): warning C4018: '<': signed/unsigned mismatch
+c:\users\conner\documents\platformgame\candlelight_engine\rendercomponent.h(4): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+  EngineTester.vcxproj -> C:\Users\Conner\Documents\PlatformGame\Debug\EngineTester.exe

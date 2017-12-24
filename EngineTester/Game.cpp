@@ -1,6 +1,6 @@
 #include "Game.h"
-
-
+#include <CandleLight_Engine\SpriteComponent.h>
+#include <CandleLight_Engine\ResourceManager.h>
 
 Game::Game()
 {
@@ -16,6 +16,19 @@ void Game::init()
 
 	_window.createWindow("Engine Test", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1280, 720);
 	_window.setBackgroundColor(Color(0, 50, 120, 255));
+
+	GameObject* testObj = GameObjectManager::instance().newGameObjectBlueprint();
+	testObj->transform.position = glm::vec2(-1.0f);
+	testObj->transform.scale = glm::vec2(10.0f);
+	testObj->attachComponent(new SpriteComponent("Textures/boxTex.png"));
+
+	_renderSystem.init();
+
+	_camera.init(1280, 720);
+	_camera.setScale(60.0f);
+
+
+	tex = ResourceManager::loadTexture("Textures/boxTex.png");
 }
 
 void Game::input()
@@ -25,12 +38,17 @@ void Game::input()
 
 void Game::update()
 {
+	_camera.update();
 
+	GameObjectManager::instance().updateGameObjects();
 }
 
 void Game::render()
 {
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	_renderSystem.prepare();
+
+	_renderSystem.render(_camera);
+
 	_window.swapWindow();
 }
 
