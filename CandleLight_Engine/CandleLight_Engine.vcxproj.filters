@@ -43,6 +43,7 @@
     <ClCompile Include="GameObjectManager.cpp" />
     <ClCompile Include="StaticShader.cpp" />
     <ClCompile Include="RenderSystem.cpp" />
+    <ClCompile Include="LightShader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
@@ -96,6 +97,9 @@
     <ClInclude Include="StaticShader.h" />
     <ClInclude Include="SpriteComponent.h" />
     <ClInclude Include="RenderSystem.h" />
+    <ClInclude Include="LightComponent.h" />
+    <ClInclude Include="LightShader.h" />
+    <ClInclude Include="Components.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="GUI">

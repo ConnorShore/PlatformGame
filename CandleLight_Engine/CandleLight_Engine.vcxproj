@@ -149,6 +149,7 @@
     <ClCompile Include="GUILabel.cpp" />
     <ClCompile Include="Icon.cpp" />
     <ClCompile Include="InputManager.cpp" />
+    <ClCompile Include="LightShader.cpp" />
     <ClCompile Include="Loader.cpp" />
     <ClCompile Include="Panel.cpp" />
     <ClCompile Include="picoPNG.cpp" />
@@ -170,6 +171,7 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Checkbox.h" />
     <ClInclude Include="Component.h" />
+    <ClInclude Include="Components.h" />
     <ClInclude Include="FrameBuffer.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameObjectManager.h" />
@@ -179,6 +181,8 @@
     <ClInclude Include="Icon.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="Light.h" />
+    <ClInclude Include="LightComponent.h" />
+    <ClInclude Include="LightShader.h" />
     <ClInclude Include="Loader.h" />
     <ClInclude Include="Panel.h" />
     <ClInclude Include="picoPNG.h" />
