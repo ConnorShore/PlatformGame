@@ -165,8 +165,7 @@ void EditorScreen::updateGUI()
 	for (int i = 0; i < _guis.size(); i++) {
 
 		_guis[i]->update();
-
-		glm::vec2 pos = _camera.screenToGLCoords(_inputManager.getMousePos());
+		
 
 		GUIType t = _guis[i]->getType();
 		if (_guis[i]->inBox(pos)) {

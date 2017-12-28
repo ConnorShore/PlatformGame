@@ -10,6 +10,7 @@ public:
 
 	void init(int screenWidth, int screenHeight);
 	void update();
+
 	glm::vec2 screenToWorldCoords(glm::vec2 screenCoords);
 	glm::vec2 screenToGLCoords(glm::vec2 screenCoords);
 	void createTransformMatrix();
@@ -22,6 +23,9 @@ public:
 
 	void setPosition(glm::vec2 newPos) { _position = newPos; _needsUpdating = true; }
 	void setScale(float newScale) { _scale = newScale; _needsUpdating = true; }
+
+	inline int getScreenWidth() { return _screenWidth; }
+	inline int getScreenHeight() { return _screenHeight; }
 
 private:
 	const int MAX_SCREEN_WIDTH = 2560;

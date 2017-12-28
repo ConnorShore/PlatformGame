@@ -17,6 +17,7 @@ void Window::createWindow(const std::string & title, int x, int y, int width, in
 {
 	_width = width;
 	_height = height;
+	_backgroundColor = Color(0, 0, 0, 255);
 
 	SDL_Init(SDL_INIT_EVERYTHING);
 
@@ -53,11 +54,16 @@ void Window::createWindow(const std::string & title, int x, int y, int width, in
 		printf("Failed to initialize glew");
 	}
 
-	//glClearColor(0.05f, 0.0f, 0.25f, 1.0f);
-	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+	setBackgroundColor(_backgroundColor);
 	glViewport(0, 0, width, height);
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+}
+
+void Window::setBackgroundColor(Color color)
+{
+	_backgroundColor = color;
+	glClearColor(_backgroundColor.r / 255.0f, _backgroundColor.g / 255.0f, _backgroundColor.b / 255.0f, _backgroundColor.a / 255.0f);
 }
 
 void Window::swapWindow()

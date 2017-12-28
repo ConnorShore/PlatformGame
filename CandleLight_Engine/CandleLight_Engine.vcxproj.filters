@@ -39,6 +39,11 @@
     <ClCompile Include="Icon.cpp">
       <Filter>GUI</Filter>
     </ClCompile>
+    <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="GameObjectManager.cpp" />
+    <ClCompile Include="StaticShader.cpp" />
+    <ClCompile Include="RenderSystem.cpp" />
+    <ClCompile Include="LightShader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
@@ -83,6 +88,18 @@
     <ClInclude Include="Icon.h">
       <Filter>GUI</Filter>
     </ClInclude>
+    <ClInclude Include="Component.h" />
+    <ClInclude Include="GameObject.h" />
+    <ClInclude Include="Transform.h" />
+    <ClInclude Include="GameObjectManager.h" />
+    <ClInclude Include="TestComponent.h" />
+    <ClInclude Include="RenderComponent.h" />
+    <ClInclude Include="StaticShader.h" />
+    <ClInclude Include="SpriteComponent.h" />
+    <ClInclude Include="RenderSystem.h" />
+    <ClInclude Include="LightComponent.h" />
+    <ClInclude Include="LightShader.h" />
+    <ClInclude Include="Components.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="GUI">
