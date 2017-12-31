@@ -15,15 +15,17 @@ public:
 
 	bool validState();
 
+	inline lua_State* getLuaState() { return _state; }
 	inline bool success() { return _status == 0; }
 	inline bool fail() { return _status != 0; }
 
 private:
 	lua_State * _state = nullptr;
 
+	static LuaManager* _instance;
+
 	int _status = 0;
 
-	static LuaManager* _instance;
 	LuaManager();
 	~LuaManager();
 };

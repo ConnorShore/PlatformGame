@@ -20,8 +20,10 @@ public:
 
 	void addTag(std::string& tag) { tags.push_back(tag); }
 	void setParent(GameObject* par) { parent = par; }
+	void setUniqueID(int id) { uniqueID = id; }
 
 	GameObject* getParent() { return parent; }
+	int getUniqueID() { return uniqueID; }
 
 	bool hasTag(std::string& tag)
 	{
@@ -37,4 +39,5 @@ public:
 protected:
 	GameObject * parent = nullptr;
 	std::vector<std::string> tags;
+	int uniqueID = 0;
 };

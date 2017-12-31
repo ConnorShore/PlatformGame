@@ -14,17 +14,16 @@ public:
 		LuaManager::instance()->callFunction("initalize");
 	}
 
-	ScriptComponent() {}
+	~ScriptComponent() {}
 
 	virtual void update() override 
 	{
 		LuaManager::instance()->loadScript(scriptName);
 		LuaManager::instance()->callFunction("update");
 	}
+
 	virtual std::string getID() override { return "script"; }
 
-	std::string scriptName;
 
-private:
-	//static LuaManager _luaManager;
+	std::string scriptName;
 };

@@ -32,6 +32,7 @@ void Game::init()
 	testLight->transform.scale = glm::vec2(25.0f);
 	testLight->attachComponent(new LightComponent(Color(0, 255, 0, 255)));
 	testLight->attachComponent(new ScriptComponent("Scripts/main.lua"));
+	testLight->attachComponent(new ScriptComponent("Scripts/script2.lua"));
 
 	tex = ResourceManager::loadTexture("Textures/boxTex.png");
 }
@@ -41,6 +42,10 @@ void Game::input()
 	_inputManager.update();
 
 	GameObjectManager::instance().getGameObject(1)->transform.position = _camera.screenToWorldCoords(_inputManager.getMousePos());
+
+	if (_inputManager.isKeyDown(SDLK_ESCAPE)) {
+		GameObjectManager::instance().getGameObject(1)->removeComponent(std::string("script"));
+	}
 }
 
 void Game::update()

@@ -24,6 +24,10 @@ void GameObject::update()
 void GameObject::attachComponent(Component* component)
 {
 	component->setParent(this);
+	int ct = _components.count(component->getID());
+	if (ct > 0) {
+		component->setUniqueID(ct);
+	}
 	_components.insert(std::make_pair(component->getID(), component));
 }
 
@@ -36,6 +40,23 @@ Component* GameObject::removeComponent(ComponentType& type)
 	}
 
 	_components.erase(mit);
+}
+
+Component* GameObject::removeComponent(ComponentType & type, int id)
+{
+	bool remove = false;
+	ComponentBag::iterator iter;
+	for (iter = _components.begin(); iter != _components.end(); iter++) {
+		if (iter->second->getID() == type && iter->second->getUniqueID() == id) {
+			remove = true;
+			break;
+		}
+	}
+	if (remove) {
+		_components.erase(iter);
+	}
+
+	return nullptr;
 }
 
 Component* GameObject::getComponent(const ComponentType& type)

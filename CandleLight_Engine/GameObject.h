@@ -8,7 +8,7 @@
 class GameObject
 {
 public:
-	typedef std::map<const ComponentType, Component*> ComponentBag;
+	typedef std::multimap<const ComponentType, Component*> ComponentBag;
 
 	GameObject(unsigned int id);
 	~GameObject();
@@ -16,6 +16,7 @@ public:
 	void update();
 	void attachComponent(Component* component);
 	Component* removeComponent(ComponentType& type);
+	Component* removeComponent(ComponentType& type, int id);
 
 	Component* getComponent(const ComponentType& type);
 	ComponentBag getComponents() const { return _components; }
