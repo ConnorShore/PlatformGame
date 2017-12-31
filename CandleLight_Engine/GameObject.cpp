@@ -10,6 +10,7 @@ GameObject::GameObject(unsigned int id) : _id(id)
 
 GameObject::~GameObject()
 {
+
 }
 
 void GameObject::update()

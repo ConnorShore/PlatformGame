@@ -31,6 +31,7 @@ void Game::init()
 	testLight->transform.position = glm::vec2(-2.0f);
 	testLight->transform.scale = glm::vec2(25.0f);
 	testLight->attachComponent(new LightComponent(Color(0, 255, 0, 255)));
+	testLight->attachComponent(new ScriptComponent("Scripts/main.lua"));
 
 	tex = ResourceManager::loadTexture("Textures/boxTex.png");
 }

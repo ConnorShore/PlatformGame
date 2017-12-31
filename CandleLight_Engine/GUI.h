@@ -65,6 +65,7 @@ public:
 	std::vector<GUI*>& getChildren() { return _children; }
 
 	std::function<void()> callback() const { return eventCallback; }
+
 	template<typename T, typename F, typename... Args>
 	void subscribeEvent(T instance, F func, Args... args)
 	{
@@ -74,12 +75,15 @@ public:
 	
 protected:
 	GUI* parent = nullptr;
+
 	glm::vec2 position, dimension;
 	glm::vec4 uvRect;
+
 	Color color;
 	Texture texture;
 	call eventCallback = NULL;
 	GUIType type;
+
 	bool mouseOver = false;
 	bool visible = true;
 

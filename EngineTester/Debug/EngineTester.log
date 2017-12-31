@@ -1,7 +1,5 @@
 ﻿  Game.cpp
 c:\users\conner\documents\platformgame\candlelight_engine\component.h(28): warning C4018: '<': signed/unsigned mismatch
 c:\users\conner\documents\platformgame\candlelight_engine\rendersystem.h(8): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-c:\users\conner\documents\platformgame\candlelight_engine\components.h(3): warning C4067: unexpected tokens following preprocessor directive - expected a newline
 c:\users\conner\documents\platformgame\candlelight_engine\rendercomponent.h(4): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-c:\users\conner\documents\platformgame\candlelight_engine\components.h(4): warning C4067: unexpected tokens following preprocessor directive - expected a newline
   EngineTester.vcxproj -> C:\Users\Conner\Documents\PlatformGame\Debug\EngineTester.exe
