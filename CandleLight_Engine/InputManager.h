@@ -6,8 +6,7 @@
 class InputManager
 {
 public:
-	InputManager();
-	~InputManager();
+	static InputManager* instance();
 
 	void update();
 	
@@ -19,6 +18,11 @@ public:
 	glm::vec2 getMousePos() const { return _mousePos; }
 
 private:
+	static InputManager* _instance;
+
 	std::unordered_map<unsigned int, bool> _keyMap;
 	glm::vec2 _mousePos;
+
+	InputManager();
+	~InputManager();
 };

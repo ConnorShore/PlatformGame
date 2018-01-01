@@ -185,6 +185,7 @@
     <ClCompile Include="lua\lutf8lib.c" />
     <ClCompile Include="lua\lvm.c" />
     <ClCompile Include="lua\lzio.c" />
+    <ClCompile Include="LUA_InputManager.cpp" />
     <ClCompile Include="Panel.cpp" />
     <ClCompile Include="picoPNG.cpp" />
     <ClCompile Include="RadioButton.cpp" />
@@ -245,6 +246,8 @@
     <ClInclude Include="lua\lundump.h" />
     <ClInclude Include="lua\lvm.h" />
     <ClInclude Include="lua\lzio.h" />
+    <ClInclude Include="LUA_InputManager.h" />
+    <ClInclude Include="luna.h" />
     <ClInclude Include="Panel.h" />
     <ClInclude Include="picoPNG.h" />
     <ClInclude Include="RadioButton.h" />

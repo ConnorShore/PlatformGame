@@ -22,7 +22,6 @@ public:
 private:
 	Window _window;
 	Timing _timer;
-	InputManager _inputManager;
 	StaticShader _staticShader;
 	SpriteBatch _spriteBatch;
 	Camera _camera;

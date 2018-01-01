@@ -1,5 +1,7 @@
 #include "LuaManager.h"
 
+#include "LUA_InputManager.h"
+
 LuaManager* LuaManager::_instance = nullptr;
 
 LuaManager::LuaManager()
@@ -18,6 +20,8 @@ LuaManager * LuaManager::instance()
 {
 	if (!_instance) {
 		_instance = new LuaManager;
+
+		LUA_InputManager::bind();
 	}
 
 	return _instance;
@@ -25,7 +29,7 @@ LuaManager * LuaManager::instance()
 
 void LuaManager::loadScript(const std::string & scriptName)
 {
-	if (validState()) {
+	if (validState(_state)) {
 		_status = luaL_dofile(_state, scriptName.c_str());
 		if (fail()) {
 			//post error message
@@ -36,14 +40,14 @@ void LuaManager::loadScript(const std::string & scriptName)
 
 void LuaManager::registerFunction(const std::string & luaFuncName, lua_CFunction localFuncName)
 {
-	if (validState()) {
+	if (validState(_state)) {
 		lua_register(_state, luaFuncName.c_str(), localFuncName);
 	}
 }
 
 void LuaManager::callFunction(const std::string & funcName)
 {
-	if (validState()) {
+	if (validState(_state)) {
 		lua_getglobal(_state, funcName.c_str());
 		_status = lua_pcall(_state, 0, 0, 0);
 		if (fail()) {
@@ -52,9 +56,39 @@ void LuaManager::callFunction(const std::string & funcName)
 	}
 }
 
-bool LuaManager::validState()
+int LuaManager::getInt(lua_State * state, int stackpos)
 {
-	if (_state != nullptr)
+	return static_cast<int>(lua_tointeger(state, stackpos));
+}
+
+int LuaManager::getFloat(lua_State * state, int stackpos)
+{
+	return static_cast<float>(lua_tonumber(state, stackpos));
+}
+
+void LuaManager::pushInt(lua_State* state, int number)
+{
+	lua_pushnumber(state, number);
+}
+
+void LuaManager::pushFloat(lua_State* state, float number)
+{
+	lua_pushnumber(state, number);
+}
+
+void LuaManager::pushBool(lua_State * state, bool value)
+{
+	lua_pushboolean(state, static_cast<int>(value));
+}
+
+int LuaManager::getArgCount(lua_State* state)
+{
+	return lua_gettop(state);
+}
+
+bool LuaManager::validState(lua_State* state)
+{
+	if (state != nullptr)
 		return true;
 	else
 		return false;

@@ -144,6 +144,7 @@
       <Filter>lua</Filter>
     </ClCompile>
     <ClCompile Include="LuaManager.cpp" />
+    <ClCompile Include="LUA_InputManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
@@ -280,6 +281,8 @@
     </ClInclude>
     <ClInclude Include="LuaManager.h" />
     <ClInclude Include="ScriptComponent.h" />
+    <ClInclude Include="luna.h" />
+    <ClInclude Include="LUA_InputManager.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="GUI">
