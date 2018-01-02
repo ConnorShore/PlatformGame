@@ -27,10 +27,13 @@ LuaManager * LuaManager::instance()
 	return _instance;
 }
 
-void LuaManager::loadScript(const std::string & scriptName)
+void LuaManager::loadScript(const std::string & scriptName, bool execute)
 {
 	if (validState(_state)) {
-		_status = luaL_dofile(_state, scriptName.c_str());
+		if (execute)
+			_status = luaL_dofile(_state, scriptName.c_str());
+		else
+			_status = luaL_loadfile(_state, scriptName.c_str());
 		if (fail()) {
 			//post error message
 			printf("Failed to load script %s\n", scriptName.c_str());

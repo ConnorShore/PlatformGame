@@ -9,7 +9,7 @@ class LuaManager
 public:
 	static LuaManager* instance();
 
-	void loadScript(const std::string& scriptName);
+	void loadScript(const std::string& scriptName, bool execute = true);
 	void registerFunction(const std::string& luaFuncName, lua_CFunction localFuncName);
 	void callFunction(const std::string& funcName);
 

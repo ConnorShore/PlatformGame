@@ -6,9 +6,15 @@
 
 const char LUA_InputManager::className[] = "InputManager";
 
-const Luna<LUA_InputManager>::RegType LUA_InputManager::Register[] = {
-	{ "KeyDown", &LUA_InputManager::KeyDown },
-	{ "SetMousePosition", &LUA_InputManager::SetMousePosition },
+
+const Luna<LUA_InputManager>::FunctionType LUA_InputManager::methods[]{
+	lunamethod(LUA_InputManager, KeyDown),
+	lunamethod(LUA_InputManager, GetMousePosition),
+	{0, 0}
+};
+
+const Luna<LUA_InputManager>::PropertyType LUA_InputManager::properties[]{
+	{"random", &LUA_InputManager::getProperty, &LUA_InputManager::setProperty},
 	{0}
 };
 
@@ -37,7 +43,7 @@ int LUA_InputManager::KeyDown(lua_State * state)
 	return 0;
 }
 
-int LUA_InputManager::SetMousePosition(lua_State * state)
+int LUA_InputManager::GetMousePosition(lua_State * state)
 {
 	return 0;
 }

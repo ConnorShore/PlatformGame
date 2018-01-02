@@ -42,10 +42,6 @@ void Game::input()
 	InputManager::instance()->update();
 
 	GameObjectManager::instance().getGameObject(1)->transform.position = _camera.screenToWorldCoords(InputManager::instance()->getMousePos());
-
-	/*if (InputManager::instance()->isKeyDown(SDLK_ESCAPE)) {
-		GameObjectManager::instance().getGameObject(1)->removeComponent(std::string("script"));
-	}*/
 }
 
 void Game::update()

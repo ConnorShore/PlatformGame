@@ -18,7 +18,7 @@ public:
 
 	virtual void update() override 
 	{
-		LuaManager::instance()->loadScript(scriptName);
+		LuaManager::instance()->loadScript(scriptName, false);
 		LuaManager::instance()->callFunction("update");
 	}
 

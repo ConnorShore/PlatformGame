@@ -60,9 +60,6 @@ void InputManager::keyReleased(unsigned int key)
 
 bool InputManager::isKeyDown(unsigned int key)
 {
-	//if (_keyMap.size() > 0) {
-	//	printf("");//breakhere
-	//}
 	auto it = _keyMap.find(key);
 	if (it != _keyMap.end())
 		return it->second;
