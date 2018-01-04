@@ -25,7 +25,9 @@ public:
 	virtual void render(SpriteBatch& spriteBatch) override 
 	{
 		if (parent != nullptr) {
-			glm::vec4 destRect(parent->transform.position, parent->transform.scale);
+			glm::vec2 pos = parent->transform.position;
+			glm::vec2 scale = parent->transform.scale;
+			glm::vec4 destRect(pos, scale);
 			spriteBatch.addToBatch(destRect, uvRect, depth, _texture.id, color);
 		}
 	}

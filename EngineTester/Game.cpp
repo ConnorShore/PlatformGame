@@ -25,11 +25,13 @@ void Game::init()
 	GameObject* testObj = GameObjectManager::instance().newGameObjectBlueprint();
 	testObj->transform.position = glm::vec2(-1.0f);
 	testObj->transform.scale = glm::vec2(10.0f);
+	testObj->name = "box";
 	testObj->attachComponent(new SpriteComponent("Textures/boxTex.png"));
 
 	GameObject* testLight = GameObjectManager::instance().newGameObjectBlueprint();
 	testLight->transform.position = glm::vec2(-2.0f);
 	testLight->transform.scale = glm::vec2(25.0f);
+	testLight->name = "light";
 	testLight->attachComponent(new LightComponent(Color(0, 255, 0, 255)));
 	//testLight->attachComponent(new ScriptComponent("Scripts/main.lua"));
 	testLight->attachComponent(new ScriptComponent("Scripts/script2.lua"));

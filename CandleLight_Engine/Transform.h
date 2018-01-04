@@ -1,8 +1,8 @@
 #pragma once
 
-#include "glm\glm.hpp"
+#include "Math/Math.h"
 
 struct Transform
 {
-	glm::vec2 position, rotation, scale;
+	Vector2 position, rotation, scale;
 };

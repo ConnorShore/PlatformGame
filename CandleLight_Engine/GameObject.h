@@ -3,6 +3,7 @@
 #include "Transform.h"
 #include "Component.h"
 
+#include <string>
 #include <map>
 
 class GameObject
@@ -28,6 +29,7 @@ public:
 	void setID(const unsigned int id) { _id = id; }
 
 	Transform transform;
+	std::string name;
 
 private:
 	ComponentBag _components;

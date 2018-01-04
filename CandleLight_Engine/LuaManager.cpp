@@ -16,7 +16,7 @@ LuaManager::~LuaManager()
 	delete _state;
 }
 
-LuaManager * LuaManager::instance()
+LuaManager* LuaManager::instance()
 {
 	if (!_instance) {
 		_instance = new LuaManager;
@@ -34,6 +34,7 @@ void LuaManager::loadScript(const std::string & scriptName, bool execute)
 			_status = luaL_dofile(_state, scriptName.c_str());
 		else
 			_status = luaL_loadfile(_state, scriptName.c_str());
+
 		if (fail()) {
 			//post error message
 			printf("Failed to load script %s\n", scriptName.c_str());

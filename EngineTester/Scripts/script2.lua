@@ -1,13 +1,10 @@
-local input = nil
 
-function initalize()
-    input = InputManager()
+function initialize()
+
 end
 
 function update()
-    if(input:KeyDown(KEY_SPACE)) then
-        print("Random before: ", input.random)
-        input.random = input.random + 10
-        print("Random after: ", input.random)
+    if(InputManager():KeyDown(KEY_SPACE)) then
+        print("SPACE IS DOWN")
     end
 end

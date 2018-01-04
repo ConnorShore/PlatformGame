@@ -283,6 +283,15 @@
     <ClInclude Include="ScriptComponent.h" />
     <ClInclude Include="luna.h" />
     <ClInclude Include="LUA_InputManager.h" />
+    <ClInclude Include="Math\Vector.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\Type_Vector2.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\Math.h">
+      <Filter>Math</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="GUI">
@@ -290,6 +299,9 @@
     </Filter>
     <Filter Include="lua">
       <UniqueIdentifier>{35f1392e-ce6e-458b-838c-beec42d03f62}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Math">
+      <UniqueIdentifier>{9a0f248d-cb28-49be-b012-dfe76b8ee2ab}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

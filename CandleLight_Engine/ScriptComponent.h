@@ -11,7 +11,7 @@ public:
 		scriptName = script;
 
 		LuaManager::instance()->loadScript(scriptName);
-		LuaManager::instance()->callFunction("initalize");
+		LuaManager::instance()->callFunction("initialize");
 	}
 
 	~ScriptComponent() {}

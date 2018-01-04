@@ -248,6 +248,9 @@
     <ClInclude Include="lua\lzio.h" />
     <ClInclude Include="LUA_InputManager.h" />
     <ClInclude Include="luna.h" />
+    <ClInclude Include="Math\Math.h" />
+    <ClInclude Include="Math\Vector.h" />
+    <ClInclude Include="Math\Type_Vector2.h" />
     <ClInclude Include="Panel.h" />
     <ClInclude Include="picoPNG.h" />
     <ClInclude Include="RadioButton.h" />
