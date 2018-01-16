@@ -28,6 +28,8 @@ private:
 	Texture tex;
 	RenderSystem _renderSystem;
 
+	int _screenWidth, _screenHeight;
+
 	bool _isRunning;
 
 	void init();

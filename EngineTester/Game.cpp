@@ -2,7 +2,7 @@
 #include <CandleLight_Engine\Components.h>
 #include <CandleLight_Engine\ResourceManager.h>
 
-Game::Game()
+Game::Game() : _screenWidth(1280), _screenHeight(720)
 {
 }
 
@@ -14,10 +14,10 @@ void Game::init()
 {
 	_isRunning = true;
 
-	_window.createWindow("Engine Test", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1280, 720);
+	_window.createWindow("Engine Test", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, _screenWidth, _screenHeight);
 	_window.setBackgroundColor(Color(0, 50, 120, 255));
 
-	_camera.init(1280, 720);
+	_camera.init(_screenWidth, _screenHeight);
 	_camera.setScale(30.0f);
 
 	_renderSystem.init(_camera);
@@ -27,13 +27,13 @@ void Game::init()
 	testObj->transform.scale = glm::vec2(10.0f);
 	testObj->name = "box";
 	testObj->attachComponent(new SpriteComponent("Textures/boxTex.png"));
+	testObj->attachComponent(new ScriptComponent("Scripts/main.lua"));
 
 	GameObject* testLight = GameObjectManager::instance().newGameObjectBlueprint();
 	testLight->transform.position = glm::vec2(-2.0f);
 	testLight->transform.scale = glm::vec2(25.0f);
 	testLight->name = "light";
 	testLight->attachComponent(new LightComponent(Color(0, 255, 0, 255)));
-	//testLight->attachComponent(new ScriptComponent("Scripts/main.lua"));
 	testLight->attachComponent(new ScriptComponent("Scripts/script2.lua"));
 
 	tex = ResourceManager::loadTexture("Textures/boxTex.png");

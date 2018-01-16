@@ -24,6 +24,5 @@ public:
 
 	virtual std::string getID() override { return "script"; }
 
-
 	std::string scriptName;
 };

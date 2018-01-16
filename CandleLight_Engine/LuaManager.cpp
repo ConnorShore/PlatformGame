@@ -1,6 +1,7 @@
 #include "LuaManager.h"
 
 #include "LUA_InputManager.h"
+#include "LUA_Vector2.h"
 
 LuaManager* LuaManager::_instance = nullptr;
 
@@ -21,7 +22,10 @@ LuaManager* LuaManager::instance()
 	if (!_instance) {
 		_instance = new LuaManager;
 
+		//CLASS BINDINGS//
+		LUA_Vector2::bind();
 		LUA_InputManager::bind();
+		////
 	}
 
 	return _instance;
